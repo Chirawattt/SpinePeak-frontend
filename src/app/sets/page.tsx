@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 import { catalog } from '@/catalog'
 import { ContactButton } from '@/components/contact-button'
+import { Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetFilterBar, SetFilterBarFromUrl, SetGrid, SetGridFromUrl, SetTabs, SetTabsFromUrl } from '@/components/set-browser'
 
 // design ไม่มีหน้านี้ ใช้โครงเดียวกับหน้ารายการคอร์ส
@@ -31,16 +32,22 @@ export default function SetsPage() {
           {' / '}
           <span className="text-ink">{TITLE}</span>
         </nav>
-        <div className="relative px-gutter pt-[22px] pb-10">
-          <h1 className="mb-3 font-heading text-[clamp(29px,5.6vw,46px)] leading-[1.15] font-bold tracking-[-0.01em]">{TITLE}</h1>
-          <p className="mb-[26px] max-w-[560px] text-[17px] leading-[1.7] text-ink-soft">{INTRO}</p>
+        <Stagger trigger="mount" className="relative px-gutter pt-[22px] pb-10">
+          <StaggerItem>
+            <h1 className="mb-3 font-heading text-[clamp(29px,5.6vw,46px)] leading-[1.15] font-bold tracking-[-0.01em]">{TITLE}</h1>
+          </StaggerItem>
+          <StaggerItem as="p" className="mb-[26px] max-w-[560px] text-[17px] leading-[1.7] text-ink-soft">
+            {INTRO}
+          </StaggerItem>
+          <StaggerItem>
           <Suspense fallback={<SetTabs index={index} filters={{}} />}>
             <SetTabsFromUrl index={index} />
           </Suspense>
           <Suspense fallback={<SetFilterBar index={index} filters={{}} />}>
             <SetFilterBarFromUrl index={index} />
           </Suspense>
-        </div>
+          </StaggerItem>
+        </Stagger>
       </section>
 
       <Suspense fallback={<SetGrid index={index} filters={{}} emptyAction={emptyAction} />}>

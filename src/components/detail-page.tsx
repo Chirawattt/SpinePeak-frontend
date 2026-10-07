@@ -5,6 +5,7 @@ import type { Cover, NavLink, SetSavings, Stat } from '@/catalog'
 import type { ContactItem } from '@/contact'
 import { ContactButton } from '@/components/contact-button'
 import { CoverBox } from '@/components/cover-box'
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 
 /** ส่วนหัว: breadcrumb, ชื่อ (children), การ์ดราคา (aside) และแถวตัวเลข */
 export function DetailTop({
@@ -41,12 +42,14 @@ export function DetailTop({
       </nav>
 
       <div className="relative grid gap-x-9 gap-y-7 px-gutter pt-1 pb-14 lg:grid-cols-[minmax(0,1fr)_340px] lg:grid-rows-[auto_1fr] lg:pb-16">
-        <div className="min-w-0 lg:col-start-1 lg:row-start-1">{children}</div>
+        <Reveal trigger="mount" className="min-w-0 lg:col-start-1 lg:row-start-1">
+          {children}
+        </Reveal>
 
         {aside}
 
         {(details || stats.length > 0) && (
-          <div className="flex flex-col gap-7 lg:col-start-1 lg:row-start-2">
+          <Reveal trigger="mount" delay={0.2} className="flex flex-col gap-7 lg:col-start-1 lg:row-start-2">
             {details}
             {stats.length > 0 && (
               <div>
@@ -61,7 +64,7 @@ export function DetailTop({
                 </dl>
               </div>
             )}
-          </div>
+          </Reveal>
         )}
       </div>
     </section>
@@ -107,7 +110,12 @@ export function PriceCard({
   contactItem: ContactItem
 }) {
   return (
-    <aside className="min-w-0 self-start rounded-[20px] border border-card-line bg-white p-5 shadow-card lg:col-start-2 lg:row-span-2 lg:row-start-1">
+    <Reveal
+      as="aside"
+      trigger="mount"
+      delay={0.12}
+      className="min-w-0 self-start rounded-[20px] border border-card-line bg-white p-5 shadow-card lg:col-start-2 lg:row-span-2 lg:row-start-1"
+    >
       <CoverBox cover={cover} label={coverLabel} title={title} className="mb-[18px] hidden lg:block" />
       {savings ? (
         // เซ็ต: ราคา + ราคาปกติขีดฆ่า แล้วป้ายประหยัดกับป้ายตลอดชีพอยู่แถวเดียวกัน ปุ่มติดต่อจะได้ไม่ตกขอบจอมือถือ
@@ -138,7 +146,7 @@ export function PriceCard({
         <li>ดูย้อนหลังได้ไม่จำกัด ไม่มีวันหมดอายุ</li>
         <li>ถ้าอัดเนื้อหาใหม่ คนที่ซื้อแล้วได้ของใหม่ด้วย ไม่ต้องจ่ายเพิ่ม</li>
       </ul>
-    </aside>
+    </Reveal>
   )
 }
 
@@ -149,14 +157,18 @@ export function SectionTitle({ children, className = '' }: { children: React.Rea
 /** แถบท้ายหน้า ปุ่มติดต่ออีกครั้ง */
 export function ClosingBand({ price, lifetime, contactItem }: { price: string; lifetime: string; contactItem: ContactItem }) {
   return (
-    <section className="flex flex-wrap items-center justify-between gap-x-8 gap-y-6 bg-brand px-gutter py-11">
-      <div>
-        <h2 className="mb-2 font-heading text-[clamp(24px,4vw,30px)] font-bold text-band-ink">พร้อมเริ่มเรียนแล้วใช่ไหม</h2>
-        <p className="text-base">
-          {price} ครั้งเดียว {lifetime}
-        </p>
-      </div>
-      <ContactButton item={contactItem} className="px-10 text-lg whitespace-nowrap" />
+    <section className="bg-brand px-gutter py-11">
+      <Stagger className="flex flex-wrap items-center justify-between gap-x-8 gap-y-6">
+        <StaggerItem>
+          <h2 className="mb-2 font-heading text-[clamp(24px,4vw,30px)] font-bold text-band-ink">พร้อมเริ่มเรียนแล้วใช่ไหม</h2>
+          <p className="text-base">
+            {price} ครั้งเดียว {lifetime}
+          </p>
+        </StaggerItem>
+        <StaggerItem>
+          <ContactButton item={contactItem} className="px-10 text-lg whitespace-nowrap" />
+        </StaggerItem>
+      </Stagger>
     </section>
   )
 }

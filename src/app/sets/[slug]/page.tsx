@@ -4,6 +4,7 @@ import { catalog, type SetDetail } from '@/catalog'
 import { CourseCard } from '@/components/course-card'
 import { ClosingBand, DetailHeading, DetailTop, PriceCard, Pill, SectionTitle } from '@/components/detail-page'
 import { FaqList } from '@/components/faq-list'
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 
 // design ไม่มีหน้านี้ ใช้ layout ของหน้ารายละเอียดคอร์สเป็นแม่แบบ
 // build ทุกเซ็ตล่วงหน้า slug ที่ไม่มีอยู่ขึ้น 404 · URL ใช้ slug ไม่ใช่รหัสเซ็ต (ADR 0002)
@@ -76,24 +77,24 @@ function Top({ detail }: { detail: SetDetail }) {
 function Body({ detail }: { detail: SetDetail }) {
   return (
     <div className="flex flex-col gap-12 px-gutter py-12">
-      <section>
+      <Reveal as="section">
         <SectionTitle className="mb-1.5">คอร์สในเซ็ตนี้</SectionTitle>
         <p className="mb-6 text-[15px] text-muted">
           {detail.courseCount} · กดที่การ์ดเพื่อดูรายละเอียดของแต่ละคอร์ส
         </p>
-        <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,280px),1fr))] gap-[22px]">
+        <Stagger as="ul" className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,280px),1fr))] gap-[22px]">
           {detail.courses.map((card) => (
-            <li key={card.slug} className="flex">
+            <StaggerItem key={card.slug} as="li" lift className="flex">
               <CourseCard card={card} />
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
-      </section>
+        </Stagger>
+      </Reveal>
 
-      <section className="max-w-[760px]">
+      <Reveal as="section" className="max-w-[760px]">
         <SectionTitle>คำถามที่พบบ่อย</SectionTitle>
         <FaqList faqs={detail.faqs} />
-      </section>
+      </Reveal>
     </div>
   )
 }

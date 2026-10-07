@@ -8,13 +8,16 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { listHref, type CourseFilters } from '@/catalog/course-filters'
 import type { GroupTab } from '@/catalog/group-tabs'
+import { PressLink } from '@/components/motion/press'
+import { Reveal } from '@/components/motion/reveal'
+import { STAGGER, STAGGER_CAP } from '@/components/motion/tokens'
 
 /** แท็บกลุ่ม · กดแล้วเปลี่ยน URL จึงแชร์ลิงก์ได้และกดย้อนกลับได้ */
 export function TabNav({ tabs }: { tabs: GroupTab[] }) {
   return (
     <nav aria-label="กลุ่ม" className="flex flex-wrap gap-2.5">
       {tabs.map((tab) => (
-        <Link
+        <PressLink
           key={tab.href}
           href={tab.href}
           scroll={false}
@@ -24,7 +27,7 @@ export function TabNav({ tabs }: { tabs: GroupTab[] }) {
           }`}
         >
           {tab.label} <span className="text-sm font-normal opacity-70">{tab.count}</span>
-        </Link>
+        </PressLink>
       ))}
     </nav>
   )
@@ -110,6 +113,11 @@ export function FilterBar({
   )
 }
 
+function batchDelay(i: number, paging: { first: number; step: number }) {
+  const inBatch = i < paging.first ? i : (i - paging.first) % paging.step
+  return Math.min(inBatch * STAGGER, STAGGER_CAP)
+}
+
 /** กริดการ์ด โหลดเพิ่มเองเมื่อเลื่อนถึงท้ายรายการ · ใส่ key ตามตัวกรองไว้ที่ผู้เรียก จำนวนที่โหลดจึงนับใหม่เมื่อเปลี่ยนตัวกรอง */
 export function PagedGrid<T extends { slug: string }>({
   cards,
@@ -172,10 +180,11 @@ export function PagedGrid<T extends { slug: string }>({
         </div>
       )}
       <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-[22px] px-gutter pt-3 pb-5">
-        {cards.slice(0, shown).map((card) => (
-          <li key={card.slug} className="flex">
+        {cards.slice(0, shown).map((card, i) => (
+          // ไล่กันเฉพาะในชุดเดียวกัน: ชุดแรก (first ใบ) และชุดที่โหลดเพิ่มทีละ step ใบ ใบที่แสดงอยู่แล้วไม่เล่นซ้ำ
+          <Reveal key={card.slug} as="li" lift delay={batchDelay(i, paging)} className="flex">
             {renderCard(card)}
-          </li>
+          </Reveal>
         ))}
       </ul>
       {hasMore && (

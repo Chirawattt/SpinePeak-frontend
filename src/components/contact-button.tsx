@@ -1,4 +1,5 @@
 import { contactHref, type ContactChannel, type ContactItem } from '@/contact'
+import { PressAnchor } from '@/components/motion/press'
 
 const VARIANT = {
   dark: 'bg-ink text-white hover:bg-ink/90',
@@ -26,13 +27,13 @@ export function ContactButton({
   children?: React.ReactNode
 }) {
   return (
-    <a
+    <PressAnchor
       href={contactHref(item, channel)}
       target="_blank"
       rel="noopener noreferrer"
       className={`block rounded-full px-6 py-3.5 text-center font-semibold transition-colors ${VARIANT[variant]} ${className}`}
     >
       {children ?? DEFAULT_LABEL[channel]}
-    </a>
+    </PressAnchor>
   )
 }

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { catalog, type CourseDetail, type CourseInstructor } from '@/catalog'
 import { ClosingBand, DetailHeading, DetailTop, PriceCard, Pill, SectionTitle } from '@/components/detail-page'
 import { FaqList } from '@/components/faq-list'
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetOffers } from '@/components/set-offers'
 
 // build ทุกคอร์สล่วงหน้า slug ที่ไม่มีอยู่ขึ้น 404
@@ -62,57 +63,61 @@ function Body({ detail }: { detail: CourseDetail }) {
     <div className="grid gap-x-9 gap-y-10 px-gutter py-12 lg:grid-cols-[minmax(0,1fr)_340px]">
       <div className="flex min-w-0 flex-col gap-10">
         {detail.content && (
-          <section>
+          <Reveal as="section">
             <SectionTitle className="mb-1.5">เนื้อหาในคอร์ส</SectionTitle>
             {detail.content.chapterCount && <p className="mb-5 text-[15px] text-muted">{detail.content.chapterCount}</p>}
             {detail.content.points && (
-              <ul className="mb-5 flex flex-wrap gap-2.5">
+              <Stagger as="ul" className="mb-5 flex flex-wrap gap-2.5">
                 {detail.content.points.map((point, i) => (
-                  <li key={i} className="rounded-full border border-outline px-4 py-2 text-sm">{point}</li>
+                  <StaggerItem key={i} as="li" className="rounded-full border border-outline px-4 py-2 text-sm">
+                    {point}
+                  </StaggerItem>
                 ))}
-              </ul>
+              </Stagger>
             )}
             {detail.content.chapters && (
-              <ol className="overflow-hidden rounded-2xl border border-line">
+              <Stagger as="ol" className="overflow-hidden rounded-2xl border border-line">
                 {detail.content.chapters.map((chapter, i) => (
-                  <li key={i} className="border-b border-line px-[22px] py-[18px] text-[17px] font-semibold last:border-b-0 odd:bg-row">
+                  <StaggerItem key={i} as="li" className="border-b border-line px-[22px] py-[18px] text-[17px] font-semibold last:border-b-0 odd:bg-row">
                     {chapter}
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ol>
+              </Stagger>
             )}
-          </section>
+          </Reveal>
         )}
 
         {detail.forWho && (
-          <section>
+          <Reveal as="section">
             <SectionTitle>คอร์สนี้เหมาะกับใคร</SectionTitle>
-            <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,210px),1fr))] gap-3.5">
+            <Stagger as="ul" className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,210px),1fr))] gap-3.5">
               {detail.forWho.map((who, i) => (
-                <li key={i} className="rounded-[14px] bg-tint p-5 text-[15.5px] leading-[1.65]">{who}</li>
+                <StaggerItem key={i} as="li" className="rounded-[14px] bg-tint p-5 text-[15.5px] leading-[1.65]">
+                  {who}
+                </StaggerItem>
               ))}
-            </ul>
-          </section>
+            </Stagger>
+          </Reveal>
         )}
 
         {detail.deliverables && (
-          <section>
+          <Reveal as="section">
             <SectionTitle>สิ่งที่ได้รับ</SectionTitle>
             <p className="rounded-[14px] bg-tint p-5 text-[15.5px] leading-[1.65]">{detail.deliverables}</p>
-          </section>
+          </Reveal>
         )}
 
-        <section>
+        <Reveal as="section">
           <SectionTitle>คำถามที่พบบ่อย</SectionTitle>
           <FaqList faqs={detail.faqs} />
-        </section>
+        </Reveal>
       </div>
 
       {(detail.sets || detail.instructor) && (
-        <div className="flex min-w-0 flex-col gap-5 self-start">
+        <Reveal className="flex min-w-0 flex-col gap-5 self-start">
           {detail.sets && <SetOffers sets={detail.sets} />}
           {detail.instructor && <Instructor instructor={detail.instructor} />}
-        </div>
+        </Reveal>
       )}
     </div>
   )
