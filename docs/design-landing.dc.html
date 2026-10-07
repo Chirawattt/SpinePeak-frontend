@@ -15,7 +15,7 @@
 <img src="uploads/SpinePeakLogo.PNG" alt="Spine Peak" style="height:44px;width:auto;display:block">
 <div style="display:flex;gap:12px 20px;align-items:center;font-size:15px;font-weight:500;flex-wrap:wrap;justify-content:flex-end">
 <a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#0B2B33">คอร์สเรียน</a>
-<a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#0B2B33">SET คอร์ส</a>
+<a href="Spine Peak Sets.dc.html" style="text-decoration:none;color:#0B2B33">SET คอร์ส</a>
 <a href="#teacher" style="text-decoration:none;color:#0B2B33">แนะนำครู</a>
 <a href="#reviews" style="text-decoration:none;color:#0B2B33">รีวิว</a>
 <a href="#login" style="text-decoration:none;color:#0B2B33;padding:10px 22px;background:#85E5FF;border:1.5px solid #85E5FF;border-radius:999px;font-weight:600">เข้าสู่ระบบ</a>
@@ -52,6 +52,25 @@
 </div>
 </div>
 
+<div id="promo" style="padding:20px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2)) 8px;scroll-margin-top:90px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+<h2 style="font-family:'Anuphan',sans-serif;font-size:clamp(24px,3.8vw,32px);font-weight:700;margin:0">โปรโมชัน</h2>
+<a href="Spine Peak Sets.dc.html" style="font-size:15px;font-weight:600;color:#0B2B33">ดู SET ทั้งหมด →</a>
+</div>
+
+<div ref="{{ promoRef }}" onMouseEnter="{{ promoEnter }}" onMouseLeave="{{ promoLeave }}" onTouchStart="{{ promoEnter }}" onTouchEnd="{{ promoLeave }}" style="display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:none;overscroll-behavior-x:contain">
+<sc-if value="{{ showSeason }}" hint-placeholder-val="{{ true }}">
+<a href="Spine Peak Sets.dc.html" style="flex:0 0 min(84vw,560px);scroll-snap-align:start;text-decoration:none;color:#fff;background:#0B2B33;border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden">
+<div style="position:absolute;inset:0;background-image:radial-gradient(#1F5360 1.4px,transparent 1.5px);background-size:24px 24px;opacity:.7;pointer-events:none"></div>
+<div style="position:relative;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><span style="background:#85E5FF;color:#0B2B33;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700">โปรตามฤดู</span><span style="font:500 13px 'IBM Plex Mono',monospace;color:#85E5FF">{{ countdown }}</span></div>
+<div style="position:relative;font-family:'Anuphan',sans-serif;font-size:clamp(23px,3.4vw,30px);font-weight:700;line-height:1.25">โปรเปิดเทอม 2<br>ลดเพิ่ม 15% ทุก SET</div>
+<div style="position:relative;font-size:15px;color:#C6DEE4">ใช้โค้ด TERM2 · ถึง 31 ต.ค. 69</div>
+</a>
+</sc-if>
+<a href="Spine Peak Sets.dc.html" style="flex:0 0 min(72vw,300px);scroll-snap-align:start;text-decoration:none;color:#0B2B33;background:#E6F9FF;border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:10px"><span style="font:600 12px 'IBM Plex Mono',monospace;color:#3E7784">ตลอดปี</span><span style="font-family:'Anuphan',sans-serif;font-size:42px;font-weight:700;line-height:1">-20%</span><span style="font-family:'Anuphan',sans-serif;font-size:18px;font-weight:700">ซื้อเป็น SET</span><span style="font-size:14.5px;color:#4A6C75;line-height:1.6">ประหยัดสูงสุดเทียบกับซื้อแยก</span></a>
+<a href="#" style="flex:0 0 min(72vw,300px);scroll-snap-align:start;text-decoration:none;color:#0B2B33;background:#F4FCFF;border:1px solid #E3EEF1;border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:10px"><span style="font:600 12px 'IBM Plex Mono',monospace;color:#3E7784">ตลอดปี</span><span style="font-family:'Anuphan',sans-serif;font-size:42px;font-weight:700;line-height:1">100.-</span><span style="font-family:'Anuphan',sans-serif;font-size:18px;font-weight:700">ชวนเพื่อนเรียน</span><span style="font-size:14.5px;color:#4A6C75;line-height:1.6">ลดทั้งคุณและเพื่อน</span></a>
+</div>
+</div>
 
 <div style="padding:52px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2)) 64px">
 <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px">
@@ -168,7 +187,7 @@
 <a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#5A7A82">ประถม</a>
 <a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#5A7A82">มัธยมต้น</a>
 <a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#5A7A82">มัธยมปลาย</a>
-<a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#5A7A82">SET คอร์ส</a>
+<a href="Spine Peak Sets.dc.html" style="text-decoration:none;color:#5A7A82">SET คอร์ส</a>
 </div>
 </div>
 <div>
@@ -199,7 +218,7 @@
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{}">class Component extends DCLogic {
+<script type="text/x-dc" data-dc-script data-props="{&quot;promoAutoScroll&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0,&quot;max&quot;:10,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;โปรโมชัน&quot;},&quot;showSeasonal&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;โปรโมชัน&quot;},&quot;seasonEnds&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2026-10-31T23:59:59+07:00&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;โปรโมชัน&quot;}}">class Component extends DCLogic {
   constructor(p){ super(p); this.scroller = React.createRef(); this.index = 0; }
   step(dir){
     const el = this.scroller.current; if(!el) return;
@@ -210,7 +229,7 @@
     el.scrollTo({ left: Math.min(this.index * w, el.scrollWidth - el.clientWidth), behavior: 'smooth' });
   }
   componentDidMount(){
-    const el = this.scroller.current; if(!el) return;
+    const el = this.scroller.current; if(!el) { this.initPromo(); return; }
     this._onUser = () => {
       clearTimeout(this._t);
       this._t = setTimeout(() => {
@@ -220,14 +239,54 @@
       }, 260);
     };
     ['wheel','pointerdown','touchmove','keydown'].forEach(e => el.addEventListener(e, this._onUser, { passive: true }));
+    this.initPromo();
+  }
+  initPromo(){
+    const el = this._promo; if (!el) return;
+    this._idle = Date.now();
+    this._wheel = e => {
+      const dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      const max = el.scrollWidth - el.clientWidth;
+      if ((dx < 0 && el.scrollLeft <= 0) || (dx > 0 && el.scrollLeft >= max - 1)) return;
+      e.preventDefault();
+      el.style.scrollSnapType = 'none';
+      el.scrollLeft += dx;
+      clearTimeout(this._snapT);
+      this._snapT = setTimeout(() => { el.style.scrollSnapType = 'x mandatory'; }, 180);
+      this._idle = Date.now();
+    };
+    el.addEventListener('wheel', this._wheel, { passive: false });
+    this._tick = setInterval(() => {
+      const sec = this.props.promoAutoScroll ?? 4;
+      if (!sec || this._hover || Date.now() - this._idle < sec * 1000) return;
+      const max = el.scrollWidth - el.clientWidth;
+      if (max <= 0) return;
+      const base = el.firstElementChild ? el.firstElementChild.offsetLeft : 0;
+      const next = [...el.children].find(c => c.offsetWidth && c.offsetLeft - base > el.scrollLeft + 4);
+      const to = el.scrollLeft >= max - 4 || !next ? 0 : Math.min(max, next.offsetLeft - base);
+      el.scrollTo({ left: to, behavior: 'smooth' });
+      this._idle = Date.now();
+    }, 500);
   }
   componentWillUnmount(){
     const el = this.scroller.current;
     if (el && this._onUser) ['wheel','pointerdown','touchmove','keydown'].forEach(e => el.removeEventListener(e, this._onUser));
     clearTimeout(this._t);
+    clearInterval(this._tick);
+    if (this._promo && this._wheel) this._promo.removeEventListener('wheel', this._wheel);
   }
   renderVals(){
+        const end = new Date(this.props.seasonEnds ?? '2026-10-31T23:59:59+07:00');
+    const ms = end - Date.now();
+    const live = (this.props.showSeasonal ?? true) && ms > 0;
+    const d = Math.max(0, Math.floor(ms / 864e5)), h = Math.max(0, Math.floor(ms / 36e5) % 24), m = Math.max(0, Math.floor(ms / 6e4) % 60);
     return {
+      promoRef: el => { this._promo = el; },
+      promoEnter: () => { this._hover = true; },
+      promoLeave: () => { this._hover = false; this._idle = Date.now(); },
+      showSeason: live,
+      countdown: d > 0 ? 'เหลืออีก ' + d + ' วัน' : 'วันสุดท้าย',
+      timer: [{ v: d, l: 'วัน' }, { v: String(h).padStart(2, '0'), l: 'ชม.' }, { v: String(m).padStart(2, '0'), l: 'นาที' }],
       scrollerRef: this.scroller,
       prevReview: () => this.step(-1),
       nextReview: () => this.step(1)

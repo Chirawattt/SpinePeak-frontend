@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>body{margin:0;background:#fff;font-family:'IBM Plex Sans Thai',system-ui,sans-serif}a{color:#0B2B33}a:hover{color:#12707f}</style></helmet>
+
+<div style="background:#FFFFFF;color:#0B2B33;font-family:'IBM Plex Sans Thai',sans-serif;width:100%">
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:18px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2));border-bottom:1px solid #E8F1F4">
+<a href="Spine Peak Landing.dc.html"><img src="uploads/SpinePeakLogo.PNG" alt="Spine Peak" style="height:44px;width:auto;display:block"></a>
+<div style="display:flex;gap:12px 20px;align-items:center;font-size:15px;font-weight:500;flex-wrap:wrap;justify-content:flex-end">
+<a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#0B2B33">คอร์สเรียน</a>
+<a href="Spine Peak Sets.dc.html" style="text-decoration:none;color:#0B2B33;font-weight:600;border-bottom:2px solid #85E5FF;padding-bottom:2px">SET คอร์ส</a>
+<a href="Spine Peak Landing.dc.html#teacher" style="text-decoration:none;color:#0B2B33">แนะนำครู</a>
+<a href="#login" style="text-decoration:none;color:#0B2B33;padding:10px 22px;background:#85E5FF;border:1.5px solid #85E5FF;border-radius:999px;font-weight:600">เข้าสู่ระบบ</a>
+</div>
+</div>
+
+<div style="position:relative;overflow:hidden;background:#0B2B33;color:#fff">
+<div style="position:absolute;inset:0;background-image:radial-gradient(#1F5360 1.4px,transparent 1.5px);background-size:26px 26px;opacity:.7;pointer-events:none"></div>
+<div style="position:absolute;right:-70px;top:-70px;width:280px;height:280px;border-radius:50%;border:1.5px solid #1D4A55;pointer-events:none"></div>
+<div style="position:relative;padding:20px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2));font-size:14px;color:#9FC3CC"><a href="Spine Peak Landing.dc.html" style="color:#9FC3CC;text-decoration:none">หน้าแรก</a> / <a href="Spine Peak Sets.dc.html" style="color:#9FC3CC;text-decoration:none">SET คอร์ส</a> / <span style="color:#fff">{{ set.title }}</span></div>
+
+<div style="position:relative;padding:12px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2)) 64px;display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start">
+<div style="flex:1 1 min(100%,520px);min-width:0">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+<span style="background:#85E5FF;color:#0B2B33;border-radius:999px;padding:7px 16px;font-size:13px;font-weight:700">SET · {{ set.countText }}</span>
+<span style="border:1.5px solid #3E6B76;border-radius:999px;padding:6px 15px;font-size:13px;font-weight:600;color:#C6DEE4">{{ set.grade }} · {{ set.tagText }}</span>
+</div>
+<h1 style="font-family:'Anuphan',sans-serif;font-size:clamp(28px,5.2vw,44px);font-weight:700;line-height:1.2;margin:0 0 14px;text-wrap:pretty">{{ set.title }}</h1>
+<p style="font-size:18px;line-height:1.75;color:#C6DEE4;margin:0 0 26px;max-width:600px">{{ set.tagline }}</p>
+<div style="display:flex;gap:18px 30px;flex-wrap:wrap">
+<sc-for list="{{ heroStats }}" as="st" hint-placeholder-count="5">
+<div><div style="font-family:'Anuphan',sans-serif;font-size:24px;font-weight:700;color:#fff">{{ st.value }}</div><div style="color:#9FC3CC;font-size:14px">{{ st.label }}</div></div>
+</sc-for>
+</div>
+
+<div style="margin-top:32px;max-width:600px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:12px">
+<div style="font-family:'Anuphan',sans-serif;font-size:19px;font-weight:600">คลิปตัวอย่างจาก SET นี้</div>
+<a href="#" style="font-size:14.5px;font-weight:600;color:#85E5FF">ดูช่อง YouTube →</a>
+</div>
+<div style="position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid #1F5360;background:repeating-linear-gradient(135deg,#E6F9FF,#E6F9FF 10px,#D4F2FB 10px,#D4F2FB 20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+<div style="width:66px;height:46px;border-radius:12px;background:#0B2B33;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;line-height:1">▶</div>
+<div style="font:400 11px 'IBM Plex Mono',monospace;color:#3E7784;letter-spacing:.06em">YOUTUBE EMBED · รอลิงก์คลิปตัวอย่าง</div>
+</div>
+</div>
+</div>
+
+<div style="flex:1 1 min(100%,320px);min-width:0;border-radius:22px;background:#fff;color:#0B2B33;padding:24px;box-shadow:0 18px 40px rgba(0,0,0,.25);position:sticky;top:20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px">
+<div style="font:600 12px 'IBM Plex Mono',monospace;color:#3E7784">ราคา SET</div>
+<span style="background:#0B2B33;color:#85E5FF;border-radius:999px;padding:5px 12px;font:600 12.5px 'IBM Plex Mono',monospace">-{{ set.savePct }}%</span>
+</div>
+<div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px"><span style="font-family:'Anuphan',sans-serif;font-size:clamp(34px,4.6vw,42px);font-weight:700">{{ set.priceText }}</span><span style="font-size:16px;color:#96AEB5;text-decoration:line-through">{{ set.fullText }}</span></div>
+<div style="font-size:14.5px;color:#3E7784;margin-bottom:18px">ประหยัด {{ set.saveText }} เทียบกับซื้อแยก</div>
+<a href="#buy" style="text-decoration:none;display:block;text-align:center;background:#0B2B33;color:#fff;font-size:17px;font-weight:600;padding:16px;border-radius:999px;margin-bottom:10px">สมัคร SET นี้</a>
+<a href="#courses" style="text-decoration:none;display:block;text-align:center;border:1.5px solid #D6E8ED;color:#0B2B33;font-size:16px;font-weight:600;padding:14px;border-radius:999px">ดูคอร์สใน SET</a>
+<div style="margin-top:20px;padding:16px;border-radius:14px;background:#F4FCFF">
+<div style="font-size:14px;font-weight:600;margin-bottom:10px">ถ้าซื้อแยกทีละคอร์ส</div>
+<div style="display:flex;flex-direction:column;gap:7px">
+<sc-for list="{{ items }}" as="c" hint-placeholder-count="3">
+<div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#4A6C75"><span style="min-width:0">{{ c.name }}</span><span style="flex:none">{{ c.priceText }}</span></div>
+</sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;gap:12px;font-size:14.5px;margin-top:10px;padding-top:10px;border-top:1px dashed #CFE4EA"><span>รวมซื้อแยก</span><span style="text-decoration:line-through;color:#96AEB5">{{ set.fullText }}</span></div>
+<div style="display:flex;justify-content:space-between;gap:12px;font-size:15.5px;font-weight:700;margin-top:6px"><span>ราคา SET</span><span>{{ set.priceText }}</span></div>
+</div>
+<div style="margin-top:18px;display:flex;flex-direction:column;gap:9px;font-size:14.5px;color:#4A6C75">
+<div>ปลดล็อกทุกคอร์สพร้อมกันทันที</div>
+<div>ดูย้อนหลังได้ไม่จำกัดอายุ</div>
+<div>ไฟล์ PDF ดาวน์โหลดได้ · เรียนได้ทั้งคอมและมือถือ</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="courses" style="padding:56px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2)) 20px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:22px">
+<h2 style="font-family:'Anuphan',sans-serif;font-size:clamp(24px,3.6vw,30px);font-weight:700;margin:0">คอร์สใน SET นี้</h2>
+<div style="font:600 13px 'IBM Plex Mono',monospace;color:#3E7784">{{ set.countText }} · เรียงตามลำดับที่แนะนำ</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<sc-for list="{{ items }}" as="c" hint-placeholder-count="3">
+<a href="{{ c.href }}" style="text-decoration:none;color:#0B2B33;border:1px solid #E3EEF1;border-radius:18px;padding:16px;display:flex;flex-wrap:wrap;gap:16px 20px;align-items:center;background:#fff" style-hover="border-color:#0B2B33">
+<div style="flex:none;width:34px;height:34px;border-radius:50%;background:#0B2B33;color:#85E5FF;display:flex;align-items:center;justify-content:center;font:600 14px 'IBM Plex Mono',monospace">{{ c.num }}</div>
+<sc-if value="{{ c.hasCover }}" hint-placeholder-val="{{ false }}"><img src="{{ c.cover }}" alt="{{ c.name }}" style="flex:0 0 clamp(120px,22%,180px);width:clamp(120px,22%,180px);aspect-ratio:16/9;object-fit:cover;border-radius:12px;display:block"></sc-if>
+<sc-if value="{{ c.noCover }}" hint-placeholder-val="{{ true }}"><div style="flex:0 0 clamp(120px,22%,180px);aspect-ratio:16/9;border-radius:12px;background:repeating-linear-gradient(135deg,#E6F9FF,#E6F9FF 10px,#D4F2FB 10px,#D4F2FB 20px);display:flex;align-items:center;justify-content:center;font:400 10.5px 'IBM Plex Mono',monospace;color:#3E7784">ปกคอร์ส</div></sc-if>
+<div style="flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:5px">
+<div style="font:600 12px 'IBM Plex Mono',monospace;color:#3E7784">{{ c.subject }} · {{ c.teacher }}</div>
+<div style="font-family:'Anuphan',sans-serif;font-size:19px;font-weight:600;line-height:1.3">{{ c.name }}</div>
+<div style="font-size:14.5px;color:#5A7A82;line-height:1.6">{{ c.tagline }}</div>
+<div style="font-size:13.5px;color:#5A7A82">{{ c.metaText }}</div>
+</div>
+<div style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:auto">
+<div style="font-size:13px;color:#96AEB5">ราคาเดี่ยว <span style="text-decoration:line-through">{{ c.priceText }}</span></div>
+<div style="font-size:14.5px;font-weight:600">ดูรายละเอียดคอร์ส →</div>
+</div>
+</a>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:40px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2)) 56px;display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start">
+<div style="flex:1 1 min(100%,520px);min-width:0">
+<h2 style="font-family:'Anuphan',sans-serif;font-size:clamp(23px,3.4vw,28px);font-weight:700;margin:0 0 16px">สิ่งที่ได้รับ</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:14px">
+<sc-for list="{{ gets }}" as="g" hint-placeholder-count="4">
+<div style="background:#F6FDFF;border:1px solid #E3EEF1;border-radius:16px;padding:20px">
+<div style="font-family:'Anuphan',sans-serif;font-size:24px;font-weight:700;margin-bottom:4px">{{ g.value }}</div>
+<div style="font-size:15px;font-weight:600;margin-bottom:4px">{{ g.label }}</div>
+<div style="font-size:14px;color:#5A7A82;line-height:1.6">{{ g.note }}</div>
+</div>
+</sc-for>
+</div>
+
+<h2 style="font-family:'Anuphan',sans-serif;font-size:clamp(23px,3.4vw,28px);font-weight:700;margin:40px 0 16px">SET นี้เหมาะกับใคร</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px">
+<sc-for list="{{ suitable }}" as="w" hint-placeholder-count="3">
+<div style="background:#F6FDFF;border-radius:14px;padding:20px;font-size:15.5px;line-height:1.65">{{ w }}</div>
+</sc-for>
+</div>
+
+<h2 id="faq" style="font-family:'Anuphan',sans-serif;font-size:clamp(23px,3.4vw,28px);font-weight:700;margin:40px 0 8px">คำถามที่พบบ่อย</h2>
+<div style="display:flex;flex-direction:column">
+<div style="padding:18px 0;border-bottom:1px solid #E3EEF1"><div style="font-size:17px;font-weight:600;margin-bottom:6px">ระยะเวลาเข้าเรียนนานแค่ไหน</div><div style="font-size:15px;color:#5A7A82;line-height:1.7">ไม่จำกัดอายุ ทุกคอร์สใน SET ดูย้อนหลังได้ตลอด</div></div>
+<div style="padding:18px 0;border-bottom:1px solid #E3EEF1"><div style="font-size:17px;font-weight:600;margin-bottom:6px">ต้องเรียนตามลำดับไหม</div><div style="font-size:15px;color:#5A7A82;line-height:1.7">ไม่บังคับ ทุกคอร์สเปิดพร้อมกัน แต่แนะนำเรียนตามลำดับในรายการจะต่อยอดได้ลื่นกว่า</div></div>
+<div style="padding:18px 0"><div style="font-size:17px;font-weight:600;margin-bottom:6px">ได้เอกสารอะไรบ้าง</div><div style="font-size:15px;color:#5A7A82;line-height:1.7">ได้ไฟล์ PDF ของทุกคอร์สใน SET ดาวน์โหลดเก็บไว้ได้ทันทีหลังสมัคร</div></div>
+</div>
+</div>
+
+<div style="flex:1 1 min(100%,300px);min-width:0;display:flex;flex-direction:column;gap:20px">
+<div style="border:1px solid #E3EEF1;border-radius:20px;padding:24px">
+<div style="font-family:'Anuphan',sans-serif;font-size:18px;font-weight:600;margin-bottom:16px">{{ teacherHeading }}</div>
+<div style="display:flex;flex-direction:column;gap:18px">
+<sc-for list="{{ teachers }}" as="t" hint-placeholder-count="1">
+<div>
+<div style="display:flex;gap:14px;align-items:center">
+<sc-if value="{{ t.hasPhoto }}" hint-placeholder-val="{{ true }}"><div style="width:60px;height:60px;border-radius:50%;background:#85E5FF;overflow:hidden;flex:none;display:flex;align-items:flex-end;justify-content:center"><img src="uploads/TeacherSpineProfile.png" alt="{{ t.name }}" style="width:74px;height:auto;margin-bottom:-6px"></div></sc-if>
+<sc-if value="{{ t.noPhoto }}" hint-placeholder-val="{{ false }}"><div style="width:60px;height:60px;border-radius:50%;background:repeating-linear-gradient(135deg,#E6F9FF,#E6F9FF 8px,#D4F2FB 8px,#D4F2FB 16px);flex:none;display:flex;align-items:center;justify-content:center;font:400 10px 'IBM Plex Mono',monospace;color:#3E7784">รูปครู</div></sc-if>
+<div><div style="font-family:'Anuphan',sans-serif;font-size:19px;font-weight:600">{{ t.name }}</div><div style="font-size:14px;color:#5A7A82">{{ t.role }}</div></div>
+</div>
+<sc-if value="{{ t.hasBio }}" hint-placeholder-val="{{ true }}"><p style="margin:12px 0 0;font-size:15px;line-height:1.75;color:#4A6C75">{{ t.bio }}</p></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="border:1px solid #E3EEF1;border-radius:20px;padding:24px">
+<div style="font-family:'Anuphan',sans-serif;font-size:18px;font-weight:600;margin-bottom:14px">รีวิวจากผู้เรียน SET</div>
+<div style="font-size:15px;line-height:1.75;padding-bottom:14px;border-bottom:1px solid #EDF5F7">“ซื้อเป็น SET คุ้มกว่ามาก เรียนต่อกันได้เลยไม่ต้องมานั่งเลือกทีละคอร์ส”<div style="font-size:13.5px;color:#5A7A82;margin-top:8px">น้องมายด์ · ม.5</div></div>
+<div style="font-size:15px;line-height:1.75;padding-top:14px">“เรียงคอร์สมาให้แล้ว ทำตามลำดับจนจบ ไปสอบจริงมั่นใจขึ้นเยอะครับ”<div style="font-size:13.5px;color:#5A7A82;margin-top:8px">น้องเจได · ม.4</div></div>
+</div>
+</div>
+</div>
+
+<div id="buy" style="background:#85E5FF;padding:44px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2));display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 32px">
+<div><h2 style="font-family:'Anuphan',sans-serif;font-size:clamp(24px,4vw,30px);font-weight:700;margin:0 0 8px;color:#08232B">ได้ครบ {{ set.countText }} ในราคาเดียว</h2><p style="margin:0;font-size:16px;color:#0B2B33">{{ set.priceText }} จากปกติ {{ set.fullText }} · ดูได้ไม่จำกัดอายุ</p></div>
+<a href="#buy" style="text-decoration:none;background:#0B2B33;color:#fff;font-size:18px;font-weight:600;padding:17px 40px;border-radius:999px;white-space:nowrap">สมัคร SET นี้</a>
+</div>
+
+<div style="border-top:1px solid #E8F1F4;background:#FBFEFF">
+<div style="padding:48px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2)) 36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:40px">
+<div>
+<img src="uploads/SpinePeakLogo.PNG" alt="Spine Peak" style="height:46px;width:auto;display:block;margin-bottom:14px">
+<p style="margin:0 0 16px;font-size:15px;line-height:1.7;color:#5A7A82;max-width:260px">คอร์สชีววิทยาออนไลน์โดยครูหนาม ตั้งแต่ประถมถึงมัธยมปลายและสนามสอบแข่งขัน ซื้อครั้งเดียวดูได้ตลอดชีพ</p>
+<div style="font-size:14.5px;color:#5A7A82">จันทร์–เสาร์ 10:00–19:00 น.</div>
+</div>
+<div>
+<div style="font-family:'Anuphan',sans-serif;font-size:16px;font-weight:600;margin-bottom:14px">คอร์สเรียน</div>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:14.5px">
+<a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#5A7A82">ประถม</a>
+<a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#5A7A82">มัธยมต้น</a>
+<a href="Spine Peak Courses.dc.html" style="text-decoration:none;color:#5A7A82">มัธยมปลาย</a>
+<a href="Spine Peak Sets.dc.html" style="text-decoration:none;color:#5A7A82">SET คอร์ส</a>
+</div>
+</div>
+<div>
+<div style="font-family:'Anuphan',sans-serif;font-size:16px;font-weight:600;margin-bottom:14px">ช่วยเหลือ</div>
+<div style="display:flex;flex-direction:column;gap:10px;font-size:14.5px">
+<a href="#faq" style="text-decoration:none;color:#5A7A82">วิธีสมัครเรียน</a>
+<a href="#faq" style="text-decoration:none;color:#5A7A82">วิธีชำระเงิน</a>
+<a href="#faq" style="text-decoration:none;color:#5A7A82">คำถามที่พบบ่อย</a>
+<a href="#" style="text-decoration:none;color:#5A7A82">เงื่อนไขการใช้งาน</a>
+<a href="#" style="text-decoration:none;color:#5A7A82">นโยบายความเป็นส่วนตัว</a>
+</div>
+</div>
+<div>
+<div style="font-family:'Anuphan',sans-serif;font-size:16px;font-weight:600;margin-bottom:14px">ติดต่อเรา</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<a href="#" style="text-decoration:none;color:#0B2B33;display:flex;align-items:center;gap:10px;font-size:14.5px"><span style="width:34px;height:34px;border-radius:50%;background:#85E5FF;display:flex;align-items:center;justify-content:center;font:600 12px 'IBM Plex Mono',monospace">IG</span>@spinepeak</a>
+<a href="#" style="text-decoration:none;color:#0B2B33;display:flex;align-items:center;gap:10px;font-size:14.5px"><span style="width:34px;height:34px;border-radius:50%;background:#85E5FF;display:flex;align-items:center;justify-content:center;font:600 12px 'IBM Plex Mono',monospace">FB</span>Spine Peak</a>
+<a href="#" style="text-decoration:none;color:#0B2B33;display:flex;align-items:center;gap:10px;font-size:14.5px"><span style="width:34px;height:34px;border-radius:50%;background:#85E5FF;display:flex;align-items:center;justify-content:center;font:600 12px 'IBM Plex Mono',monospace">TT</span>@spinepeak</a>
+<a href="mailto:hello@spinepeak.com" style="text-decoration:none;color:#0B2B33;display:flex;align-items:center;gap:10px;font-size:14.5px"><span style="width:34px;height:34px;border-radius:50%;background:#85E5FF;display:flex;align-items:center;justify-content:center;font:600 12px 'IBM Plex Mono',monospace">@</span>hello@spinepeak.com</a>
+</div>
+</div>
+</div>
+<div style="padding:18px max(clamp(18px,5vw,56px),calc((100% - 1180px) / 2)) 30px;border-top:1px solid #EDF5F7;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;align-items:center;font-size:13.5px;color:#5A7A82">
+<div>© 2026 Spine Peak. สงวนลิขสิทธิ์</div>
+<div>ชำระเงินผ่านโอนธนาคาร · พร้อมเพย์ · บัตรเครดิต</div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;setId&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;PR-01&quot;,&quot;PR-02&quot;,&quot;PR-03&quot;,&quot;PR-04&quot;,&quot;PR-05&quot;,&quot;PR-06&quot;,&quot;PR-07&quot;,&quot;PR-08&quot;,&quot;PR-09&quot;,&quot;PR-10&quot;,&quot;JH-01&quot;,&quot;JH-02&quot;,&quot;JH-03&quot;,&quot;JH-04&quot;,&quot;JH-05&quot;,&quot;JH-06&quot;,&quot;HS-01&quot;,&quot;HS-02&quot;,&quot;NAT-01&quot;,&quot;POSN-01&quot;,&quot;POSN-02&quot;,&quot;AL-01&quot;,&quot;AL-02&quot;,&quot;NS-01&quot;,&quot;NS-02&quot;,&quot;BC-01&quot;,&quot;BC-02&quot;],&quot;default&quot;:&quot;BC-01&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { sets: null };
+
+  componentDidMount() {
+    import('./spine-sets.js').then(m => this.setState({ sets: m.SETS }));
+  }
+
+  renderVals() {
+    const all = this.state.sets;
+    if (!all) return {};
+    let id = null;
+    try { id = new URLSearchParams(window.location.search).get('set'); } catch (e) {}
+    const set = all.find(x => x.id === id) || all.find(x => x.id === (this.props.setId ?? 'BC-01')) || all[0];
+    const items = set.items.map((c, i) => Object.assign({}, c, { num: String(i + 1).padStart(2, '0') }));
+    const heroStats = [
+      { value: set.count, label: 'คอร์สในชุด' },
+      set.hoursText && { value: set.hoursText, label: 'วิดีโอรวม' },
+      set.pdfText && { value: set.pdfText, label: 'ไฟล์ PDF' },
+      set.qText && { value: set.qText, label: 'โจทย์พร้อมเฉลย' },
+      { value: 'ไม่จำกัด', label: 'อายุคอร์ส' }
+    ].filter(Boolean);
+    const gets = [
+      set.pdfText && { value: set.pdfText, label: 'ไฟล์ PDF', note: 'เอกสารสรุปและข้อสอบ ดาวน์โหลดเก็บได้' },
+      set.hoursText && { value: set.hoursText, label: 'คลิปวิดีโอ', note: 'อธิบายทีละบท ดูซ้ำได้ไม่จำกัด' },
+      set.qText && { value: set.qText, label: 'โจทย์พร้อมเฉลย', note: 'เฉลยละเอียดพร้อมวิธีคิดทุกข้อ' },
+      { value: 'ไม่จำกัด', label: 'ระยะเวลาเข้าเรียน', note: 'ดูย้อนหลังได้ตลอด ทั้งคอมและมือถือ' }
+    ].filter(Boolean);
+    const suitable = [...new Set(set.items.flatMap(c => c.suitable.split('•').map(x => x.trim())))].slice(0, 4);
+    const bioNam = 'เกียรตินิยมอันดับ 2 ชีววิทยา ม.บูรพา · ติวเตอร์ชีววิทยา ประสบการณ์ติวมากกว่า 40 โรงเรียนทั่วประเทศ';
+    const teachers = set.teachers.map(name => {
+      const subj = [...new Set(set.items.filter(c => c.teacher === name).map(c => c.subject))].join(' · ');
+      const nam = name === 'ครูพี่หนาม';
+      return { name, role: 'สอน' + subj, hasPhoto: nam, noPhoto: !nam, hasBio: nam, bio: nam ? bioNam : '' };
+    });
+    return {
+      set: Object.assign({}, set, { tagText: set.tags.join(' · ') }),
+      items, heroStats, gets, suitable, teachers,
+      teacherHeading: teachers.length > 1 ? 'ทีมครูผู้สอน' : 'ครูผู้สอน'
+    };
+  }
+}
+</script>
+</body>
+</html>
