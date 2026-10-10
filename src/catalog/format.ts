@@ -66,22 +66,27 @@ function present(value: number | undefined): value is number {
 /** ตัวเลขทั้งแถวในบรรทัดเดียว เช่น "VDO 6 ชม. · PDF 80 หน้า · 150 ข้อ" สำหรับการ์ด · ว่างเมื่อไม่มีตัวเลขเลย */
 export function statsLine(stats: CourseStats): string {
   return statParts(stats)
-    .map((s) => (s.prefix ? `${s.prefix} ${s.value}` : s.value))
+    .map((s) => (s.key === 'video' ? `VDO ${s.value}` : s.key === 'pdf' ? `PDF ${s.value}` : s.value))
     .join(' · ')
 }
 
+/** ป้ายใต้ตัวเลข แต่ละหน้าเรียกต่างกันได้ (เช่น หน้าคอร์ส "วิดีโอทั้งหมด" หน้า SET "วิดีโอรวม") */
+export type StatLabels = Record<StatKey, string>
+const DEFAULT_LABELS: StatLabels = { video: 'วิดีโอ', pdf: 'ไฟล์ PDF', questions: 'ข้อสอบ' }
+
 /** แถว ชั่วโมงวิดีโอ / หน้า PDF / ข้อสอบ เฉพาะตัวที่มีค่า */
-export function statsRow(stats: CourseStats): Stat[] {
-  return statParts(stats).map(({ value, label }) => ({ value, label }))
+export function statsRow(stats: CourseStats, labels: StatLabels = DEFAULT_LABELS): Stat[] {
+  return statParts(stats).map(({ key, value }) => ({ value, label: labels[key] }))
 }
 
-/** prefix ใช้ในบรรทัดย่อของการ์ดเท่านั้น */
-function statParts({ questionCount, pdfPages, videoHours }: CourseStats): (Stat & { prefix?: string })[] {
-  const out: (Stat & { prefix?: string })[] = []
-  if (present(videoHours)) out.push({ value: `${videoHours} ชม.`, label: 'วิดีโอ', prefix: 'VDO' })
+type StatKey = 'video' | 'pdf' | 'questions'
+
+function statParts({ questionCount, pdfPages, videoHours }: CourseStats): { key: StatKey; value: string }[] {
+  const out: { key: StatKey; value: string }[] = []
+  if (present(videoHours)) out.push({ key: 'video', value: `${videoHours} ชม.` })
   // หน้า PDF เป็นช่วงได้ ({min,max}) ตัวเลขเดี่ยวใช้กฎ 0 = ไม่มีข้อมูลเหมือนตัวอื่น
   const pages = typeof pdfPages === 'number' && !present(pdfPages) ? null : formatPages(pdfPages)
-  if (pages) out.push({ value: pages, label: 'ไฟล์ PDF', prefix: 'PDF' })
-  if (present(questionCount)) out.push({ value: `${questionCount} ข้อ`, label: 'ข้อสอบ' })
+  if (pages) out.push({ key: 'pdf', value: pages })
+  if (present(questionCount)) out.push({ key: 'questions', value: `${questionCount} ข้อ` })
   return out
 }

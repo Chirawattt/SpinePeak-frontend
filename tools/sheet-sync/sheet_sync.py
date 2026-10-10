@@ -241,6 +241,12 @@ def build_courses():
         course["contentPoints"] = content_points
         course["deliverables"] = row.get("สิ่งที่ได้รับ", "")
         course["setCodes"] = set_codes
+        # คลิปตัวอย่าง (ลิงก์ YouTube) · เว้นว่าง = หน้าคอร์สซ่อนกล่องคลิป
+        clip = row.get("คลิปตัวอย่าง", "").strip()
+        if clip:
+            if not clip.startswith("https://"):
+                err("%s: คลิปตัวอย่าง '%s' ต้องเป็นลิงก์ https" % (where, clip))
+            course["previewVideoUrl"] = clip
         courses.append(course)
     if skipped:
         warn("ข้าม %d คอร์สที่สถานะไม่ใช่ 'เปิดขาย' (ไม่ขึ้นเว็บ): %s" % (len(skipped), ", ".join(skipped)))

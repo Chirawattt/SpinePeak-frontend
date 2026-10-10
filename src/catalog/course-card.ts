@@ -29,12 +29,18 @@ export type CourseCard = {
   lifetime: string
 }
 
+/** "{กลุ่ม} · {วิชา} · {หัวข้อแรก}" · หัวข้อที่ชื่อซ้ำกับกลุ่ม (เช่น คอร์สประถมที่หัวข้อคือ "ประถม") แสดงครั้งเดียว · หน้ารายละเอียดคอร์สใช้ด้วย */
+export function courseEyebrow(course: Course, site: Site): string {
+  const groupName = groupLabel(site, course.group)
+  const topic = course.topics[0] ?? course.category
+  return [groupName, SUBJECT_LABEL[course.subject], ...(topic === groupName ? [] : [topic])].join(' · ')
+}
+
 export function buildCourseCard(course: Course, site: Site): CourseCard {
   const groupName = groupLabel(site, course.group)
   const subject = SUBJECT_LABEL[course.subject]
   const facts = statsLine(course.stats)
   const teacher = site.instructors.find((i) => i.slug === course.instructorSlug)?.name
-  const topic = course.topics[0] ?? course.category
 
   return {
     slug: course.slug,
@@ -42,8 +48,7 @@ export function buildCourseCard(course: Course, site: Site): CourseCard {
     title: course.title,
     tagline: course.tagline,
     label: courseBadge(course, groupName),
-    // หัวข้อที่ชื่อซ้ำกับกลุ่ม (เช่น คอร์สประถมที่หัวข้อคือ "ประถม") แสดงครั้งเดียว
-    eyebrow: [groupName, subject, ...(topic === groupName ? [] : [topic])].join(' · '),
+    eyebrow: courseEyebrow(course, site),
     subject,
     ...(teacher && { teacher }),
     cover: cover(course.group, course.coverImage),

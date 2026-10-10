@@ -15,6 +15,7 @@ export function DetailTop({
   details,
   stats,
   statsCaption,
+  after,
   children,
 }: {
   crumbs: NavLink[]
@@ -25,6 +26,8 @@ export function DetailTop({
   stats: Stat[]
   /** หัวเล็ก ๆ เหนือแถวตัวเลข เช่น "รวมทุกคอร์สในเซ็ต" */
   statsCaption?: string
+  /** ต่อจากแถวตัวเลข เช่น คลิปตัวอย่าง */
+  after?: React.ReactNode
   children: React.ReactNode
 }) {
   return (
@@ -48,7 +51,7 @@ export function DetailTop({
 
         {aside}
 
-        {(details || stats.length > 0) && (
+        {(details || stats.length > 0 || after) && (
           <Reveal trigger="mount" delay={0.2} className="flex flex-col gap-7 lg:col-start-1 lg:row-start-2">
             {details}
             {stats.length > 0 && (
@@ -64,6 +67,7 @@ export function DetailTop({
                 </dl>
               </div>
             )}
+            {after}
           </Reveal>
         )}
       </div>
@@ -90,6 +94,8 @@ export function DetailHeading({ title, tagline }: { title: string; tagline: stri
   )
 }
 
+const COURSE_BULLETS = ['ดูย้อนหลังได้ไม่จำกัดอายุ', 'ไฟล์ PDF ดาวน์โหลดได้', 'เรียนได้ทั้งคอมและมือถือ']
+
 /** มือถือ: อยู่ถัดจากชื่อทันที เห็นราคาและปุ่มติดต่อโดยไม่ต้องเลื่อน · จอใหญ่: คอลัมน์ขวา */
 export function PriceCard({
   cover,
@@ -98,7 +104,10 @@ export function PriceCard({
   price,
   savings,
   lifetime,
+  note,
   contactItem,
+  secondary = <ContactButton item={contactItem} channel="facebook" variant="outline" />,
+  bullets = COURSE_BULLETS,
 }: {
   cover: Cover
   coverLabel: string
@@ -107,7 +116,12 @@ export function PriceCard({
   /** มีเฉพาะเซ็ตที่ประหยัดถึงเกณฑ์ ไม่มีก็แสดงราคาเดียว */
   savings?: SetSavings
   lifetime: string
+  /** บรรทัดเล็กใต้ราคา เช่น "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)" */
+  note?: string
   contactItem: ContactItem
+  /** ปุ่มรองใต้ปุ่มสมัคร · ค่าเริ่มต้นทักทาง Messenger */
+  secondary?: React.ReactNode
+  bullets?: string[]
 }) {
   return (
     <Reveal
@@ -116,7 +130,7 @@ export function PriceCard({
       delay={0.12}
       className="min-w-0 self-start rounded-[20px] border border-card-line bg-white p-5 shadow-card lg:col-start-2 lg:row-span-2 lg:row-start-1"
     >
-      <CoverBox cover={cover} label={coverLabel} title={title} className="mb-[18px] hidden lg:block" />
+      <CoverBox cover={cover} label={coverLabel} title={title} className="mb-[18px]" />
       {savings ? (
         // เซ็ต: ราคา + ราคาปกติขีดฆ่า แล้วป้ายประหยัดกับป้ายอายุคอร์สอยู่แถวเดียวกัน ปุ่มติดต่อจะได้ไม่ตกขอบจอมือถือ
         <div className="mb-[18px] flex flex-col gap-1.5">
@@ -135,16 +149,19 @@ export function PriceCard({
           </div>
         </div>
       ) : (
-        <div className="mb-[18px] flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</span>
-          <span className="rounded-full bg-brand-wash px-3 py-1 text-[13px] font-semibold">{lifetime}</span>
+        <div className="mb-[18px]">
+          <div className="mb-1 font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</div>
+          <div className="text-sm text-eyebrow">{note ?? lifetime}</div>
         </div>
       )}
-      <ContactButton item={contactItem} className="mb-2.5 text-[17px]" />
-      <ContactButton item={contactItem} channel="facebook" variant="outline" />
-      <ul className="mt-[18px] flex flex-col gap-2.5 border-t border-divider-soft pt-[18px] text-[14.5px] leading-relaxed text-ink-soft">
-        <li>ดูย้อนหลังได้ไม่จำกัด ไม่มีวันหมดอายุ</li>
-        <li>ถ้าอัดเนื้อหาใหม่ คนที่ซื้อแล้วได้ของใหม่ด้วย ไม่ต้องจ่ายเพิ่ม</li>
+      <ContactButton item={contactItem} className="mb-2.5 py-4 text-[17px]">
+        สมัครเรียนเลย
+      </ContactButton>
+      {secondary}
+      <ul className="mt-[18px] flex flex-col gap-[9px] border-t border-divider-soft pt-[18px] text-[14.5px] leading-relaxed text-ink-soft">
+        {bullets.map((b) => (
+          <li key={b}>{b}</li>
+        ))}
       </ul>
     </Reveal>
   )
@@ -166,7 +183,9 @@ export function ClosingBand({ price, lifetime, contactItem }: { price: string; l
           </p>
         </StaggerItem>
         <StaggerItem>
-          <ContactButton item={contactItem} className="px-10 text-lg whitespace-nowrap" />
+          <ContactButton item={contactItem} className="px-10 py-[17px] text-lg whitespace-nowrap">
+            สมัครเรียนเลย
+          </ContactButton>
         </StaggerItem>
       </Stagger>
     </section>
