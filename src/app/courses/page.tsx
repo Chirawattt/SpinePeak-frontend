@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { catalog, type GoalLink, type ReviewQuote } from '@/catalog'
 import { ContactButton } from '@/components/contact-button'
 import { CourseGrid, CourseFilterBar, CourseGridFromUrl, FilterBarFromUrl, GroupTabs, GroupTabsFromUrl } from '@/components/course-browser'
+import { StickyFilterBand } from '@/components/list-browser'
 import { FaqList } from '@/components/faq-list'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 
@@ -11,7 +12,7 @@ import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 // fallback ของ Suspense คือรายการที่ยังไม่กรอง HTML ที่ build ไว้จึงมีการ์ดจริงตั้งแต่แรก
 
 const TITLE = 'คอร์สเรียนทั้งหมด'
-const INTRO = 'เลือกระดับชั้นของน้องก่อน แล้วค่อยกรองตามหัวข้อที่สนใจ ทุกคอร์สซื้อครั้งเดียวดูได้ไม่จำกัดอายุ'
+const INTRO = 'เลือกระดับชั้นของน้องก่อน แล้วค่อยกรองตามหัวข้อที่สนใจ ทุกคอร์สได้ไฟล์ PDF + คลิปวิดีโอ ดูได้ไม่จำกัดอายุ'
 
 export const metadata: Metadata = { title: TITLE, description: INTRO }
 
@@ -19,12 +20,14 @@ export default function CoursesPage() {
   const index = catalog.courseListIndex()
   const page = catalog.coursesPage()
 
-  const emptyAction = <ContactButton variant="brand" className="text-base">ทักแอดมินให้ช่วยเลือก</ContactButton>
-
   return (
     <>
       <section className="relative overflow-hidden border-b border-card-line bg-white bg-[radial-gradient(circle_at_6%_18%,var(--color-glow)_0,transparent_38%),radial-gradient(circle_at_94%_70%,var(--color-glow-soft)_0,transparent_42%)]">
-        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot)_1.4px,transparent_1.5px)] bg-size-[26px_26px] opacity-35" />
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(var(--color-dot)_1.4px,transparent_1.5px)] bg-size-[26px_26px] opacity-35" />
+          <div className="absolute top-[38px] right-[30%] h-[54px] w-[54px] rounded-full border-[1.5px] border-dashed border-ring-dashed" />
+          <div className="absolute right-10 -bottom-[50px] h-[180px] w-[180px] rounded-full border-[1.5px] border-ring-faint" />
+        </div>
         <nav aria-label="breadcrumb" className="relative px-gutter pt-5 text-sm text-muted">
           <Link href="/" className="hover:text-ink">หน้าแรก</Link>
           {' / '}
@@ -38,18 +41,21 @@ export default function CoursesPage() {
             {INTRO}
           </StaggerItem>
           <StaggerItem>
-          <Suspense fallback={<GroupTabs index={index} filters={{}} />}>
-            <GroupTabsFromUrl index={index} />
-          </Suspense>
-          <Suspense fallback={<CourseFilterBar index={index} filters={{}} />}>
-            <FilterBarFromUrl index={index} />
-          </Suspense>
+            <Suspense fallback={<GroupTabs index={index} filters={{}} />}>
+              <GroupTabsFromUrl index={index} />
+            </Suspense>
           </StaggerItem>
         </Stagger>
       </section>
 
-      <Suspense fallback={<CourseGrid index={index} filters={{}} emptyAction={emptyAction} />}>
-        <CourseGridFromUrl index={index} emptyAction={emptyAction} />
+      <StickyFilterBand>
+        <Suspense fallback={<CourseFilterBar index={index} filters={{}} />}>
+          <FilterBarFromUrl index={index} />
+        </Suspense>
+      </StickyFilterBand>
+
+      <Suspense fallback={<CourseGrid index={index} filters={{}} />}>
+        <CourseGridFromUrl index={index} />
       </Suspense>
 
       <Goals goals={page.goals} />
@@ -65,7 +71,21 @@ export default function CoursesPage() {
           {page.hours && <p className="mb-5 text-[15.5px] leading-[1.75] text-ink-soft">ตอบกลับภายในวันทำการ {page.hours}</p>}
           <div className="mt-5 flex flex-col gap-2.5">
             <ContactButton variant="brand" className="text-base">ทักทาง LINE</ContactButton>
-            <ContactButton channel="facebook" variant="outline" className="text-base" />
+            {page.instagramHref && (
+              <a
+                href={page.instagramHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-full border-[1.5px] border-outline py-[13px] text-center text-base font-semibold transition-colors hover:border-brand hover:bg-brand-wash"
+              >
+                ส่งข้อความทาง Instagram
+              </a>
+            )}
+            {page.email && (
+              <a href={`mailto:${page.email}`} className="py-1.5 text-center text-[15px] text-eyebrow hover:text-ink">
+                {page.email}
+              </a>
+            )}
           </div>
         </StaggerItem>
       </Stagger>
@@ -79,7 +99,7 @@ function Goals({ goals }: { goals: GoalLink[] }) {
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot)_1.4px,transparent_1.5px)] bg-size-[24px_24px] opacity-30" />
       <div className="relative grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] items-center gap-9">
         <Reveal>
-          <p className="mb-3 font-mono text-xs font-semibold text-link-hover">ไม่แน่ใจว่าเรียนอะไรดี</p>
+          <p className="mb-3 font-mono text-xs font-semibold text-eyebrow">ไม่แน่ใจว่าเรียนอะไรดี</p>
           <h2 className="mb-3.5 font-heading text-[clamp(25px,3.8vw,32px)] leading-[1.25] font-bold">
             บอกชั้นปีกับเป้าหมาย
             <br />

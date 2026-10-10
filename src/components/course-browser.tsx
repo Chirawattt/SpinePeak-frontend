@@ -4,7 +4,6 @@
 // import จาก course-filters / course-list ตรง ๆ ไม่ผ่าน '@/catalog' เพราะตัวนั้นโหลดข้อมูล content/ ทั้งก้อนเข้ามาใน bundle
 
 import { useSearchParams } from 'next/navigation'
-import type { ReactNode } from 'react'
 import { filtersToQuery, parseFilters, type CourseFilters } from '@/catalog/course-filters'
 import { filterCourseList, type CourseListIndex } from '@/catalog/course-list'
 import { CourseCard } from '@/components/course-card'
@@ -23,33 +22,32 @@ export function GroupTabs({ index, filters }: { index: CourseListIndex; filters:
   return <TabNav tabs={filterCourseList(index, filters).tabs} />
 }
 
-/** แถบกรองสาย + ค้นหา + ล้างตัวกรอง ตามตัวกรองใน URL · ใช้ใน <Suspense> */
+/** ช่องค้นหา + เลือกหัวข้อ ตามตัวกรองใน URL · ใช้ใน <Suspense> */
 export function FilterBarFromUrl({ index }: { index: CourseListIndex }) {
   const filters = useFilters()
   return <CourseFilterBar key={filtersToQuery(filters)} index={index} filters={filters} />
 }
 
 export function CourseFilterBar({ index, filters }: { index: CourseListIndex; filters: CourseFilters }) {
-  const { trackOptions, clearHref } = filterCourseList(index, filters)
+  const { topicOptions } = filterCourseList(index, filters)
   return (
     <FilterBar
       base="/courses"
       filters={filters}
-      trackOptions={trackOptions}
-      clearHref={clearHref}
-      placeholder="ค้นหาคอร์ส เช่น สอวน. ชีวะ"
+      topicOptions={topicOptions}
+      placeholder="ค้นหาชื่อคอร์ส หรือหัวข้อ เช่น พันธุศาสตร์"
       label="ค้นหาคอร์ส"
     />
   )
 }
 
 /** กริดการ์ดตามตัวกรองใน URL · ใช้ใน <Suspense> · key ตามตัวกรอง จำนวนที่โหลดจึงนับใหม่เมื่อเปลี่ยนตัวกรอง */
-export function CourseGridFromUrl({ index, emptyAction }: { index: CourseListIndex; emptyAction?: ReactNode }) {
+export function CourseGridFromUrl({ index }: { index: CourseListIndex }) {
   const filters = useFilters()
-  return <CourseGrid key={filtersToQuery(filters)} index={index} filters={filters} emptyAction={emptyAction} />
+  return <CourseGrid key={filtersToQuery(filters)} index={index} filters={filters} />
 }
 
-export function CourseGrid({ index, filters, emptyAction }: { index: CourseListIndex; filters: CourseFilters; emptyAction?: ReactNode }) {
+export function CourseGrid({ index, filters }: { index: CourseListIndex; filters: CourseFilters }) {
   const list = filterCourseList(index, filters)
   return (
     <PagedGrid
@@ -57,10 +55,9 @@ export function CourseGrid({ index, filters, emptyAction }: { index: CourseListI
       resultText={list.resultText}
       paging={list.paging}
       empty={list.empty}
-      clearHref={list.clearHref}
-      emptyTitle="ยังไม่เจอคอร์สที่ตรงกับที่ค้นหา"
-      emptyHint="ลองเปลี่ยนคำค้นหา หรือทักมาบอกแอดมินว่าน้องอยากเรียนอะไร จะช่วยเลือกให้"
-      emptyAction={emptyAction}
+      resetHref="/courses"
+      emptyTitle="ยังไม่มีคอร์สที่ตรงกับตัวกรองนี้"
+      emptyHint="ลองลดตัวกรองลงสักข้อ หรือทักมาถามครูพี่หนามได้เลย"
       loadingText="กำลังโหลดคอร์สเพิ่ม…"
       renderCard={(card) => <CourseCard card={card} />}
     />

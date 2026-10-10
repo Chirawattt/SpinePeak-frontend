@@ -51,7 +51,6 @@ function Top({ detail }: { detail: CourseDetail }) {
     >
       <div className="mb-4 flex flex-wrap gap-2">
         <Pill>{detail.badge}</Pill>
-        {detail.statusLabel && <Pill variant="outline">{detail.statusLabel}</Pill>}
       </div>
       <DetailHeading title={detail.title} tagline={detail.tagline} />
     </DetailTop>

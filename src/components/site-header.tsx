@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { catalog } from '@/catalog'
+import { HeaderHeight } from '@/components/header-height'
 import { Logo } from '@/components/logo'
 
 // ไม่มีปุ่ม "เข้าสู่ระบบ": ระบบสมาชิกเป็นเฟส 2
@@ -7,7 +8,7 @@ import { Logo } from '@/components/logo'
 export function SiteHeader() {
   const nav = catalog.landing().nav
   return (
-    <header className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-divider bg-white/95 px-gutter py-[18px] backdrop-blur-sm">
+    <header id="site-header" className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-divider bg-white/95 px-gutter py-[18px] backdrop-blur-sm">
       <Link href="/" className="shrink-0">
         <Logo size={44} priority />
       </Link>
@@ -18,6 +19,7 @@ export function SiteHeader() {
           </Link>
         ))}
       </nav>
+      <HeaderHeight targetId="site-header" />
     </header>
   )
 }

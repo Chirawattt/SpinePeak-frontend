@@ -14,8 +14,6 @@ export type Subject =
   | 'math'
   | 'applied_science'
 
-export type Status = 'open' | 'coming_soon'
-
 export type SaleMode = 'standalone_and_set' | 'standalone_only'
 
 /** จำนวนหน้า PDF บางคอร์สในชีตเป็นช่วง เช่น "30-70" จึงไม่ใช่ number เสมอไป */
@@ -39,13 +37,10 @@ export type Course = {
   group: Group
   /** หมวดหมู่จากชีต ใช้เป็นหัวข้อแถบในหน้า Course List */
   category: string
-  /** ตัวเลือกใน dropdown ตัวกรอง ตอนนี้เท่ากับ [category] เสมอ */
-  tracks: string[]
-  subject: Subject
-  /** ยังไม่มีในข้อมูลชุดนี้ — ว่างทั้ง 44 คอร์ส ชีตไม่มีคอลัมน์นี้ */
+  /** หัวข้อ: ตัวกรอง "ทุกหัวข้อ" และป้ายบนการ์ด · คอลัมน์ หัวข้อ ในชีต เว้นว่าง = [category] */
   topics: string[]
+  subject: Subject
   instructorSlug: string
-  status: Status
   price: number
   saleMode: SaleMode
   stats: CourseStats
@@ -63,8 +58,6 @@ export type Course = {
   /** ราคาก่อนลด สำหรับราคาขีดฆ่า เจ้าของจะเพิ่มในชีตทีหลัง */
   compareAtPrice?: number
   priceNote?: string
-  /** ใช้คู่กับ status === 'coming_soon' */
-  openDate?: string
   coverImage?: string
   previewVideoUrl?: string
   faqs?: { q: string; a: string }[]
@@ -77,7 +70,6 @@ export type CourseSet = {
   title: string
   tagline: string
   group: Group
-  status: Status
   /** ราคาขายของเซ็ต ส่วนราคาปกติและส่วนลดคำนวณเอาเอง */
   price: number
   /** slug ของคอร์สสมาชิก เรียงตามลำดับในชีต */
@@ -160,16 +152,22 @@ export type Site = {
     hours?: string
     youtubeChannelUrl?: string
   }
+  /** การ์ด "ไม่แน่ใจว่าเรียนอะไรดี" หน้ารายการคอร์ส · กดแล้วไปรายการที่กรองตาม filter (q = คำค้นหา) */
   goalCards: {
     title: string
     desc: string
-    filter: { group?: Group; category?: string }
+    filter: { group?: Group; topic?: string; q?: string }
   }[]
   /** ของแนะนำบนหน้าแรก เรียงตามลำดับนี้ · ว่าง = ซ่อนส่วน "คอร์สขายดี" ทั้งส่วน */
   featured: FeaturedItem[]
   /** แถบโปรโมชันบนหน้าแรก · ไม่มีโปรเลย = ซ่อนทั้งแถบ */
   promos: Promotions
+  /** FAQ ทั่วไป (modal จาก footer) */
   faqs: { q: string; a: string }[]
+  /** FAQ ท้ายหน้ารายการคอร์ส */
+  coursesFaqs: { q: string; a: string }[]
+  /** FAQ ท้ายหน้ารายการ SET */
+  setsFaqs: { q: string; a: string }[]
   config: {
     lifetimeLabel: string
     savingsBadge: { minPercent: number; minBaht: number }

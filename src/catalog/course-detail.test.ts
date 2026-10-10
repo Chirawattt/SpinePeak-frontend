@@ -153,17 +153,6 @@ describe('courseDetail()', () => {
     })
   })
 
-  it('shows no status badge for a course that is open as usual', () => {
-    expect(detailOf(testCourse({ status: 'open' }))?.statusLabel).toBeUndefined()
-  })
-
-  it('shows a coming-soon badge, with the opening date when there is one', () => {
-    expect(detailOf(testCourse({ status: 'coming_soon' }))?.statusLabel).toBe('เร็ว ๆ นี้')
-    expect(detailOf(testCourse({ status: 'coming_soon', openDate: '1 พ.ย. 2569' }))?.statusLabel).toBe(
-      'เร็ว ๆ นี้ · เปิด 1 พ.ย. 2569',
-    )
-  })
-
   it('builds the lifetime badge from the label in site.json', () => {
     expect(detailOf(testCourse())?.lifetime).toBe('ดูได้ไม่จำกัดอายุ')
   })

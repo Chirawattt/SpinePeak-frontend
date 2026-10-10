@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { catalog } from '@/catalog'
-import { ContactButton } from '@/components/contact-button'
 import { Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetFilterBar, SetFilterBarFromUrl, SetGrid, SetGridFromUrl, SetTabs, SetTabsFromUrl } from '@/components/set-browser'
 
@@ -17,11 +16,6 @@ export const metadata: Metadata = { title: TITLE, description: INTRO }
 
 export default function SetsPage() {
   const index = catalog.setListIndex()
-  const emptyAction = (
-    <ContactButton variant="brand" className="text-base">
-      ทักแอดมินให้ช่วยเลือก
-    </ContactButton>
-  )
 
   return (
     <>
@@ -50,8 +44,8 @@ export default function SetsPage() {
         </Stagger>
       </section>
 
-      <Suspense fallback={<SetGrid index={index} filters={{}} emptyAction={emptyAction} />}>
-        <SetGridFromUrl index={index} emptyAction={emptyAction} />
+      <Suspense fallback={<SetGrid index={index} filters={{}} />}>
+        <SetGridFromUrl index={index} />
       </Suspense>
     </>
   )

@@ -80,8 +80,8 @@ describe('setList()', () => {
 })
 
 describe('parseSetFilters()', () => {
-  it('keeps only group and search from the URL; a track from a course link is ignored', () => {
-    expect(parseSetFilters(new URLSearchParams('group=mton&q=ชีวะ&track=x&utm=1'))).toEqual({ group: 'mton', q: 'ชีวะ' })
+  it('keeps only group and search from the URL; a topic from a course link is ignored', () => {
+    expect(parseSetFilters(new URLSearchParams('group=mton&q=ชีวะ&topic=x&utm=1'))).toEqual({ group: 'mton', q: 'ชีวะ' })
     expect(parseSetFilters(new URLSearchParams('group=nope'))).toEqual({})
   })
 })
@@ -92,8 +92,8 @@ describe('setList() on the real content', () => {
     expect(realCatalog.setList({}).tabs.map((t) => [t.label, t.count])).toEqual([
       ['ทุกระดับชั้น', '27 เซ็ต'],
       ['ประถม', '10 เซ็ต'],
-      ['ม.ต้น', '6 เซ็ต'],
-      ['ม.ปลาย', '11 เซ็ต'],
+      ['มัธยมต้น', '6 เซ็ต'],
+      ['มัธยมปลาย', '11 เซ็ต'],
     ])
   })
 

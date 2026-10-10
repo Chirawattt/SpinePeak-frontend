@@ -50,7 +50,6 @@ export function buildSetDetail(set: CourseSet, courses: Course[], site: Site): S
     tagline: set.tagline,
     group: groupLink(set.group, groupName),
     cover: cover(set.group, set.coverImage),
-    ...(set.status === 'coming_soon' && { statusLabel: 'เร็ว ๆ นี้' }),
     price: formatBaht(set.price),
     savings: setSavings(derived),
     lifetime: lifetimeLabel(site),

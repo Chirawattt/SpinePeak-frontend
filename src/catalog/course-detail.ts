@@ -73,12 +73,6 @@ function courseContent(course: Course): CourseContent | undefined {
   }
 }
 
-/** ไม่มีค่าเมื่อคอร์สเปิดรับตามปกติ · การ์ดคอร์สใช้ด้วย */
-export function courseStatusLabel(course: Course): string | undefined {
-  if (course.status !== 'coming_soon') return undefined
-  return course.openDate ? `เร็ว ๆ นี้ · เปิด ${course.openDate}` : 'เร็ว ๆ นี้'
-}
-
 /** เช่น "ม.ปลาย · สอวน." · หมวดหมู่ชื่อซ้ำกับกลุ่มแสดงครั้งเดียว · การ์ดคอร์สใช้ด้วย */
 export function courseBadge(course: Course, groupName: string): string {
   return course.category === groupName ? groupName : `${groupName} · ${course.category}`
@@ -114,7 +108,6 @@ export function buildCourseDetail(course: Course, { site, sets, courses }: Pick<
     category: course.category,
     badge: courseBadge(course, groupName),
     cover: cover(course.group, course.coverImage),
-    statusLabel: courseStatusLabel(course),
     price: formatBaht(course.price),
     lifetime: lifetimeLabel(site),
     stats: statsRow(course.stats),

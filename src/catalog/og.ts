@@ -25,7 +25,7 @@ export function courseOgCard(course: Course, site: Site): OgCard {
     title: card.title,
     tagline: card.tagline,
     price: card.price,
-    badges: [card.lifetime, ...(card.statusLabel ? [card.statusLabel] : [])],
+    badges: [card.lifetime],
   }
 }
 
@@ -41,7 +41,6 @@ export function setOgCard(set: CourseSet, courses: Course[], site: Site): OgCard
     badges: [
       `รวม ${card.courseCount}`,
       ...(savings ? [`ประหยัด ${savings.amount} (${savings.percent})`] : []),
-      ...(card.statusLabel ? [card.statusLabel] : []),
     ],
   }
 }

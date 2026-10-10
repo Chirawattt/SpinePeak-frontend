@@ -1,6 +1,6 @@
 'use client'
 
-// ชิ้นส่วนที่หน้ารายการคอร์ส (/courses) กับหน้ารายการเซ็ต (/sets) ใช้ร่วมกัน: แท็บกลุ่ม, แถบค้นหา/กรอง, กริดที่โหลดเพิ่มเอง
+// ชิ้นส่วนที่หน้ารายการคอร์ส (/courses) กับหน้ารายการ SET (/sets) ใช้ร่วมกัน: แท็บกลุ่ม, แถบค้นหา/กรอง, กริดที่โหลดเพิ่มเอง
 // import จาก @/catalog/course-filters ตรง ๆ ไม่ผ่าน '@/catalog' เพราะตัวนั้นโหลดข้อมูล content/ ทั้งก้อนเข้ามาใน bundle
 
 import Link from 'next/link'
@@ -12,8 +12,14 @@ import { PressLink } from '@/components/motion/press'
 import { Reveal } from '@/components/motion/reveal'
 import { STAGGER, STAGGER_CAP } from '@/components/motion/tokens'
 
+const TAB_TONE = {
+  light: { on: 'border-ink bg-ink text-white', off: 'border-outline bg-white hover:border-brand' },
+  // บนพื้นเข้ม (hero ของหน้า SET)
+  dark: { on: 'border-brand bg-brand text-ink', off: 'border-[#3e6b76] bg-transparent text-white hover:border-brand' },
+}
+
 /** แท็บกลุ่ม · กดแล้วเปลี่ยน URL จึงแชร์ลิงก์ได้และกดย้อนกลับได้ */
-export function TabNav({ tabs }: { tabs: GroupTab[] }) {
+export function TabNav({ tabs, tone = 'light' }: { tabs: GroupTab[]; tone?: keyof typeof TAB_TONE }) {
   return (
     <nav aria-label="กลุ่ม" className="flex flex-wrap gap-2.5">
       {tabs.map((tab) => (
@@ -22,9 +28,7 @@ export function TabNav({ tabs }: { tabs: GroupTab[] }) {
           href={tab.href}
           scroll={false}
           aria-current={tab.active ? 'page' : undefined}
-          className={`rounded-full border-[1.5px] px-[26px] py-3 font-heading text-[17px] font-semibold transition-colors ${
-            tab.active ? 'border-ink bg-ink text-white' : 'border-outline bg-white hover:border-brand'
-          }`}
+          className={`rounded-full border-[1.5px] px-[26px] py-3 font-heading text-[17px] font-semibold transition-colors ${tab.active ? TAB_TONE[tone].on : TAB_TONE[tone].off}`}
         >
           {tab.label} <span className="text-sm font-normal opacity-70">{tab.count}</span>
         </PressLink>
@@ -33,25 +37,28 @@ export function TabNav({ tabs }: { tabs: GroupTab[] }) {
   )
 }
 
-const CONTROL = 'h-12 rounded-full border-[1.5px] border-outline bg-white px-5 text-base outline-none focus:border-brand'
+const CONTROL = 'min-w-0 rounded-full border border-outline bg-white px-5 py-3 text-[15px] outline-none focus:border-brand'
+
+/** แถบที่ติดอยู่ใต้ header ตอนเลื่อน · ใส่ FilterBar ไว้ข้างใน */
+export function StickyFilterBand({ children }: { children: ReactNode }) {
+  return <div className="sticky top-(--header-h) z-[5] border-b border-divider-soft bg-footer px-gutter py-5">{children}</div>
+}
 
 /**
- * แถบค้นหา (+ เลือกสาย ถ้ามี trackOptions) + ล้างตัวกรอง
- * เลือกสายเปลี่ยน URL แบบ push (ย้อนกลับได้) · พิมพ์ค้นหาเปลี่ยน URL แบบ replace หลังหยุดพิมพ์ จะได้ไม่เต็มประวัติ
- * ใส่ key ตามตัวกรองไว้ที่ผู้เรียก: กดย้อนกลับแล้วช่องค้นหาจะตามค่าใน URL
+ * ช่องค้นหา + เลือกหัวข้อ
+ * เลือกหัวข้อเปลี่ยน URL แบบ push (ย้อนกลับได้) · พิมพ์ค้นหาเปลี่ยน URL แบบ replace หลังหยุดพิมพ์ จะได้ไม่เต็มประวัติ
+ * ใส่ key ตามตัวกรองไว้ที่ผู้เรียก: กดย้อนกลับหรือล้างตัวกรองแล้วช่องค้นหาจะตามค่าใน URL
  */
 export function FilterBar({
   base,
   filters,
-  trackOptions = [],
-  clearHref,
+  topicOptions,
   placeholder,
   label,
 }: {
   base: '/courses' | '/sets'
   filters: CourseFilters
-  trackOptions?: string[]
-  clearHref?: string
+  topicOptions: string[]
   placeholder: string
   label: string
 }) {
@@ -69,7 +76,7 @@ export function FilterBar({
   return (
     <form
       role="search"
-      className="mt-5 flex flex-wrap items-center gap-2.5"
+      className="flex flex-wrap gap-3"
       onSubmit={(e) => {
         e.preventDefault()
         clearTimeout(timer.current)
@@ -87,59 +94,57 @@ export function FilterBar({
         }}
         placeholder={placeholder}
         aria-label={label}
-        className={`${CONTROL} min-w-[220px] flex-1 sm:max-w-[360px]`}
+        className={`${CONTROL} flex-[3_1_340px]`}
       />
-      {trackOptions.length > 1 && (
-        <select
-          value={filters.track ?? ''}
-          onChange={(e) => go({ ...filters, track: e.target.value || undefined, q: text })}
-          aria-label="สาย"
-          className={`${CONTROL} max-w-full`}
-        >
-          <option value="">ทุกสาย</option>
-          {trackOptions.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-      )}
-      {(clearHref || text.trim()) && (
-        <Link href={base} scroll={false} onClick={() => setText('')} className="px-2 text-[15px] font-semibold text-link-hover underline">
-          ล้างตัวกรองทั้งหมด
-        </Link>
-      )}
+      <select
+        value={filters.topic ?? ''}
+        onChange={(e) => go({ ...filters, topic: e.target.value || undefined, q: text })}
+        aria-label="หัวข้อ"
+        className={`${CONTROL} flex-[1_1_200px] cursor-pointer`}
+      >
+        <option value="">ทุกหัวข้อ</option>
+        {topicOptions.map((t) => (
+          <option key={t} value={t}>
+            {t}
+          </option>
+        ))}
+      </select>
     </form>
   )
 }
 
+/** การ์ดในชุดเดียวกันขึ้นไล่กัน: ชุดแรก (first ใบ) และชุดที่โหลดเพิ่มทีละ step ใบ ใบที่แสดงอยู่แล้วไม่เล่นซ้ำ */
 function batchDelay(i: number, paging: { first: number; step: number }) {
   const inBatch = i < paging.first ? i : (i - paging.first) % paging.step
   return Math.min(inBatch * STAGGER, STAGGER_CAP)
 }
 
-/** กริดการ์ด โหลดเพิ่มเองเมื่อเลื่อนถึงท้ายรายการ · ใส่ key ตามตัวกรองไว้ที่ผู้เรียก จำนวนที่โหลดจึงนับใหม่เมื่อเปลี่ยนตัวกรอง */
+/**
+ * แถว "พบ N …" + ล้างตัวกรอง แล้วกริดการ์ดที่โหลดเพิ่มเองเมื่อเลื่อนถึงท้ายรายการ
+ * ใส่ key ตามตัวกรองไว้ที่ผู้เรียก จำนวนที่โหลดจึงนับใหม่เมื่อเปลี่ยนตัวกรอง
+ */
 export function PagedGrid<T extends { slug: string }>({
   cards,
   resultText,
   paging,
   empty,
-  clearHref,
+  resetHref,
   emptyTitle,
   emptyHint,
-  emptyAction,
   loadingText,
+  gridClassName = 'grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-[22px]',
   renderCard,
 }: {
   cards: T[]
   resultText: string
   paging: { first: number; step: number }
   empty: boolean
-  clearHref?: string
+  /** หน้ารายการที่ไม่กรองอะไร */
+  resetHref: string
   emptyTitle: string
-  emptyHint: string
-  emptyAction?: ReactNode
+  emptyHint: ReactNode
   loadingText: string
+  gridClassName?: string
   renderCard: (card: T) => ReactNode
 }) {
   const [shown, setShown] = useState(paging.first)
@@ -162,31 +167,27 @@ export function PagedGrid<T extends { slug: string }>({
 
   return (
     <>
-      <p className="px-gutter pt-[26px] pb-2.5 font-mono text-[13px] font-semibold text-link-hover" aria-live="polite">
-        {resultText}
-      </p>
-      {empty && (
-        <div className="mx-gutter mt-3 mb-5 rounded-[20px] border border-line bg-footer p-7 text-center">
-          <h2 className="mb-2 font-heading text-xl font-bold">{emptyTitle}</h2>
-          <p className="mb-5 text-[15.5px] leading-[1.75] text-ink-soft">{emptyHint}</p>
-          <div className="mx-auto flex max-w-[320px] flex-col gap-2.5">
-            {emptyAction}
-            {clearHref && (
-              <Link href={clearHref} scroll={false} className="text-[15px] font-semibold text-link-hover underline">
-                ล้างตัวกรองทั้งหมด
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
-      <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-[22px] px-gutter pt-3 pb-5">
+      <div className="flex items-baseline justify-between gap-4 px-gutter pt-[26px] pb-2.5">
+        <p className="font-mono text-[13px] font-semibold text-eyebrow" aria-live="polite">
+          {resultText}
+        </p>
+        <Link href={resetHref} scroll={false} className="border-b border-ring text-[14.5px] text-eyebrow hover:text-ink">
+          ล้างตัวกรองทั้งหมด
+        </Link>
+      </div>
+      <ul className={`grid px-gutter pt-3 pb-5 ${gridClassName}`}>
         {cards.slice(0, shown).map((card, i) => (
-          // ไล่กันเฉพาะในชุดเดียวกัน: ชุดแรก (first ใบ) และชุดที่โหลดเพิ่มทีละ step ใบ ใบที่แสดงอยู่แล้วไม่เล่นซ้ำ
           <Reveal key={card.slug} as="li" lift delay={batchDelay(i, paging)} className="flex">
             {renderCard(card)}
           </Reveal>
         ))}
       </ul>
+      {empty && (
+        <div className="mx-gutter mb-6 rounded-[18px] border border-dashed border-ring bg-footer p-[clamp(26px,5vw,44px)] text-center">
+          <h2 className="mb-2 font-heading text-[22px] font-semibold">{emptyTitle}</h2>
+          <p className="text-[15.5px] text-muted">{emptyHint}</p>
+        </div>
+      )}
       {hasMore && (
         <div ref={sentinel} className="px-gutter pt-5 pb-10 text-center font-mono text-sm text-muted">
           {loadingText}

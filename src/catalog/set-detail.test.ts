@@ -35,10 +35,6 @@ describe('setDetail()', () => {
     expect(detailOf(testSet(), [])?.lifetime).toBe('ดูได้ไม่จำกัดอายุ')
   })
 
-  it('shows a coming-soon badge only for a set that is not open yet', () => {
-    expect(detailOf(testSet({ status: 'open' }), [])).not.toHaveProperty('statusLabel')
-    expect(detailOf(testSet({ status: 'coming_soon' }), [])?.statusLabel).toBe('เร็ว ๆ นี้')
-  })
 
   it('shows the FAQ from site.json', () => {
     const faqs = [{ q: 'ซื้อเป็นเซ็ตต่างจากรายคอร์สอย่างไร', a: 'ถูกกว่า' }]
@@ -151,12 +147,6 @@ describe('setDetail()', () => {
 
       expect(cards?.[0]?.facts).toBe('VDO 6 ชม. · 150 ข้อ')
       expect(cards?.[1]).not.toHaveProperty('facts')
-    })
-
-    it('marks a course that is not open yet', () => {
-      const courses = [testCourse({ slug: 'course-a', status: 'coming_soon' })]
-
-      expect(detailOf(testSet({ courseSlugs: ['course-a'] }), courses)?.courses[0]?.statusLabel).toBe('เร็ว ๆ นี้')
     })
   })
 

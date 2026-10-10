@@ -142,6 +142,7 @@ def build_courses():
     rows = read_csv(os.path.join(RAW, "courses.csv"))
     courses = []
     cover_refs = []
+    skipped = []
     for row in rows:
         name = lookup(row, "ชื่อคอร์ส", "คอร์สทั้งหมด")
         if not name:
@@ -166,6 +167,10 @@ def build_courses():
         status_th = row.get("สถานะ", "")
         if status_th not in STATUSES:
             err("%s: สถานะ '%s' ไม่อยู่ในค่าที่รู้จัก (เปิดขาย / เร็ว ๆ นี้)" % (where, status_th))
+        elif STATUSES[status_th] != "open":
+            # ยังไม่เปิดขาย = ไม่ขึ้นเว็บเลย ถ้ามี SET ที่ใส่คอร์สนี้ไว้ cross_check จะแจ้งให้แก้
+            skipped.append(where)
+            continue
 
         price = as_int(row.get("ราคา (บาท)"))
         if price is None or price <= 0:
@@ -220,11 +225,14 @@ def build_courses():
         course["tagline"] = tagline
         course["group"] = GROUPS.get(group_th)
         course["category"] = category
-        course["tracks"] = [category] if category else []
+        # หัวข้อ = ตัวกรองบนเว็บ คั่นหลายค่าด้วย , · เว้นว่าง = ใช้หมวดหมู่
+        topics = [t.strip() for t in re.split(r"[,
+]+", row.get("หัวข้อ", "")) if t.strip()]
+        if len(topics) != len(set(topics)):
+            err("%s ระบุหัวข้อซ้ำ" % where)
+        course["topics"] = topics or ([category] if category else [])
         course["subject"] = SUBJECTS.get(subject_th)
-        course["topics"] = []
         course["instructorSlug"] = instructor
-        course["status"] = STATUSES.get(status_th)
         course["price"] = price
         course["saleMode"] = sale_mode
         course["stats"] = stats
@@ -234,6 +242,8 @@ def build_courses():
         course["deliverables"] = row.get("สิ่งที่ได้รับ", "")
         course["setCodes"] = set_codes
         courses.append(course)
+    if skipped:
+        warn("ข้าม %d คอร์สที่สถานะไม่ใช่ 'เปิดขาย' (ไม่ขึ้นเว็บ): %s" % (len(skipped), ", ".join(skipped)))
     return courses, cover_refs
 
 
@@ -301,6 +311,10 @@ def build_sets(courses):
         status_th = row.get("สถานะ", "")
         if status_th not in STATUSES:
             err("%s: สถานะ '%s' ไม่อยู่ในค่าที่รู้จัก" % (where, status_th))
+        elif STATUSES[status_th] != "open":
+            # ยังไม่เปิดขาย = ไม่ขึ้นเว็บ · คอร์สที่ยังเขียนรหัส SET นี้ไว้ cross_check จะแจ้งให้ลบออก
+            warn("ข้าม %s: สถานะไม่ใช่ 'เปิดขาย' (ไม่ขึ้นเว็บ)" % where)
+            continue
         tagline = row.get("tagline", "")
         if not tagline:
             err("%s ยังไม่มี tagline" % where)
@@ -334,7 +348,6 @@ def build_sets(courses):
         s["title"] = row.get("ชื่อ SET", "")
         s["tagline"] = tagline
         s["group"] = GROUPS.get(group_th)
-        s["status"] = STATUSES.get(status_th)
         s["price"] = price
         s["courseSlugs"] = slugs
         sets.append(s)
@@ -375,10 +388,6 @@ def cross_check(courses, sets):
         if extra:
             err("คอร์ส '%s' ถูกใส่ใน %s แต่คอลัมน์ 'อยู่ใน SET' ไม่ได้เขียนไว้" % (c["title"], sorted(extra)))
 
-    for c in courses:
-        if c["status"] == "coming_soon" and not c.get("openDate"):
-            warn("คอร์ส '%s' สถานะเร็ว ๆ นี้ แต่ไม่มีวันเปิด" % c["title"])
-
     # คอร์สแนวตะลุยโจทย์ไม่มีรายการบทอยู่แล้ว ไม่ใช่ข้อมูลขาด จึงรวบเป็นบรรทัดเดียว
     no_chapters = [c["title"] for c in courses if not c["chapters"]]
     if no_chapters:
@@ -407,14 +416,14 @@ def check_site(courses):
     for g in sorted({c["group"] for c in courses} - groups):
         err("site.json ไม่มีกลุ่ม '%s'" % g)
 
-    categories = {c["category"] for c in courses}
+    topics = {t for c in courses for t in c["topics"]}
     for card in site.get("goalCards", []):
         f_ = card.get("filter", {})
         if f_.get("group") and f_["group"] not in groups:
             err("goalCard '%s' กรองกลุ่ม '%s' ที่ไม่มีใน site.json" % (card.get("title"), f_["group"]))
-        if f_.get("category") and f_["category"] not in categories:
-            err("goalCard '%s' กรองหมวดหมู่ '%s' ที่ไม่มีคอร์สไหนอยู่เลย"
-                % (card.get("title"), f_["category"]))
+        if f_.get("topic") and f_["topic"] not in topics:
+            err("goalCard '%s' กรองหัวข้อ '%s' ที่ไม่มีคอร์สไหนอยู่เลย"
+                % (card.get("title"), f_["topic"]))
 
     # ปุ่มสมัครเรียนทั้งเว็บวิ่งผ่านช่องทางพวกนี้ ถ้าว่างคือปุ่มไม่มีที่ไป
     contact = site.get("contact", {})

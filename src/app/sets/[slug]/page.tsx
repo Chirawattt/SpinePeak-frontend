@@ -67,7 +67,6 @@ function Top({ detail }: { detail: SetDetail }) {
       <div className="mb-4 flex flex-wrap gap-2">
         <Pill>{detail.group.label}</Pill>
         <Pill variant="code">{detail.codeLabel}</Pill>
-        {detail.statusLabel && <Pill variant="outline">{detail.statusLabel}</Pill>}
       </div>
       <DetailHeading title={detail.title} tagline={detail.tagline} />
     </DetailTop>

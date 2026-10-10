@@ -4,14 +4,14 @@
 import type { Course, Group, Review, Site } from '@content/types'
 import { buildCourseCard, type CourseCard } from './course-card'
 import { listHref, type CourseFilters } from './course-filters'
-import { nonEmpty, type Faq } from './format'
+import { nonEmpty, SUBJECT_LABEL, type Faq } from './format'
 import { buildGroupTabs, type GroupTab } from './group-tabs'
 
 export type { GroupTab }
 
 /** ข้อมูลทั้งหมดที่หน้ารายการต้องใช้ ส่งจาก server ไป client ได้ (เป็น JSON ล้วน) */
 export type CourseListIndex = {
-  items: { group: Group; tracks: string[]; /** ข้อความที่ค้นหาได้ ตัวพิมพ์เล็กแล้ว */ text: string; card: CourseCard }[]
+  items: { group: Group; topics: string[]; /** ข้อความที่ค้นหาได้ ตัวพิมพ์เล็กแล้ว */ text: string; card: CourseCard }[]
   /** แท็บกลุ่มตามลำดับใน site.json */
   groups: { key: Group; label: string }[]
   paging: Paging
@@ -23,8 +23,8 @@ export type Paging = { first: number; step: number }
 export type CourseList = {
   /** การ์ดที่ผ่านตัวกรอง เรียงตามลำดับในชีต */
   cards: CourseCard[]
-  /** ตัวเลือกสายในตัวกรอง คำนวณจากข้อมูลจริงของกลุ่มที่เลือก (ทุกกลุ่มถ้าไม่ได้เลือก) ตามลำดับในชีต */
-  trackOptions: string[]
+  /** ตัวเลือกหัวข้อในตัวกรอง คำนวณจากข้อมูลจริงของกลุ่มที่เลือก (ทุกกลุ่มถ้าไม่ได้เลือก) ตามลำดับในชีต */
+  topicOptions: string[]
   /** ไม่มีผลลัพธ์เลย ให้หน้าแสดงข้อความและปุ่มทักแอดมิน */
   empty: boolean
   /** ลิงก์ล้างตัวกรองทั้งหมด · ไม่มีค่าเมื่อไม่ได้กรองอะไรอยู่ */
@@ -39,8 +39,9 @@ export function buildCourseListIndex(courses: Course[], site: Site): CourseListI
   return {
     items: courses.map((c) => ({
       group: c.group,
-      tracks: c.tracks,
-      text: [c.title, c.tagline, c.category, ...c.tracks].join(' ').toLowerCase(),
+      topics: c.topics,
+      // ค้นได้ทั้งชื่อ คำโปรย หมวดหมู่ หัวข้อ วิชา และชื่อบท (เช่น พิมพ์ "พันธุศาสตร์" แล้วเจอคอร์สที่มีบทนั้น)
+      text: [c.title, c.tagline, c.category, ...c.topics, SUBJECT_LABEL[c.subject], ...c.chapters.map((ch) => ch.title)].join(' ').toLowerCase(),
       card: buildCourseCard(c, site),
     })),
     groups: site.groups.map((g) => ({ key: g.key, label: g.label })),
@@ -53,21 +54,21 @@ export function filterCourseList(index: CourseListIndex, filters: CourseFilters)
   const inGroup = (item: CourseListIndex['items'][number]) => !filters.group || item.group === filters.group
   const matches = (item: CourseListIndex['items'][number]) =>
     inGroup(item) &&
-    (!filters.track || item.tracks.includes(filters.track)) &&
+    (!filters.topic || item.topics.includes(filters.topic)) &&
     words.every((w) => item.text.includes(w))
   const cards = index.items.filter(matches).map((item) => item.card)
   const countIn = (group?: Group) => index.items.filter((item) => !group || item.group === group).length
-  // เปลี่ยนกลุ่มแล้วสายที่เลือกไว้หายไป (สายผูกกับกลุ่ม) แต่คำค้นหาอยู่
+  // เปลี่ยนกลุ่มแล้วหัวข้อที่เลือกไว้หายไป (หัวข้อผูกกับกลุ่ม) แต่คำค้นหาอยู่
   const tabHref = (group?: Group) => listHref({ ...(group && { group }), ...(filters.q && { q: filters.q }) })
   const tabs = buildGroupTabs({ groups: index.groups, active: filters.group, unit: 'คอร์ส', countIn, hrefFor: tabHref })
-  const trackOptions = [...new Set(index.items.filter(inGroup).flatMap((item) => item.tracks))]
-  const filtered = Boolean(filters.group || filters.track || words.length)
+  const topicOptions = [...new Set(index.items.filter(inGroup).flatMap((item) => item.topics))]
+  const filtered = Boolean(filters.group || filters.topic || words.length)
   return {
     cards,
-    trackOptions,
+    topicOptions,
     empty: cards.length === 0,
     ...(filtered && { clearHref: listHref({}) }),
-    resultText: cards.length === 0 ? 'ไม่พบคอร์สที่ตรงกับที่ค้นหา' : `พบ ${cards.length} คอร์ส`,
+    resultText: `พบ ${cards.length} คอร์ส`,
     tabs,
     paging: index.paging,
   }
@@ -92,19 +93,22 @@ export type CoursesPage = {
   faqs: Faq[]
   /** ไม่มีค่าเมื่อ site.json เว้นว่าง ให้ซ่อนบรรทัดนั้น */
   hours?: string
+  /** ช่องทางรองในกล่องติดต่อ · ไม่มีค่าเมื่อ site.json ไม่มี ให้ซ่อนปุ่มนั้น */
+  instagramHref?: string
+  email?: string
 }
 
 export function buildCoursesPage(site: Site, reviews: Review[]): CoursesPage {
   const hours = nonEmpty(site.contact.hours)
+  const instagramHref = nonEmpty(site.contact.instagram?.url)
+  const email = nonEmpty(site.contact.email)
   return {
-    // สายของคอร์สคือหมวดหมู่ของมันเมื่อชีตไม่ระบุ ลิงก์จึงกรองด้วยสายจาก category ของการ์ด
-    goals: site.goalCards.map((g) => ({
-      title: g.title,
-      desc: g.desc,
-      href: listHref({ ...(g.filter.group && { group: g.filter.group }), ...(g.filter.category && { track: g.filter.category }) }),
-    })),
-    reviews: reviews.map(buildReviewQuote),
-    faqs: site.faqs,
+    goals: site.goalCards.map((g) => ({ title: g.title, desc: g.desc, href: listHref(g.filter) })),
+    // หน้านี้โชว์แค่ 3 ใบแรก ตาม design (หน้าแรกมีแถบรีวิวเต็ม)
+    reviews: reviews.slice(0, 3).map(buildReviewQuote),
+    faqs: site.coursesFaqs,
     ...(hours && { hours }),
+    ...(instagramHref && { instagramHref }),
+    ...(email && { email }),
   }
 }

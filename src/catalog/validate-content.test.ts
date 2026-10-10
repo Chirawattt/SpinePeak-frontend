@@ -200,7 +200,6 @@ describe('validateContent()', () => {
     it.each([
       ['group', { group: bad<Course['group']>('primary') }, 'กลุ่ม "primary" ไม่รู้จัก'],
       ['subject', { subject: bad<Course['subject']>('bio') }, 'วิชา "bio" ไม่รู้จัก'],
-      ['status', { status: bad<Course['status']>('closed') }, 'สถานะ "closed" ไม่รู้จัก'],
       ['saleMode', { saleMode: bad<Course['saleMode']>('set_only') }, 'การขาย "set_only" ไม่รู้จัก'],
     ] as const)('reports a course with an unknown %s', (_field, overrides, message) => {
       expect(problemsIn([testCourse(overrides)])).toContainEqual({ where: 'คอร์ส primary-science-p4', message })
@@ -208,7 +207,6 @@ describe('validateContent()', () => {
 
     it.each([
       ['group', { group: bad<CourseSet['group']>('primary') }, 'กลุ่ม "primary" ไม่รู้จัก'],
-      ['status', { status: bad<CourseSet['status']>('closed') }, 'สถานะ "closed" ไม่รู้จัก'],
     ] as const)('reports a set with an unknown %s', (_field, overrides, message) => {
       expect(problemsIn([], [testSet(overrides)])).toContainEqual({ where: 'เซ็ต PR-01 (primary-p4-bundle)', message })
     })

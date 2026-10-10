@@ -11,7 +11,7 @@ import { setSavings, type SetSavings } from './set-card'
 /** หน้ารายการเซ็ตกรองได้แค่กลุ่มกับคำค้นหา */
 export type SetFilters = Pick<CourseFilters, 'group' | 'q'>
 
-/** query string → ตัวกรองของหน้ารายการเซ็ต · track จากลิงก์หน้าคอร์สถูกทิ้ง */
+/** query string → ตัวกรองของหน้ารายการเซ็ต · topic จากลิงก์หน้าคอร์สถูกทิ้ง */
 export function parseSetFilters(params: { get(name: string): string | null }): SetFilters {
   const { group, q } = parseFilters(params)
   return { ...(group && { group }), ...(q && { q }) }
@@ -74,7 +74,6 @@ export function buildSetListCard(set: CourseSet, courses: Course[], site: Site):
     cover: cover(set.group, set.coverImage),
     price: formatBaht(set.price),
     ...(savings && { savings }),
-    ...(set.status === 'coming_soon' && { statusLabel: 'เร็ว ๆ นี้' }),
   }
 }
 

@@ -5,7 +5,7 @@ import { testContent, testCourse, testSet, testSite } from './test-content'
 
 const courses = [
   testCourse({ slug: 'c1', title: 'สอวน. ชีววิทยา', tagline: 'ตะลุยโจทย์', group: 'mplai', category: 'แข่งขันวิชาการ', price: 500 }),
-  testCourse({ slug: 'c2', title: 'ปรับพื้นฐาน', group: 'mplai', category: 'ม.ปลาย', price: 500, status: 'coming_soon' }),
+  testCourse({ slug: 'c2', title: 'ปรับพื้นฐาน', group: 'mplai', category: 'ม.ปลาย', price: 500 }),
 ]
 const sets = [
   testSet({ code: 'NAT-01', slug: 'nat-01-bundle', title: 'รวม สวช. ม.ปลาย', tagline: 'ครบทุกวิชา', group: 'mplai', price: 750, courseSlugs: ['c1', 'c2'] }),
@@ -25,7 +25,7 @@ describe('courseOg()', () => {
   })
 
   it('adds the coming-soon badge, and names the group once when category repeats it', () => {
-    expect(catalog.courseOg('c2')).toMatchObject({ eyebrow: 'ม.ปลาย', badges: ['ดูได้ไม่จำกัดอายุ', 'เร็ว ๆ นี้'] })
+    expect(catalog.courseOg('c2')).toMatchObject({ eyebrow: 'ม.ปลาย', badges: ['ดูได้ไม่จำกัดอายุ'] })
   })
 
   it('is undefined for a slug that does not exist', () => {

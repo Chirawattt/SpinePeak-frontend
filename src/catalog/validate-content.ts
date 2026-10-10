@@ -1,7 +1,7 @@
 // ตรวจว่าข้อมูลใน content/ สอดคล้องกัน ถ้าพัง build ต้องพัง ข้อมูลผิดจะได้ไม่ขึ้นเว็บ
 // ยึด sheet_sync.py --check เป็นแนว แต่รันด้วย Node ได้ จึงใช้บน Vercel ที่ไม่มี Python ได้
 
-import type { Course, CourseSet, Group, SaleMode, Status, Subject } from '@content/types'
+import type { Course, CourseSet, Group, SaleMode, Subject } from '@content/types'
 import type { Content } from './catalog'
 
 export type ContentProblem = {
@@ -20,7 +20,6 @@ const SUBJECTS = {
   math: true,
   applied_science: true,
 } satisfies Record<Subject, true>
-const STATUSES = { open: true, coming_soon: true } satisfies Record<Status, true>
 const SALE_MODES = { standalone_and_set: true, standalone_only: true } satisfies Record<SaleMode, true>
 
 const isOneOf = (allowed: Record<string, true>, value: string) => Object.hasOwn(allowed, value)
@@ -45,13 +44,11 @@ export function validateContent(content: Content): ContentProblem[] {
   for (const c of courses) {
     if (!isOneOf(GROUPS, c.group)) report(courseLabel(c), `กลุ่ม "${c.group}" ไม่รู้จัก`)
     if (!isOneOf(SUBJECTS, c.subject)) report(courseLabel(c), `วิชา "${c.subject}" ไม่รู้จัก`)
-    if (!isOneOf(STATUSES, c.status)) report(courseLabel(c), `สถานะ "${c.status}" ไม่รู้จัก`)
     if (!isOneOf(SALE_MODES, c.saleMode)) report(courseLabel(c), `การขาย "${c.saleMode}" ไม่รู้จัก`)
     if (!instructors.has(c.instructorSlug)) report(courseLabel(c), `ผู้สอน ${c.instructorSlug} ไม่มีใน site.json`)
   }
   for (const s of sets) {
     if (!isOneOf(GROUPS, s.group)) report(setLabel(s), `กลุ่ม "${s.group}" ไม่รู้จัก`)
-    if (!isOneOf(STATUSES, s.status)) report(setLabel(s), `สถานะ "${s.status}" ไม่รู้จัก`)
   }
 
   // slug ต้องถูกรูปแบบ และไม่ซ้ำ ทั้งในตารางเดียวกันและข้ามคอร์สกับเซ็ต

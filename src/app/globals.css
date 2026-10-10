@@ -58,6 +58,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* ความสูงของ header ที่ติดบนสุด · HeaderHeight วัดจริงแล้วเขียนทับ (header ขึ้นสองบรรทัดบนจอแคบ) · ใช้กับของที่ติดใต้ header */
+  --header-h: 81px;
 }
 
 body {

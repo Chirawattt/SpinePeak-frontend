@@ -34,7 +34,7 @@ export function SetFilterBar({ index, filters }: { index: SetListIndex; filters:
     <FilterBar
       base="/sets"
       filters={filters}
-      clearHref={filterSetList(index, filters).clearHref}
+      topicOptions={[]}
       placeholder="ค้นหาเซ็ต เช่น ชีวะ A-Level"
       label="ค้นหาเซ็ต"
     />
@@ -42,12 +42,12 @@ export function SetFilterBar({ index, filters }: { index: SetListIndex; filters:
 }
 
 /** กริดการ์ดเซ็ตตามตัวกรองใน URL · ใช้ใน <Suspense> · key ตามตัวกรอง จำนวนที่โหลดจึงนับใหม่เมื่อเปลี่ยนตัวกรอง */
-export function SetGridFromUrl({ index, emptyAction }: { index: SetListIndex; emptyAction?: ReactNode }) {
+export function SetGridFromUrl({ index }: { index: SetListIndex }) {
   const filters = useFilters()
-  return <SetGrid key={filtersToQuery(filters)} index={index} filters={filters} emptyAction={emptyAction} />
+  return <SetGrid key={filtersToQuery(filters)} index={index} filters={filters} />
 }
 
-export function SetGrid({ index, filters, emptyAction }: { index: SetListIndex; filters: SetFilters; emptyAction?: ReactNode }) {
+export function SetGrid({ index, filters }: { index: SetListIndex; filters: SetFilters }) {
   const list = filterSetList(index, filters)
   return (
     <PagedGrid
@@ -55,10 +55,9 @@ export function SetGrid({ index, filters, emptyAction }: { index: SetListIndex; 
       resultText={list.resultText}
       paging={list.paging}
       empty={list.empty}
-      clearHref={list.clearHref}
+      resetHref="/sets"
       emptyTitle="ยังไม่เจอเซ็ตที่ตรงกับที่ค้นหา"
       emptyHint="ลองเปลี่ยนคำค้นหา หรือทักมาบอกแอดมินว่าน้องอยากเรียนอะไร จะช่วยเลือกเซ็ตให้"
-      emptyAction={emptyAction}
       loadingText="กำลังโหลดเซ็ตเพิ่ม…"
       renderCard={(card) => <SetListCard card={card} />}
     />
