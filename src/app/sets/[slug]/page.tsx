@@ -57,7 +57,7 @@ function Top({ detail }: { detail: SetDetail }) {
     >
       <div className="mb-4 flex flex-wrap gap-2">
         <Pill>SET · {detail.courseCount}</Pill>
-        <Pill variant="onDark">{detail.topicsLabel}</Pill>
+        <Pill variant="onDark">{detail.categoriesLabel}</Pill>
       </div>
       <DetailHeading title={detail.title} tagline={detail.tagline} tone="dark" />
     </DetailTop>

@@ -86,33 +86,33 @@ describe('parseFilters() / filtersToQuery()', () => {
   })
 })
 
-describe('topic and search filters', () => {
+describe('category and search filters', () => {
   const cs = [
-    testCourse({ slug: 'a', title: 'ชีวะ สอวน. ค่าย 1', tagline: 'ตะลุยโจทย์', group: 'mplai', category: 'แข่งขันวิชาการ', topics: ['แข่งขันวิชาการ', 'สอวน.'] }),
-    testCourse({ slug: 'b', title: 'ปรับพื้นฐาน ม.4', tagline: 'ปูพื้นฐาน', group: 'mplai', category: 'ปรับพื้นฐาน', topics: ['ปรับพื้นฐาน', 'A-Level'] }),
-    testCourse({ slug: 'c', title: 'ชีวะ ม.2', tagline: 'เตรียมสอบ', group: 'mton', category: 'แข่งขันวิชาการ', topics: ['แข่งขันวิชาการ'] }),
+    testCourse({ slug: 'a', title: 'ชีวะ สอวน. ค่าย 1', tagline: 'ตะลุยโจทย์', group: 'mplai', category: 'สอวน.' }),
+    testCourse({ slug: 'b', title: 'ปรับพื้นฐาน ม.4', tagline: 'ปูพื้นฐาน', group: 'mplai', category: 'ปรับพื้นฐาน' }),
+    testCourse({ slug: 'c', title: 'ชีวะ ม.2', tagline: 'เตรียมสอบ', group: 'mton', category: 'แข่งขันวิชาการ' }),
   ]
   const cat = createCatalog(testContent({ courses: cs }))
   const slugs = (f: Parameters<typeof cat.courseList>[0]) => cat.courseList(f).cards.map((c) => c.slug)
 
-  it('filters by topic; a course with several topics matches each of them', () => {
-    expect(slugs({ group: 'mplai', topic: 'A-Level' })).toEqual(['b'])
-    expect(slugs({ group: 'mplai', topic: 'แข่งขันวิชาการ' })).toEqual(['a'])
-    expect(slugs({ topic: 'แข่งขันวิชาการ' })).toEqual(['a', 'c'])
+  it('filters by category', () => {
+    expect(slugs({ group: 'mplai', category: 'ปรับพื้นฐาน' })).toEqual(['b'])
+    expect(slugs({ group: 'mplai', category: 'สอวน.' })).toEqual(['a'])
+    expect(slugs({ category: 'แข่งขันวิชาการ' })).toEqual(['c'])
   })
 
-  it('computes the topic options from the data of the chosen group, in sheet order', () => {
-    expect(cat.courseList({ group: 'mplai' }).topicOptions).toEqual(['แข่งขันวิชาการ', 'สอวน.', 'ปรับพื้นฐาน', 'A-Level'])
-    expect(cat.courseList({ group: 'mton' }).topicOptions).toEqual(['แข่งขันวิชาการ'])
-    expect(cat.courseList({}).topicOptions).toEqual(['แข่งขันวิชาการ', 'สอวน.', 'ปรับพื้นฐาน', 'A-Level'])
+  it('computes the category options from the data of the chosen group, in sheet order', () => {
+    expect(cat.courseList({ group: 'mplai' }).categoryOptions).toEqual(['สอวน.', 'ปรับพื้นฐาน'])
+    expect(cat.courseList({ group: 'mton' }).categoryOptions).toEqual(['แข่งขันวิชาการ'])
+    expect(cat.courseList({}).categoryOptions).toEqual(['สอวน.', 'ปรับพื้นฐาน', 'แข่งขันวิชาการ'])
   })
 
-  it('searches title, tagline, category and topic, ignoring case; every word must match', () => {
+  it('searches title, tagline and category, ignoring case; every word must match', () => {
     expect(slugs({ q: 'ค่าย' })).toEqual(['a'])
     expect(slugs({ q: 'ปูพื้นฐาน' })).toEqual(['b'])
-    expect(slugs({ q: 'a-level' })).toEqual(['b'])
+    expect(slugs({ q: 'ปรับพื้นฐาน' })).toEqual(['b'])
     expect(slugs({ q: 'สอวน' })).toEqual(['a'])
-    expect(slugs({ q: 'ชีวะ แข่งขัน' })).toEqual(['a', 'c'])
+    expect(slugs({ q: 'ชีวะ แข่งขัน' })).toEqual(['c'])
     expect(slugs({ q: 'ชีวะ ปรับพื้นฐาน' })).toEqual([])
     expect(slugs({ q: '   ' })).toEqual(['a', 'b', 'c'])
   })
@@ -132,9 +132,9 @@ describe('topic and search filters', () => {
     expect(found('เคมี')).toEqual(['h'])
   })
 
-  it('combines group, topic and search', () => {
+  it('combines group, category and search', () => {
     expect(slugs({ group: 'mton', q: 'ชีวะ' })).toEqual(['c'])
-    expect(slugs({ group: 'mplai', topic: 'แข่งขันวิชาการ', q: 'ชีวะ' })).toEqual(['a'])
+    expect(slugs({ group: 'mplai', category: 'สอวน.', q: 'ชีวะ' })).toEqual(['a'])
   })
 
   it('flags an empty result so the page can offer to ask the admin', () => {
@@ -148,8 +148,8 @@ describe('topic and search filters', () => {
     expect(cat.courseList({ group: 'mton' }).clearHref).toBe('/courses')
   })
 
-  it('keeps the search but drops the topic on the group tabs, so changing group clears the topic', () => {
-    expect(cat.courseList({ group: 'mplai', topic: 'A-Level', q: 'x' }).tabs.map((t) => t.href)).toEqual([
+  it('keeps the search but drops the category on the group tabs, so changing group clears the category', () => {
+    expect(cat.courseList({ group: 'mplai', category: 'สอวน.', q: 'x' }).tabs.map((t) => t.href)).toEqual([
       '/courses?q=x',
       '/courses?group=prathom&q=x',
       '/courses?group=mton&q=x',
@@ -158,29 +158,29 @@ describe('topic and search filters', () => {
   })
 })
 
-describe('topic and search in the URL', () => {
+describe('category and search in the URL', () => {
   it.each([
     {},
-    { group: 'mplai' as const, topic: 'สอวน.' },
-    { topic: 'แข่งขันวิชาการ', q: 'ชีวะ ม.4' },
-    { group: 'mton' as const, topic: 'x y', q: 'a&b=c' },
+    { group: 'mplai' as const, category: 'สอวน.' },
+    { category: 'แข่งขันวิชาการ', q: 'ชีวะ ม.4' },
+    { group: 'mton' as const, category: 'x y', q: 'a&b=c' },
   ])('turns %o into a query and back unchanged', (filters) => {
     expect(parseFilters(new URLSearchParams(filtersToQuery(filters)))).toEqual(filters)
   })
 
   it('drops empty or blank values and trims the search', () => {
-    expect(parseFilters(new URLSearchParams('topic=&q=%20%20'))).toEqual({})
+    expect(parseFilters(new URLSearchParams('category=&q=%20%20'))).toEqual({})
     expect(parseFilters(new URLSearchParams('q=%20ชีวะ%20'))).toEqual({ q: 'ชีวะ' })
   })
 })
 
 describe('goal cards', () => {
-  it('link to the list filtered by the group and topic of the card', () => {
+  it('link to the list filtered by the group and category of the card', () => {
     const site = testSite({
-      goalCards: [{ title: 't', desc: 'd', filter: { group: 'mton', topic: 'สอบเข้า ม.4' } }],
+      goalCards: [{ title: 't', desc: 'd', filter: { group: 'mton', category: 'สอบเข้า ม.4' } }],
     })
 
-    expect(createCatalog(testContent({ site })).coursesPage().goals[0]?.href).toBe('/courses?group=mton&topic=%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2+%E0%B8%A1.4')
+    expect(createCatalog(testContent({ site })).coursesPage().goals[0]?.href).toBe('/courses?group=mton&category=%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2+%E0%B8%A1.4')
   })
 })
 
@@ -197,16 +197,16 @@ describe('courseList() on the real content', () => {
 })
 
 describe('coursesPage()', () => {
-  it('turns each goal card in site.json into a link to the list filtered by its group, topic or search', () => {
+  it('turns each goal card in site.json into a link to the list filtered by its group, category or search', () => {
     const site = testSite({
       goalCards: [
-        { title: 'อยู่ ม.ต้น อยากสอบเข้า ม.4', desc: 'ปรับพื้นฐานวิทย์', filter: { group: 'mton', topic: 'สอบเข้า ม.4' } },
+        { title: 'อยู่ ม.ต้น อยากสอบเข้า ม.4', desc: 'ปรับพื้นฐานวิทย์', filter: { group: 'mton', category: 'สอบเข้า ม.4' } },
         { title: 'จะลงสนามแข่ง', desc: 'สอวน. สวช.', filter: { q: 'แข่งขันวิชาการ' } },
       ],
     })
 
     expect(createCatalog(testContent({ site })).coursesPage().goals).toEqual([
-      { title: 'อยู่ ม.ต้น อยากสอบเข้า ม.4', desc: 'ปรับพื้นฐานวิทย์', href: listHref({ group: 'mton', topic: 'สอบเข้า ม.4' }) },
+      { title: 'อยู่ ม.ต้น อยากสอบเข้า ม.4', desc: 'ปรับพื้นฐานวิทย์', href: listHref({ group: 'mton', category: 'สอบเข้า ม.4' }) },
       { title: 'จะลงสนามแข่ง', desc: 'สอวน. สวช.', href: listHref({ q: 'แข่งขันวิชาการ' }) },
     ])
   })
@@ -234,11 +234,11 @@ describe('coursesPage()', () => {
 describe('course card eyebrow', () => {
   const cardOf = (over: Parameters<typeof testCourse>[0]) => createCatalog(testContent({ courses: [testCourse(over)] })).courseList({}).cards[0]
 
-  it('reads group · subject · first topic', () => {
-    expect(cardOf({ group: 'mplai', subject: 'biology', category: 'แข่งขันวิชาการ', topics: ['สอวน.', 'A-Level'] })?.eyebrow).toBe('ม.ปลาย · ชีววิทยา · สอวน.')
+  it('reads group · subject · category', () => {
+    expect(cardOf({ group: 'mplai', subject: 'biology', category: 'สอวน.' })?.eyebrow).toBe('ม.ปลาย · ชีววิทยา · สอวน.')
   })
 
-  it('does not repeat a topic that has the same name as the group', () => {
-    expect(cardOf({ group: 'prathom', subject: 'science', category: 'ประถม', topics: ['ประถม'] })?.eyebrow).toBe('ประถม · วิทยาศาสตร์')
+  it('does not repeat a category that has the same name as the group', () => {
+    expect(cardOf({ group: 'prathom', subject: 'science', category: 'ประถม' })?.eyebrow).toBe('ประถม · วิทยาศาสตร์')
   })
 })

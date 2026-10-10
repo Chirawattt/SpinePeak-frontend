@@ -23,14 +23,14 @@ describe('setDetail()', () => {
     })
   })
 
-  it('labels the group with every topic of its courses, the group name once', () => {
+  it('labels the group with every category of its courses, the group name once', () => {
     const courses = [
-      testCourse({ slug: 'a', group: 'mplai', topics: ['ปรับพื้นฐาน', 'A-Level'] }),
-      testCourse({ slug: 'b', group: 'mplai', topics: ['A-Level'] }),
-      testCourse({ slug: 'c', group: 'mplai', topics: ['ม.ปลาย'] }),
+      testCourse({ slug: 'a', group: 'mplai', category: 'ปรับพื้นฐาน' }),
+      testCourse({ slug: 'b', group: 'mplai', category: 'A-Level' }),
+      testCourse({ slug: 'c', group: 'mplai', category: 'ม.ปลาย' }),
     ]
 
-    expect(detailOf(testSet({ group: 'mplai', courseSlugs: ['a', 'b', 'c'] }), courses)?.topicsLabel).toBe('ม.ปลาย · ปรับพื้นฐาน · A-Level')
+    expect(detailOf(testSet({ group: 'mplai', courseSlugs: ['a', 'b', 'c'] }), courses)?.categoriesLabel).toBe('ม.ปลาย · ปรับพื้นฐาน · A-Level')
   })
 
   it('uses a palette colour box for the cover while the set has no cover image', () => {

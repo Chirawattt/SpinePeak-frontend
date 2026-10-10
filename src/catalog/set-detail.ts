@@ -8,7 +8,7 @@ import type { CoursePreview } from './course-detail'
 import { buildReviewQuote, type ReviewQuote } from './course-list'
 import { cover, formatBaht, groupLabel, groupLink, lifetimeLabel, nonEmpty, statsRow, SUBJECT_LABEL, type Cover, type NavLink, type Stat } from './format'
 import { setSavings, type SetSavings } from './set-card'
-import { setTopics } from './set-list'
+import { setCategories } from './set-list'
 import { youtubeEmbedUrl } from './youtube'
 
 /** ครูหนึ่งคนในกล่อง "ครูผู้สอน" · role เช่น "สอนชีววิทยา · เคมี" */
@@ -23,7 +23,7 @@ export type SetDetail = {
   tagline: string
   group: NavLink
   /** ป้ายที่สองบนหัว เช่น "มัธยมปลาย · ปรับพื้นฐาน · สอวน." */
-  topicsLabel: string
+  categoriesLabel: string
   cover: Cover
   price: string
   /** ไม่มีค่าเมื่อ SET ไม่ได้ถูกกว่าซื้อแยก */
@@ -59,7 +59,7 @@ export function buildSetDetail(set: CourseSet, courses: Course[], site: Site, re
   // เรียงตาม courseSlugs ของ SET · slug ที่ไม่มีอยู่ validateContent() จับไปแล้วตอน build
   const bySlug = new Map(courses.map((c) => [c.slug, c]))
   const members = set.courseSlugs.map((slug) => bySlug.get(slug)).filter((c): c is Course => c != null)
-  const topics = setTopics(members).filter((t) => t !== groupName)
+  const categories = setCategories(members).filter((t) => t !== groupName)
   const totals = statsRow(derived.totals, { video: 'วิดีโอรวม', pdf: 'ไฟล์ PDF', questions: 'โจทย์พร้อมเฉลย' })
   const savings = setSavings(derived)
   const preview = setPreview(members, site)
@@ -72,7 +72,7 @@ export function buildSetDetail(set: CourseSet, courses: Course[], site: Site, re
     title: set.title,
     tagline: set.tagline,
     group: groupLink(set.group, groupName),
-    topicsLabel: [groupName, ...topics].join(' · '),
+    categoriesLabel: [groupName, ...categories].join(' · '),
     cover: cover(set.group, set.coverImage),
     price: formatBaht(set.price),
     ...(savings && { savings }),

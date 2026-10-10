@@ -13,7 +13,7 @@ import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 // fallback ของ Suspense คือรายการที่ยังไม่กรอง HTML ที่ build ไว้จึงมีการ์ดจริงตั้งแต่แรก
 
 const TITLE = 'คอร์สเรียนทั้งหมด'
-const INTRO = 'เลือกระดับชั้นของน้องก่อน แล้วค่อยกรองตามหัวข้อที่สนใจ ทุกคอร์สได้ไฟล์ PDF + คลิปวิดีโอ ดูได้ไม่จำกัดอายุ'
+const INTRO = 'เลือกระดับชั้นของน้องก่อน แล้วค่อยกรองตามหมวดหมู่ที่สนใจ ทุกคอร์สได้ไฟล์ PDF + คลิปวิดีโอ ดูได้ไม่จำกัดอายุ'
 
 export const metadata: Metadata = { title: TITLE, description: INTRO }
 

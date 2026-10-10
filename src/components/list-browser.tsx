@@ -45,20 +45,20 @@ export function StickyFilterBand({ children }: { children: ReactNode }) {
 }
 
 /**
- * ช่องค้นหา + เลือกหัวข้อ
- * เลือกหัวข้อเปลี่ยน URL แบบ push (ย้อนกลับได้) · พิมพ์ค้นหาเปลี่ยน URL แบบ replace หลังหยุดพิมพ์ จะได้ไม่เต็มประวัติ
+ * ช่องค้นหา + เลือกหมวดหมู่
+ * เลือกหมวดหมู่เปลี่ยน URL แบบ push (ย้อนกลับได้) · พิมพ์ค้นหาเปลี่ยน URL แบบ replace หลังหยุดพิมพ์ จะได้ไม่เต็มประวัติ
  * ใส่ key ตามตัวกรองไว้ที่ผู้เรียก: กดย้อนกลับหรือล้างตัวกรองแล้วช่องค้นหาจะตามค่าใน URL
  */
 export function FilterBar({
   base,
   filters,
-  topicOptions,
+  categoryOptions,
   placeholder,
   label,
 }: {
   base: '/courses' | '/sets'
   filters: CourseFilters
-  topicOptions: string[]
+  categoryOptions: string[]
   placeholder: string
   label: string
 }) {
@@ -97,13 +97,13 @@ export function FilterBar({
         className={`${CONTROL} flex-[3_1_340px]`}
       />
       <select
-        value={filters.topic ?? ''}
-        onChange={(e) => go({ ...filters, topic: e.target.value || undefined, q: text })}
-        aria-label="หัวข้อ"
+        value={filters.category ?? ''}
+        onChange={(e) => go({ ...filters, category: e.target.value || undefined, q: text })}
+        aria-label="หมวดหมู่"
         className={`${CONTROL} flex-[1_1_200px] cursor-pointer`}
       >
-        <option value="">ทุกหัวข้อ</option>
-        {topicOptions.map((t) => (
+        <option value="">ทุกหมวดหมู่</option>
+        {categoryOptions.map((t) => (
           <option key={t} value={t}>
             {t}
           </option>

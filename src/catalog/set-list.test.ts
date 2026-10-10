@@ -6,10 +6,10 @@ import { testContent, testCourse, testSet } from './test-content'
 
 // SET ตัวอย่างตามลำดับในชีต: กลุ่มสลับกันเพื่อให้เห็นว่าไม่ได้เรียงตามกลุ่ม
 const courses = [
-  testCourse({ slug: 'c1', title: 'เนื้อหา ป.4', price: 500, topics: ['เนื้อหาประถม'] }),
-  testCourse({ slug: 'c2', title: 'ข้อสอบ ป.4', price: 500, topics: ['ข้อสอบประถม'], stats: { videoHours: 3, pdfPages: 27, questionCount: 100 } }),
-  testCourse({ slug: 'c3', title: 'ปรับพื้นฐาน ม.4', price: 1000, group: 'mplai', topics: ['ปรับพื้นฐาน', 'A-Level'] }),
-  testCourse({ slug: 'c4', title: 'A-Level ชีวะ ปี 68', price: 1000, group: 'mplai', topics: ['A-Level'] }),
+  testCourse({ slug: 'c1', title: 'เนื้อหา ป.4', price: 500, category: 'เนื้อหาประถม' }),
+  testCourse({ slug: 'c2', title: 'ข้อสอบ ป.4', price: 500, category: 'ข้อสอบประถม', stats: { videoHours: 3, pdfPages: 27, questionCount: 100 } }),
+  testCourse({ slug: 'c3', title: 'ปรับพื้นฐาน ม.4', price: 1000, group: 'mplai', category: 'ปรับพื้นฐาน' }),
+  testCourse({ slug: 'c4', title: 'A-Level ชีวะ ปี 68', price: 1000, group: 'mplai', category: 'A-Level' }),
 ]
 const sets = [
   testSet({ code: 'PR-01', slug: 'pr-01-bundle', title: 'วิทย์ ป.4', tagline: 'ครบในเซ็ตเดียว', group: 'prathom', price: 990, courseSlugs: ['c1', 'c2'] }),
@@ -30,8 +30,8 @@ describe('setList()', () => {
     expect(catalog.setList({ group: 'prathom' }).resultText).toBe('พบ 2 SET')
   })
 
-  it('gives one tab per group with how many sets it has, keeping the search but dropping the topic', () => {
-    expect(catalog.setList({ group: 'mplai', topic: 'A-Level', q: 'วิทย์' }).tabs).toEqual([
+  it('gives one tab per group with how many sets it has, keeping the search but dropping the category', () => {
+    expect(catalog.setList({ group: 'mplai', category: 'A-Level', q: 'วิทย์' }).tabs).toEqual([
       { label: 'ทุกระดับชั้น', count: '3 SET', href: '/sets?q=%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B9%8C', active: false },
       { label: 'ประถม', count: '2 SET', href: '/sets?group=prathom&q=%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B9%8C', active: false },
       { label: 'ม.ต้น', count: '0 SET', href: '/sets?group=mton&q=%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B9%8C', active: false },
@@ -49,14 +49,14 @@ describe('setList()', () => {
     expect(slugs({ q: '  ' })).toHaveLength(3)
   })
 
-  it('filters by topic: a set has every topic of its courses', () => {
-    expect(slugs({ topic: 'A-Level' })).toEqual(['nat-01-bundle'])
-    expect(slugs({ topic: 'ข้อสอบประถม' })).toEqual(['pr-01-bundle', 'pr-02-bundle'])
+  it('filters by category: a set has every category of its courses', () => {
+    expect(slugs({ category: 'A-Level' })).toEqual(['nat-01-bundle'])
+    expect(slugs({ category: 'ข้อสอบประถม' })).toEqual(['pr-01-bundle', 'pr-02-bundle'])
   })
 
-  it('offers the topics of the sets in the chosen group, in course order', () => {
-    expect(catalog.setList({}).topicOptions).toEqual(['เนื้อหาประถม', 'ข้อสอบประถม', 'ปรับพื้นฐาน', 'A-Level'])
-    expect(catalog.setList({ group: 'mplai' }).topicOptions).toEqual(['ปรับพื้นฐาน', 'A-Level'])
+  it('offers the categories of the sets in the chosen group, in course order', () => {
+    expect(catalog.setList({}).categoryOptions).toEqual(['เนื้อหาประถม', 'ข้อสอบประถม', 'ปรับพื้นฐาน', 'A-Level'])
+    expect(catalog.setList({ group: 'mplai' }).categoryOptions).toEqual(['ปรับพื้นฐาน', 'A-Level'])
   })
 
   it('flags an empty result', () => {
@@ -72,7 +72,7 @@ describe('setList()', () => {
 describe('set card', () => {
   const card = (slug: string, inCatalog = catalog) => inCatalog.setList({}).cards.find((c) => c.slug === slug)
 
-  it('describes the set: code, group with its topics, course count, totals, price and the link', () => {
+  it('describes the set: code, group with its categories, course count, totals, price and the link', () => {
     expect(card('pr-01-bundle')).toMatchObject({
       href: '/sets/pr-01-bundle',
       codeLabel: 'SET PR-01',
@@ -114,8 +114,8 @@ describe('set card', () => {
 })
 
 describe('parseSetFilters()', () => {
-  it('keeps group, topic and search from the URL and drops unknown keys', () => {
-    expect(parseSetFilters(new URLSearchParams('group=mton&q=ชีวะ&topic=สวช.&utm=1'))).toEqual({ group: 'mton', topic: 'สวช.', q: 'ชีวะ' })
+  it('keeps group, category and search from the URL and drops unknown keys', () => {
+    expect(parseSetFilters(new URLSearchParams('group=mton&q=ชีวะ&category=สวช.&utm=1'))).toEqual({ group: 'mton', category: 'สวช.', q: 'ชีวะ' })
     expect(parseSetFilters(new URLSearchParams('group=nope'))).toEqual({})
   })
 })

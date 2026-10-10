@@ -9,7 +9,7 @@ import { Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetFilterBar, SetFilterBarFromUrl, SetGrid, SetGridFromUrl, SetTabs, SetTabsFromUrl } from '@/components/set-browser'
 
 // ตาม docs/design-sets.dc.html · hero พื้นเข้มให้ต่างจากหน้ารายการคอร์ส
-// build แบบ static ทั้งหน้า แล้วกรองฝั่ง client ตาม query string (?group=mplai&topic=สอวน.&q=ชีวะ)
+// build แบบ static ทั้งหน้า แล้วกรองฝั่ง client ตาม query string (?group=mplai&category=สอวน.&q=ชีวะ)
 // fallback ของ Suspense คือรายการที่ยังไม่กรอง HTML ที่ build ไว้จึงมีการ์ดจริงตั้งแต่แรก
 
 const TITLE = 'SET คอร์ส'

@@ -225,12 +225,6 @@ def build_courses():
         course["tagline"] = tagline
         course["group"] = GROUPS.get(group_th)
         course["category"] = category
-        # หัวข้อ = ตัวกรองบนเว็บ คั่นหลายค่าด้วย , · เว้นว่าง = ใช้หมวดหมู่
-        topics = [t.strip() for t in re.split(r"[,
-]+", row.get("หัวข้อ", "")) if t.strip()]
-        if len(topics) != len(set(topics)):
-            err("%s ระบุหัวข้อซ้ำ" % where)
-        course["topics"] = topics or ([category] if category else [])
         course["subject"] = SUBJECTS.get(subject_th)
         course["instructorSlug"] = instructor
         course["price"] = price
@@ -422,14 +416,14 @@ def check_site(courses):
     for g in sorted({c["group"] for c in courses} - groups):
         err("site.json ไม่มีกลุ่ม '%s'" % g)
 
-    topics = {t for c in courses for t in c["topics"]}
+    categories = {c["category"] for c in courses}
     for card in site.get("goalCards", []):
         f_ = card.get("filter", {})
         if f_.get("group") and f_["group"] not in groups:
             err("goalCard '%s' กรองกลุ่ม '%s' ที่ไม่มีใน site.json" % (card.get("title"), f_["group"]))
-        if f_.get("topic") and f_["topic"] not in topics:
-            err("goalCard '%s' กรองหัวข้อ '%s' ที่ไม่มีคอร์สไหนอยู่เลย"
-                % (card.get("title"), f_["topic"]))
+        if f_.get("category") and f_["category"] not in categories:
+            err("goalCard '%s' กรองหมวดหมู่ '%s' ที่ไม่มีคอร์สไหนอยู่เลย"
+                % (card.get("title"), f_["category"]))
 
     # ปุ่มสมัครเรียนทั้งเว็บวิ่งผ่านช่องทางพวกนี้ ถ้าว่างคือปุ่มไม่มีที่ไป
     contact = site.get("contact", {})

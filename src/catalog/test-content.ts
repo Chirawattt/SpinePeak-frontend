@@ -11,7 +11,6 @@ export function testCourse(overrides: Partial<Course> = {}): Course {
     tagline: 'ปูพื้นวิทย์ ป.4',
     group: 'prathom',
     category: 'ประถม',
-    topics: ['ประถม'],
     subject: 'science',
     instructorSlug: 'kru-nam',
     price: 599,

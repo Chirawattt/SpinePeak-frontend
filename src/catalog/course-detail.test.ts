@@ -41,11 +41,11 @@ describe('courseDetail()', () => {
     })
   })
 
-  it('labels the badge with the group, subject and first topic, like the course card', () => {
-    expect(detailOf(testCourse({ group: 'mplai', subject: 'biology', category: 'แข่งขันวิชาการ', topics: ['สอวน.'] }))?.badge).toBe(
+  it('labels the badge with the group, subject and category, like the course card', () => {
+    expect(detailOf(testCourse({ group: 'mplai', subject: 'biology', category: 'สอวน.' }))?.badge).toBe(
       'ม.ปลาย · ชีววิทยา · สอวน.',
     )
-    expect(detailOf(testCourse({ group: 'prathom', category: 'ประถม', topics: ['ประถม'] }))?.badge).toBe('ประถม · วิทยาศาสตร์')
+    expect(detailOf(testCourse({ group: 'prathom', category: 'ประถม' }))?.badge).toBe('ประถม · วิทยาศาสตร์')
   })
 
   it('prefers the full title when the sheet has one', () => {

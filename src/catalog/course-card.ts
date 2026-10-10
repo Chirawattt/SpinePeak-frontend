@@ -12,7 +12,7 @@ export type CourseCard = {
   tagline: string
   /** เช่น "มัธยมปลาย · สอวน." */
   label: string
-  /** บรรทัดเล็กหัวการ์ด เช่น "มัธยมปลาย · ชีววิทยา · สอวน." (หัวข้อแรกของคอร์ส) */
+  /** บรรทัดเล็กหัวการ์ด เช่น "มัธยมปลาย · ชีววิทยา · สอวน." (หมวดหมู่ของคอร์ส) */
   eyebrow: string
   /** ป้ายวิชา เช่น "ชีววิทยา" */
   subject: string
@@ -29,11 +29,11 @@ export type CourseCard = {
   lifetime: string
 }
 
-/** "{กลุ่ม} · {วิชา} · {หัวข้อแรก}" · หัวข้อที่ชื่อซ้ำกับกลุ่ม (เช่น คอร์สประถมที่หัวข้อคือ "ประถม") แสดงครั้งเดียว · หน้ารายละเอียดคอร์สใช้ด้วย */
+/** "{กลุ่ม} · {วิชา} · {หมวดหมู่}" · หมวดหมู่ที่ชื่อซ้ำกับกลุ่ม (เช่น คอร์สประถมที่หมวดหมู่คือ "ประถม") แสดงครั้งเดียว · หน้ารายละเอียดคอร์สใช้ด้วย */
 export function courseEyebrow(course: Course, site: Site): string {
   const groupName = groupLabel(site, course.group)
-  const topic = course.topics[0] ?? course.category
-  return [groupName, SUBJECT_LABEL[course.subject], ...(topic === groupName ? [] : [topic])].join(' · ')
+  const category = course.category
+  return [groupName, SUBJECT_LABEL[course.subject], ...(category === groupName ? [] : [category])].join(' · ')
 }
 
 export function buildCourseCard(course: Course, site: Site): CourseCard {

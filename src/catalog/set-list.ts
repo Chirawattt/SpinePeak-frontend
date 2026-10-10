@@ -8,7 +8,7 @@ import { cover, formatBaht, groupLabel, nonEmpty, statsLine, type Cover } from '
 import { buildGroupTabs, type GroupTab } from './group-tabs'
 import { setSavings, type SetSavings } from './set-card'
 
-/** หน้ารายการ SET กรองได้ทั้งกลุ่ม หัวข้อ และคำค้นหา เหมือนหน้ารายการคอร์ส */
+/** หน้ารายการ SET กรองได้ทั้งกลุ่ม หมวดหมู่ และคำค้นหา เหมือนหน้ารายการคอร์ส */
 export type SetFilters = CourseFilters
 
 export function parseSetFilters(params: { get(name: string): string | null }): SetFilters {
@@ -28,7 +28,7 @@ export type SetListCard = {
   tagline: string
   /** เช่น "ประถม" */
   group: string
-  /** บรรทัดเล็ก เช่น "มัธยมปลาย · ปรับพื้นฐาน · สอวน." (หัวข้อของทุกคอร์สใน SET รวมกัน) */
+  /** บรรทัดเล็ก เช่น "มัธยมปลาย · ปรับพื้นฐาน · สอวน." (หมวดหมู่ของทุกคอร์สใน SET รวมกัน) */
   eyebrow: string
   /** เช่น "2 คอร์ส" */
   courseCount: string
@@ -53,9 +53,9 @@ export type SetListCard = {
 const STACK = 3
 const LISTED = 4
 
-/** หัวข้อของ SET = หัวข้อของทุกคอร์สใน SET รวมกัน ตามลำดับคอร์ส ไม่ซ้ำ (ดู CONTEXT.md) */
-export function setTopics(members: Course[]): string[] {
-  return [...new Set(members.flatMap((c) => c.topics))]
+/** หมวดหมู่ของ SET = หมวดหมู่ของทุกคอร์สใน SET รวมกัน ตามลำดับคอร์ส ไม่ซ้ำ (ดู CONTEXT.md) */
+export function setCategories(members: Course[]): string[] {
+  return [...new Set(members.map((c) => c.category))]
 }
 
 function membersOf(set: CourseSet, courses: Course[]): Course[] {
@@ -69,7 +69,7 @@ export function buildSetListCard(set: CourseSet, courses: Course[], site: Site):
   const savings = setSavings(derived)
   const facts = statsLine(derived.totals)
   const groupName = groupLabel(site, set.group)
-  const topics = setTopics(members).filter((t) => t !== groupName)
+  const categories = setCategories(members).filter((t) => t !== groupName)
   const { videoHours, pdfPages, questionCount } = derived.totals
   const pages = formatPages(pdfPages)
 
@@ -80,7 +80,7 @@ export function buildSetListCard(set: CourseSet, courses: Course[], site: Site):
     title: set.title,
     tagline: set.tagline,
     group: groupName,
-    eyebrow: [groupName, ...topics].join(' · '),
+    eyebrow: [groupName, ...categories].join(' · '),
     courseCount: `${derived.courseCount} คอร์ส`,
     ...(facts && { facts }),
     stats: [videoHours && `VDO ${videoHours} ชม.`, pages && `PDF ${pages}`, questionCount && `โจทย์ ${questionCount} ข้อ`].filter((s): s is string => Boolean(s)),
@@ -102,15 +102,15 @@ export function buildSetListCard(set: CourseSet, courses: Course[], site: Site):
 
 export type SetListIndex = {
   /** text = ข้อความที่ค้นหาได้ ตัวพิมพ์เล็กแล้ว */
-  items: { group: Group; topics: string[]; text: string; card: SetListCard }[]
+  items: { group: Group; categories: string[]; text: string; card: SetListCard }[]
   groups: { key: Group; label: string }[]
   paging: Paging
 }
 
 export type SetList = {
   cards: SetListCard[]
-  /** ตัวเลือกหัวข้อในตัวกรอง จาก SET ของกลุ่มที่เลือก (ทุกกลุ่มถ้าไม่ได้เลือก) */
-  topicOptions: string[]
+  /** ตัวเลือกหมวดหมู่ในตัวกรอง จาก SET ของกลุ่มที่เลือก (ทุกกลุ่มถ้าไม่ได้เลือก) */
+  categoryOptions: string[]
   /** เช่น "พบ 10 SET" */
   resultText: string
   tabs: GroupTab[]
@@ -124,7 +124,7 @@ export function buildSetListIndex(sets: CourseSet[], courses: Course[], site: Si
       const members = membersOf(set, courses)
       return {
         group: set.group,
-        topics: setTopics(members),
+        categories: setCategories(members),
         // ค้นได้จากชื่อคอร์สที่อยู่ข้างในด้วย เช่น พิมพ์ "A-Level" เจอทุก SET ที่มีคอร์ส A-Level
         text: [set.title, set.tagline, set.code, ...members.map((c) => c.title)].join(' ').toLowerCase(),
         card: buildSetListCard(set, courses, site),
@@ -139,14 +139,14 @@ export function filterSetList(index: SetListIndex, filters: SetFilters): SetList
   const words = (filters.q ?? '').toLowerCase().split(/\s+/).filter(Boolean)
   const inGroup = (item: SetListIndex['items'][number]) => !filters.group || item.group === filters.group
   const cards = index.items
-    .filter((item) => inGroup(item) && (!filters.topic || item.topics.includes(filters.topic)) && words.every((w) => item.text.includes(w)))
+    .filter((item) => inGroup(item) && (!filters.category || item.categories.includes(filters.category)) && words.every((w) => item.text.includes(w)))
     .map((item) => item.card)
   const countIn = (group?: Group) => index.items.filter((item) => !group || item.group === group).length
-  // เปลี่ยนกลุ่มแล้วหัวข้อที่เลือกไว้หายไป (หัวข้อผูกกับกลุ่ม) แต่คำค้นหาอยู่
+  // เปลี่ยนกลุ่มแล้วหมวดหมู่ที่เลือกไว้หายไป (หมวดหมู่ผูกกับกลุ่ม) แต่คำค้นหาอยู่
   const hrefFor = (group?: Group) => listHref({ ...(group && { group }), ...(filters.q && { q: filters.q }) }, '/sets')
   return {
     cards,
-    topicOptions: [...new Set(index.items.filter(inGroup).flatMap((item) => item.topics))],
+    categoryOptions: [...new Set(index.items.filter(inGroup).flatMap((item) => item.categories))],
     resultText: `พบ ${cards.length} SET`,
     tabs: buildGroupTabs({ groups: index.groups, active: filters.group, unit: 'SET', countIn, hrefFor }),
     empty: cards.length === 0,

@@ -22,20 +22,20 @@ export function GroupTabs({ index, filters }: { index: CourseListIndex; filters:
   return <TabNav tabs={filterCourseList(index, filters).tabs} />
 }
 
-/** ช่องค้นหา + เลือกหัวข้อ ตามตัวกรองใน URL · ใช้ใน <Suspense> */
+/** ช่องค้นหา + เลือกหมวดหมู่ ตามตัวกรองใน URL · ใช้ใน <Suspense> */
 export function FilterBarFromUrl({ index }: { index: CourseListIndex }) {
   const filters = useFilters()
   return <CourseFilterBar key={filtersToQuery(filters)} index={index} filters={filters} />
 }
 
 export function CourseFilterBar({ index, filters }: { index: CourseListIndex; filters: CourseFilters }) {
-  const { topicOptions } = filterCourseList(index, filters)
+  const { categoryOptions } = filterCourseList(index, filters)
   return (
     <FilterBar
       base="/courses"
       filters={filters}
-      topicOptions={topicOptions}
-      placeholder="ค้นหาชื่อคอร์ส หรือหัวข้อ เช่น พันธุศาสตร์"
+      categoryOptions={categoryOptions}
+      placeholder="ค้นหาชื่อคอร์ส หรือหมวดหมู่ เช่น พันธุศาสตร์"
       label="ค้นหาคอร์ส"
     />
   )

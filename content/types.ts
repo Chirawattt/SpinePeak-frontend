@@ -35,10 +35,8 @@ export type Course = {
   title: string
   tagline: string
   group: Group
-  /** หมวดหมู่จากชีต ใช้เป็นหัวข้อแถบในหน้า Course List */
+  /** หมวดหมู่จากชีต ค่าเดียวต่อคอร์ส · ใช้เป็นหัวข้อแถบในหน้า Course List, ตัวกรอง "ทุกหมวดหมู่" และป้ายบนการ์ด */
   category: string
-  /** หัวข้อ: ตัวกรอง "ทุกหัวข้อ" และป้ายบนการ์ด · คอลัมน์ หัวข้อ ในชีต เว้นว่าง = [category] */
-  topics: string[]
   subject: Subject
   instructorSlug: string
   price: number
@@ -156,7 +154,7 @@ export type Site = {
   goalCards: {
     title: string
     desc: string
-    filter: { group?: Group; topic?: string; q?: string }
+    filter: { group?: Group; category?: string; q?: string }
   }[]
   /** ของแนะนำบนหน้าแรก เรียงตามลำดับนี้ · ว่าง = ซ่อนส่วน "คอร์สขายดี" ทั้งส่วน */
   featured: FeaturedItem[]

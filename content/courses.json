@@ -4,10 +4,7 @@
     "title": "เนื้อหาประถม ป.4",
     "tagline": "ปูพื้นวิทย์ ป.4 ครบทุกบท เรียนเข้าใจง่าย เพิ่มเกรดในห้อง",
     "group": "prathom",
-    "category": "ประถม",
-    "topics": [
-      "ประถม"
-    ],
+    "category": "เนื้อหาประถม",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -57,10 +54,7 @@
     "title": "เนื้อหาประถม ป.5",
     "tagline": "สรุปวิทย์ ป.5 ครบทุกบท เตรียมสอบกลางภาค-ปลายภาค",
     "group": "prathom",
-    "category": "ประถม",
-    "topics": [
-      "ประถม"
-    ],
+    "category": "เนื้อหาประถม",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -107,10 +101,7 @@
     "title": "เนื้อหาประถม ป.6",
     "tagline": "วิทย์ ป.6 ครบทุกบท ปูพื้นให้แน่นก่อนสอบเข้า ม.1",
     "group": "prathom",
-    "category": "ประถม",
-    "topics": [
-      "ประถม"
-    ],
+    "category": "เนื้อหาประถม",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -160,10 +151,7 @@
     "title": "ข้อสอบประถม ป.4",
     "tagline": "ตะลุยโจทย์วิทย์ ป.4 100 ข้อ พร้อมเฉลยละเอียด",
     "group": "prathom",
-    "category": "ประถม",
-    "topics": [
-      "ประถม"
-    ],
+    "category": "ข้อสอบประถม",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 299,
@@ -199,10 +187,7 @@
     "title": "ข้อสอบประถม ป.5",
     "tagline": "ตะลุยโจทย์วิทย์ ป.5 165 ข้อ พร้อมเฉลยละเอียด",
     "group": "prathom",
-    "category": "ประถม",
-    "topics": [
-      "ประถม"
-    ],
+    "category": "ข้อสอบประถม",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 299,
@@ -238,10 +223,7 @@
     "title": "ข้อสอบประถม ป.6",
     "tagline": "ตะลุยโจทย์วิทย์ ป.6 120 ข้อ พร้อมเฉลยละเอียด",
     "group": "prathom",
-    "category": "ประถม",
-    "topics": [
-      "ประถม"
-    ],
+    "category": "ข้อสอบประถม",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 299,
@@ -278,9 +260,6 @@
     "tagline": "ข้อสอบ 4 ชุด 120 ข้อ แนว จภ. สวนกุหลาบ หอวัง สาธิต",
     "group": "prathom",
     "category": "สอบเข้า ม.1",
-    "topics": [
-      "สอบเข้า ม.1"
-    ],
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -311,9 +290,6 @@
     "tagline": "เฉลย 150 ข้อ พร้อมสรุปเนื้อหา ติวเข้า ม.1 ตรงจุด",
     "group": "prathom",
     "category": "สอบเข้า ม.1",
-    "topics": [
-      "สอบเข้า ม.1"
-    ],
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -342,9 +318,6 @@
     "tagline": "สรุปชีวะ + ข้อสอบ สำหรับสอบเข้า ม.4 เตรียมอุดมฯ",
     "group": "mton",
     "category": "สอบเข้า ม.4",
-    "topics": [
-      "สอบเข้า ม.4"
-    ],
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -372,10 +345,7 @@
     "title": "สวช. ม.ต้น",
     "tagline": "เฉลย 80 ข้อ สอบชิงถ้วยพระราชทาน สายแข่งวิชาการ ม.ต้น",
     "group": "mton",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "สวช.",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -407,10 +377,7 @@
     "title": "IJSO",
     "tagline": "เฉลยข้อสอบชีวะ IJSO 60 ข้อ พร้อมสรุปเนื้อหาท้ายเล่ม",
     "group": "mton",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "IJSO",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -436,10 +403,7 @@
     "title": "O-NET ม.3",
     "tagline": "Mock Test O-NET วิทย์ ม.3 เฉลย 88 ข้อ พร้อมสรุปเนื้อหา",
     "group": "mton",
-    "category": "สอบระดับชาติ",
-    "topics": [
-      "สอบระดับชาติ"
-    ],
+    "category": "O-NET",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -470,9 +434,6 @@
     "tagline": "ตะลุยโจทย์คณิต 50 ข้อ แนว MWIT เตรียมอุดม วมว.",
     "group": "mton",
     "category": "สอบเข้า ม.4",
-    "topics": [
-      "สอบเข้า ม.4"
-    ],
     "subject": "math",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -497,9 +458,6 @@
     "tagline": "เฉลย 100 ข้อ พร้อมสรุปเนื้อหา พิชิตห้องพิเศษ SMTE",
     "group": "mton",
     "category": "สอบเข้า ม.4",
-    "topics": [
-      "สอบเข้า ม.4"
-    ],
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -529,10 +487,7 @@
     "title": "ปรับพื้นฐาน ม.1 เทอม 1",
     "tagline": "ปูพื้นวิทย์ ม.1 เทอม 1 — สารบริสุทธิ์ • เซลล์ • ชีวิตพืช",
     "group": "mton",
-    "category": "ปรับพื้นฐาน ม.ต้น (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ต้น (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ต้น",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -574,10 +529,7 @@
     "title": "ปรับพื้นฐาน ม.1 เทอม 2",
     "tagline": "ปูพื้นวิทย์ ม.1 เทอม 2 — พลังงานความร้อน • ลมฟ้าอากาศ",
     "group": "mton",
-    "category": "ปรับพื้นฐาน ม.ต้น (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ต้น (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ต้น",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -616,10 +568,7 @@
     "title": "ปรับพื้นฐาน ม.2 เทอม 1",
     "tagline": "ปูพื้นวิทย์ ม.2 เทอม 1 — สารละลาย • ร่างกายมนุษย์ • แรง",
     "group": "mton",
-    "category": "ปรับพื้นฐาน ม.ต้น (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ต้น (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ต้น",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -661,10 +610,7 @@
     "title": "ปรับพื้นฐาน ม.2 เทอม 2",
     "tagline": "ปูพื้นวิทย์ ม.2 เทอม 2 — พลังงาน • การแยกสาร • โลก",
     "group": "mton",
-    "category": "ปรับพื้นฐาน ม.ต้น (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ต้น (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ต้น",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -709,10 +655,7 @@
     "title": "ปรับพื้นฐาน ม.3 เทอม 1",
     "tagline": "ปูพื้นวิทย์ ม.3 เทอม 1 — พันธุกรรม • คลื่น แสง • ระบบสุริยะ",
     "group": "mton",
-    "category": "ปรับพื้นฐาน ม.ต้น (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ต้น (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ต้น",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -754,10 +697,7 @@
     "title": "ปรับพื้นฐาน ม.3 เทอม 2",
     "tagline": "ปูพื้นวิทย์ ม.3 เทอม 2 — ปฏิกิริยาเคมี • ไฟฟ้า • ระบบนิเวศ",
     "group": "mton",
-    "category": "ปรับพื้นฐาน ม.ต้น (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ต้น (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ต้น",
     "subject": "science",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -799,10 +739,7 @@
     "title": "ครูผู้ช่วย เอกชีวะ",
     "tagline": "ตะลุยโจทย์ 400 ข้อ ติวสอบครูผู้ช่วย เอกชีววิทยา",
     "group": "mplai",
-    "category": "สอบครูผู้ช่วย",
-    "topics": [
-      "สอบครูผู้ช่วย"
-    ],
+    "category": "ครูผู้ช่วย",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -830,10 +767,7 @@
     "title": "สวช. ม.ปลาย ชีววิทยา",
     "tagline": "เฉลย สวช. ชีวะ 40 ข้อ พร้อมเทคนิคทำข้อสอบ",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "สวช.",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -860,10 +794,7 @@
     "title": "สวช. ม.ปลาย เคมี",
     "tagline": "เฉลย สวช. เคมี 40 ข้อ พร้อมเทคนิคทำข้อสอบ",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "สวช.",
     "subject": "chemistry",
     "instructorSlug": "kru-fon",
     "price": 399,
@@ -890,10 +821,7 @@
     "title": "สวช. ม.ปลาย ฟิสิกส์",
     "tagline": "เฉลย สวช. ฟิสิกส์ 40 ข้อ พร้อมเทคนิคทำข้อสอบ",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "สวช.",
     "subject": "physics",
     "instructorSlug": "kru-lookmai",
     "price": 399,
@@ -920,10 +848,7 @@
     "title": "ปรับพื้นฐาน ม.4 เทอม 1",
     "tagline": "ปูพื้นชีวะ ม.4 เทอม 1 — เซลล์ • เคมีของสิ่งมีชีวิต",
     "group": "mplai",
-    "category": "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ปลาย",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -958,18 +883,14 @@
       "AL-02",
       "NS-02",
       "BC-02"
-    ],
-    "previewVideoUrl": "https://youtu.be/QnQe0xW_JY4"
+    ]
   },
   {
     "slug": "foundation-biology-m4-term-2",
     "title": "ปรับพื้นฐาน ม.4 เทอม 2",
     "tagline": "ปูพื้นชีวะ ม.4 เทอม 2 — พันธุศาสตร์ • DNA • วิวัฒนาการ",
     "group": "mplai",
-    "category": "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ปลาย",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1014,10 +935,7 @@
     "title": "ปรับพื้นฐาน ม.5 เทอม 1",
     "tagline": "ปูพื้นชีวะ ม.5 เทอม 1 — พืชดอก • การสังเคราะห์ด้วยแสง",
     "group": "mplai",
-    "category": "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ปลาย",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1062,10 +980,7 @@
     "title": "ปรับพื้นฐาน ม.5 เทอม 2",
     "tagline": "ปูพื้นชีวะ ม.5 เทอม 2 — ระบบในร่างกายมนุษย์ 5 ระบบ",
     "group": "mplai",
-    "category": "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ปลาย",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1113,10 +1028,7 @@
     "title": "ปรับพื้นฐาน ม.6 เทอม 1",
     "tagline": "ปูพื้นชีวะ ม.6 เทอม 1 — ประสาท • ต่อมไร้ท่อ • พฤติกรรม",
     "group": "mplai",
-    "category": "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ปลาย",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1164,10 +1076,7 @@
     "title": "ปรับพื้นฐาน ม.6 เทอม 2",
     "tagline": "ปูพื้นชีวะ ม.6 เทอม 2 — ความหลากหลาย • ระบบนิเวศ",
     "group": "mplai",
-    "category": "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)",
-    "topics": [
-      "ปรับพื้นฐาน ม.ปลาย (แยกเทอม)"
-    ],
+    "category": "ปรับพื้นฐาน ม.ปลาย",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1209,10 +1118,7 @@
     "title": "สอวน. ปี 61/64",
     "tagline": "เฉลย สอวน. ชีวะ ปี 61/64 รวม 200 ข้อ แบบละเอียด",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "สอวน.",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 999,
@@ -1241,10 +1147,7 @@
     "title": "สอวน. ปี 66",
     "tagline": "เฉลย สอวน. ชีวะ ปี 66 จำนวน 100 ข้อ แบบละเอียด",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "สอวน.",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -1273,10 +1176,7 @@
     "title": "สอวน. ปี 67",
     "tagline": "เฉลย สอวน. ชีวะ ปี 67 จำนวน 100 ข้อ แบบละเอียด",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "สอวน.",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1305,10 +1205,7 @@
     "title": "สอวน. ปี 68",
     "tagline": "เฉลย สอวน. ชีวะ ปี 68 จำนวน 100 ข้อ แบบละเอียด",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "สอวน.",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1337,10 +1234,7 @@
     "title": "A-Level ชีวะ ปี 64-66",
     "tagline": "เฉลย A-Level ชีวะ ปี 64-66 รวม 150 ข้อ สายแพทย์ เภสัช ทันตะ",
     "group": "mplai",
-    "category": "สอบเข้ามหาวิทยาลัย",
-    "topics": [
-      "สอบเข้ามหาวิทยาลัย"
-    ],
+    "category": "A-Level",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1368,10 +1262,7 @@
     "title": "A-Level ชีวะ ปี 67",
     "tagline": "เฉลย A-Level ชีวะ ปี 67 จำนวน 40 ข้อ แบบละเอียด",
     "group": "mplai",
-    "category": "สอบเข้ามหาวิทยาลัย",
-    "topics": [
-      "สอบเข้ามหาวิทยาลัย"
-    ],
+    "category": "A-Level",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -1399,10 +1290,7 @@
     "title": "A-Level ชีวะ ปี 68",
     "tagline": "เฉลย A-Level ชีวะ ปี 68 จำนวน 40 ข้อ แบบละเอียด",
     "group": "mplai",
-    "category": "สอบเข้ามหาวิทยาลัย",
-    "topics": [
-      "สอบเข้ามหาวิทยาลัย"
-    ],
+    "category": "A-Level",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -1430,10 +1318,7 @@
     "title": "A-Level วิทย์ประยุกต์",
     "tagline": "Mock Test 80 ข้อ พร้อมเฉลย เข้ากลุ่มคณะสายวิทย์",
     "group": "mplai",
-    "category": "สอบเข้ามหาวิทยาลัย",
-    "topics": [
-      "สอบเข้ามหาวิทยาลัย"
-    ],
+    "category": "A-Level",
     "subject": "applied_science",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -1459,10 +1344,7 @@
     "title": "NETSAT ปี 65",
     "tagline": "ข้อสอบจริง NETSAT ชีวะ ปี 65 เฉลย 50 ข้อ พิชิตโควต้า มข.",
     "group": "mplai",
-    "category": "สอบเข้ามหาวิทยาลัย",
-    "topics": [
-      "สอบเข้ามหาวิทยาลัย"
-    ],
+    "category": "NETSAT",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -1491,10 +1373,7 @@
     "title": "NETSAT ปี 66",
     "tagline": "ข้อสอบจริง NETSAT ชีวะ ปี 66 เฉลย 50 ข้อ พิชิตโควต้า มข.",
     "group": "mplai",
-    "category": "สอบเข้ามหาวิทยาลัย",
-    "topics": [
-      "สอบเข้ามหาวิทยาลัย"
-    ],
+    "category": "NETSAT",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -1522,10 +1401,7 @@
     "title": "NETSAT ปี 67",
     "tagline": "ข้อสอบจริง NETSAT ชีวะ ปี 67 เฉลย 50 ข้อ พิชิตโควต้า มข.",
     "group": "mplai",
-    "category": "สอบเข้ามหาวิทยาลัย",
-    "topics": [
-      "สอบเข้ามหาวิทยาลัย"
-    ],
+    "category": "NETSAT",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -1553,10 +1429,7 @@
     "title": "NETSAT ปี 68",
     "tagline": "ข้อสอบจริง NETSAT ชีวะ ปี 68 เฉลย 50 ข้อ พิชิตโควต้า มข.",
     "group": "mplai",
-    "category": "สอบเข้ามหาวิทยาลัย",
-    "topics": [
-      "สอบเข้ามหาวิทยาลัย"
-    ],
+    "category": "NETSAT",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 399,
@@ -1585,10 +1458,7 @@
     "title": "BIOCONTEST",
     "tagline": "เฉลย 100 ข้อ สนามแข่งชีวะ ม.เกษตรศาสตร์",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "Biocontest",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,
@@ -1617,10 +1487,7 @@
     "title": "BIOCONTEST Otter",
     "tagline": "เฉลย Biocontest Otter 120 ข้อ สนามแข่งชีวะ ม.เกษตรฯ",
     "group": "mplai",
-    "category": "แข่งขันวิชาการ",
-    "topics": [
-      "แข่งขันวิชาการ"
-    ],
+    "category": "Biocontest",
     "subject": "biology",
     "instructorSlug": "kru-nam",
     "price": 599,

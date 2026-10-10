@@ -3,8 +3,8 @@
 
 import type { Group } from '@content/types'
 
-/** group = กลุ่ม · topic = หัวข้อ (ดู CONTEXT.md) · q = คำค้นหา */
-export type CourseFilters = { group?: Group; topic?: string; q?: string }
+/** group = กลุ่ม · category = หมวดหมู่ (ดู CONTEXT.md) · q = คำค้นหา */
+export type CourseFilters = { group?: Group; category?: string; q?: string }
 
 /** ค่า group ที่ยอมรับใน URL · satisfies บังคับให้ครบทุกค่าใน type Group */
 const GROUP_KEYS = { prathom: true, mton: true, mplai: true } satisfies Record<Group, true>
@@ -16,16 +16,16 @@ function isGroup(value: string | null): value is Group {
 /** query string → ตัวกรอง · ค่าที่ไม่รู้จักหรือว่างถือว่าไม่ได้กรอง ลิงก์เก่าหรือพิมพ์ผิดจะได้ไม่พัง · key ที่ไม่รู้จักถูกทิ้ง */
 export function parseFilters(params: { get(name: string): string | null }): CourseFilters {
   const group = params.get('group')
-  const topic = params.get('topic')?.trim()
+  const category = params.get('category')?.trim()
   const q = params.get('q')?.trim()
-  return { ...(isGroup(group) && { group }), ...(topic && { topic }), ...(q && { q }) }
+  return { ...(isGroup(group) && { group }), ...(category && { category }), ...(q && { q }) }
 }
 
 /** ตัวกรอง → query string ที่ไม่มี "?" นำหน้า · ไม่กรองอะไรเลยได้ "" */
 export function filtersToQuery(filters: CourseFilters): string {
   const params = new URLSearchParams()
   if (filters.group) params.set('group', filters.group)
-  if (filters.topic) params.set('topic', filters.topic)
+  if (filters.category) params.set('category', filters.category)
   if (filters.q?.trim()) params.set('q', filters.q.trim())
   return params.toString()
 }

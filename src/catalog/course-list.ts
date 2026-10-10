@@ -11,7 +11,7 @@ export type { GroupTab }
 
 /** ข้อมูลทั้งหมดที่หน้ารายการต้องใช้ ส่งจาก server ไป client ได้ (เป็น JSON ล้วน) */
 export type CourseListIndex = {
-  items: { group: Group; topics: string[]; /** ข้อความที่ค้นหาได้ ตัวพิมพ์เล็กแล้ว */ text: string; card: CourseCard }[]
+  items: { group: Group; category: string; /** ข้อความที่ค้นหาได้ ตัวพิมพ์เล็กแล้ว */ text: string; card: CourseCard }[]
   /** แท็บกลุ่มตามลำดับใน site.json */
   groups: { key: Group; label: string }[]
   paging: Paging
@@ -23,8 +23,8 @@ export type Paging = { first: number; step: number }
 export type CourseList = {
   /** การ์ดที่ผ่านตัวกรอง เรียงตามลำดับในชีต */
   cards: CourseCard[]
-  /** ตัวเลือกหัวข้อในตัวกรอง คำนวณจากข้อมูลจริงของกลุ่มที่เลือก (ทุกกลุ่มถ้าไม่ได้เลือก) ตามลำดับในชีต */
-  topicOptions: string[]
+  /** ตัวเลือกหมวดหมู่ในตัวกรอง คำนวณจากข้อมูลจริงของกลุ่มที่เลือก (ทุกกลุ่มถ้าไม่ได้เลือก) ตามลำดับในชีต */
+  categoryOptions: string[]
   /** ไม่มีผลลัพธ์เลย ให้หน้าแสดงข้อความและปุ่มทักแอดมิน */
   empty: boolean
   /** ลิงก์ล้างตัวกรองทั้งหมด · ไม่มีค่าเมื่อไม่ได้กรองอะไรอยู่ */
@@ -39,9 +39,9 @@ export function buildCourseListIndex(courses: Course[], site: Site): CourseListI
   return {
     items: courses.map((c) => ({
       group: c.group,
-      topics: c.topics,
-      // ค้นได้ทั้งชื่อ คำโปรย หมวดหมู่ หัวข้อ วิชา และชื่อบท (เช่น พิมพ์ "พันธุศาสตร์" แล้วเจอคอร์สที่มีบทนั้น)
-      text: [c.title, c.tagline, c.category, ...c.topics, SUBJECT_LABEL[c.subject], ...c.chapters.map((ch) => ch.title)].join(' ').toLowerCase(),
+      category: c.category,
+      // ค้นได้ทั้งชื่อ คำโปรย หมวดหมู่ วิชา และชื่อบท (เช่น พิมพ์ "พันธุศาสตร์" แล้วเจอคอร์สที่มีบทนั้น)
+      text: [c.title, c.tagline, c.category, SUBJECT_LABEL[c.subject], ...c.chapters.map((ch) => ch.title)].join(' ').toLowerCase(),
       card: buildCourseCard(c, site),
     })),
     groups: site.groups.map((g) => ({ key: g.key, label: g.label })),
@@ -54,18 +54,18 @@ export function filterCourseList(index: CourseListIndex, filters: CourseFilters)
   const inGroup = (item: CourseListIndex['items'][number]) => !filters.group || item.group === filters.group
   const matches = (item: CourseListIndex['items'][number]) =>
     inGroup(item) &&
-    (!filters.topic || item.topics.includes(filters.topic)) &&
+    (!filters.category || item.category === filters.category) &&
     words.every((w) => item.text.includes(w))
   const cards = index.items.filter(matches).map((item) => item.card)
   const countIn = (group?: Group) => index.items.filter((item) => !group || item.group === group).length
-  // เปลี่ยนกลุ่มแล้วหัวข้อที่เลือกไว้หายไป (หัวข้อผูกกับกลุ่ม) แต่คำค้นหาอยู่
+  // เปลี่ยนกลุ่มแล้วหมวดหมู่ที่เลือกไว้หายไป (หมวดหมู่ผูกกับกลุ่ม) แต่คำค้นหาอยู่
   const tabHref = (group?: Group) => listHref({ ...(group && { group }), ...(filters.q && { q: filters.q }) })
   const tabs = buildGroupTabs({ groups: index.groups, active: filters.group, unit: 'คอร์ส', countIn, hrefFor: tabHref })
-  const topicOptions = [...new Set(index.items.filter(inGroup).flatMap((item) => item.topics))]
-  const filtered = Boolean(filters.group || filters.topic || words.length)
+  const categoryOptions = [...new Set(index.items.filter(inGroup).map((item) => item.category))]
+  const filtered = Boolean(filters.group || filters.category || words.length)
   return {
     cards,
-    topicOptions,
+    categoryOptions,
     empty: cards.length === 0,
     ...(filtered && { clearHref: listHref({}) }),
     resultText: `พบ ${cards.length} คอร์ส`,

@@ -23,7 +23,7 @@ export function SetTabs({ index, filters }: { index: SetListIndex; filters: SetF
   return <TabNav tabs={filterSetList(index, filters).tabs} tone="dark" />
 }
 
-/** ช่องค้นหา + เลือกหัวข้อ ตามตัวกรองใน URL · ใช้ใน <Suspense> */
+/** ช่องค้นหา + เลือกหมวดหมู่ ตามตัวกรองใน URL · ใช้ใน <Suspense> */
 export function SetFilterBarFromUrl({ index }: { index: SetListIndex }) {
   const filters = useFilters()
   return <SetFilterBar key={filtersToQuery(filters)} index={index} filters={filters} />
@@ -34,7 +34,7 @@ export function SetFilterBar({ index, filters }: { index: SetListIndex; filters:
     <FilterBar
       base="/sets"
       filters={filters}
-      topicOptions={filterSetList(index, filters).topicOptions}
+      categoryOptions={filterSetList(index, filters).categoryOptions}
       placeholder="ค้นหา SET หรือชื่อคอร์สข้างใน เช่น A-Level"
       label="ค้นหา SET"
     />

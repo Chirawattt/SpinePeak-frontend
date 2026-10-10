@@ -76,7 +76,6 @@ SpinPeak-frontend/
   "category": "ประถม",
   "tracks": ["ประถม"],
   "subject": "science",
-  "topics": [],
   "instructorSlug": "kru-nam",
   "status": "open",
   "price": 599,
@@ -158,7 +157,6 @@ type: `Group` `Subject` `Status` `SaleMode` `PageCount` `CourseStats` `Chapter` 
 
 - `chapters` มีจริงแค่ 15 จาก 44 คอร์ส
 - `stats` ไม่ครบ 24 จาก 44 คอร์ส (ตัวอย่างข้างบนไม่มี `questionCount` เพราะ sheet ไม่ได้กรอก)
-- `topics` ว่างทั้ง 44 คอร์ส
 - `pdfPages` เป็นช่วง (`{min,max}`) ใน 12 คอร์ส
 
 เวลา render **ต้องซ่อน slot นั้นไป ห้ามขึ้น "0 ชม." หรือช่องว่าง ๆ** เช่น
