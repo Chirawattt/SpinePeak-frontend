@@ -11,7 +11,7 @@ import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 // fallback ของ Suspense คือรายการที่ยังไม่กรอง HTML ที่ build ไว้จึงมีการ์ดจริงตั้งแต่แรก
 
 const TITLE = 'คอร์สเรียนทั้งหมด'
-const INTRO = 'เลือกระดับชั้นของน้องก่อน แล้วค่อยกรองตามหัวข้อที่สนใจ ทุกคอร์สซื้อครั้งเดียวดูได้ตลอดชีพ'
+const INTRO = 'เลือกระดับชั้นของน้องก่อน แล้วค่อยกรองตามหัวข้อที่สนใจ ทุกคอร์สซื้อครั้งเดียวดูได้ไม่จำกัดอายุ'
 
 export const metadata: Metadata = { title: TITLE, description: INTRO }
 
@@ -57,7 +57,7 @@ export default function CoursesPage() {
 
       <Stagger as="section" className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,320px),1fr))] items-start gap-9 px-gutter py-[52px]">
         <StaggerItem>
-          <h2 className="mb-3 font-heading text-[30px] font-bold">คำถามที่พบบ่อย</h2>
+          <h2 id="faq" className="mb-3 scroll-mt-[90px] font-heading text-[30px] font-bold">คำถามที่พบบ่อย</h2>
           <FaqList faqs={page.faqs} />
         </StaggerItem>
         <StaggerItem className="rounded-[20px] border border-line bg-footer p-7">

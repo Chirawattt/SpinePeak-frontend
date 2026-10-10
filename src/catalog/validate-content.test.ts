@@ -263,3 +263,21 @@ describe('validateContent() featured', () => {
     ])
   })
 })
+
+describe('validateContent() promos', () => {
+  const seasonal = { name: 'โปรเปิดเทอม', headline: ['โปรเปิดเทอม'], detail: '', endsAt: '2026-10-31T23:59:59+07:00' }
+  const problemsWith = (promo: typeof seasonal) =>
+    createCatalog(testContent({ site: testSite({ promos: { seasonal: [promo], evergreen: [] } }) })).validateContent()
+
+  it('accepts an end date with a timezone', () => {
+    expect(problemsWith(seasonal)).toEqual([])
+  })
+
+  it('reports an end date without a timezone, which would end at a different hour per visitor', () => {
+    expect(problemsWith({ ...seasonal, endsAt: '2026-10-31' })).toMatchObject([{ where: 'โปรตามฤดู #1 (โปรเปิดเทอม)' }])
+  })
+
+  it('reports an end date it cannot read', () => {
+    expect(problemsWith({ ...seasonal, endsAt: '31 ต.ค. 69+07:00' })).toHaveLength(1)
+  })
+})

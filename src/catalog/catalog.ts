@@ -5,9 +5,10 @@ import type { Clip, Course, CourseSet, Review, Site } from '@content/types'
 import type { ContactItem } from '@/contact'
 import { buildCourseCard, type CourseCard } from './course-card'
 import { buildCourseDetail, type CourseDetail } from './course-detail'
-import { listHref, type CourseFilters } from './course-filters'
-import { buildCourseListIndex, buildCoursesPage, filterCourseList, type CourseList, type ReviewQuote } from './course-list'
-import { groupLink, nonEmpty, type Faq, type NavLink } from './format'
+import type { CourseFilters } from './course-filters'
+import { buildCourseListIndex, buildCoursesPage, buildReviewQuote, filterCourseList, type CourseList, type ReviewQuote } from './course-list'
+import { groupLink, nonEmpty, type NavLink } from './format'
+import { buildPromos, type Promo } from './promos'
 import { courseOgCard, pageOgCard, setOgCard, type OgCard, type OgPage } from './og'
 import { buildSetDetail, type SetDetail } from './set-detail'
 import { buildSetListCard, buildSetListIndex, filterSetList, type SetFilters, type SetList, type SetListCard } from './set-list'
@@ -35,8 +36,8 @@ export type Landing = {
     /** false เมื่อ clips.json ว่าง ให้ซ่อนปุ่ม "ดูตัวอย่างคลิปสอน" */
     showClipsLink: boolean
   }
-  /** ทางเข้า 3 กลุ่ม ตามลำดับใน site.json */
-  groups: GroupEntry[]
+  /** แถบโปรโมชัน · ว่างเมื่อไม่มีโปร ให้ซ่อนทั้งแถบ */
+  promos: Promo[]
   /** ไม่มีค่าเมื่อ site.json ไม่มีผู้สอน ให้ซ่อนส่วนแนะนำครู */
   teacher?: Teacher
   /** ว่างเมื่อ clips.json ว่าง ให้ซ่อนทั้งส่วน */
@@ -45,7 +46,6 @@ export type Landing = {
   reviews: ReviewQuote[]
   /** ของแนะนำ (หัวข้อ "คอร์สขายดี") ตามลำดับใน site.json · ว่างเมื่อไม่ได้เลือกไว้ ให้ซ่อนทั้งส่วน */
   featured: FeaturedCard[]
-  faqs: Faq[]
   /** เมนูหัวเว็บ · ลิงก์ไปส่วนที่ซ่อนอยู่จะไม่โผล่ */
   nav: NavLink[]
 }
@@ -53,10 +53,8 @@ export type Landing = {
 /** การ์ดของแนะนำ · ใช้การ์ดเดิมของคอร์ส / เซ็ต + ป้ายที่เจ้าของใส่ + ของที่ปุ่มติดต่อต้องบอกแอดมิน */
 export type FeaturedCard = { label?: string; contactItem: ContactItem } & (
   | { kind: 'course'; card: CourseCard }
-  | { kind: 'set'; card: SetListCard }
+  | { kind: 'set'; card: SetListCard; /** เช่น "แพ็กคู่ · ประหยัด 199.-" */ eyebrow: string }
 )
-
-export type GroupEntry = { label: string; /** เช่น "24 คอร์ส" */ count: string; href: string }
 
 export type Teacher = { name: string; bio: string; tags: string[] }
 
@@ -75,7 +73,8 @@ export type Footer = {
   socials: SocialLink[]
 }
 
-export function createCatalog(content: Content) {
+/** now: เวลาที่ใช้ตัดโปรที่หมดเขต (ค่าเริ่มต้น = ตอน build) */
+export function createCatalog(content: Content, { now = () => new Date() }: { now?: () => Date } = {}) {
   const { site, courses, sets } = content
 
   function landing(): Landing {
@@ -83,21 +82,21 @@ export function createCatalog(content: Content) {
     const main = site.instructors[0]
     const teacher = main && { name: main.name, bio: nonEmpty(main.longBio) ?? main.shortBio, tags: main.tags }
     const clips = content.clips.map((c) => ({ title: c.title, meta: `${c.sourceLabel} · ${c.minutes} นาที`, href: c.youtubeUrl, ...(nonEmpty(c.thumbnail) && { thumbnail: c.thumbnail }) }))
-    const reviews = content.reviews.map((r) => ({ quote: r.quote, by: `${r.studentName} · ${r.grade}` }))
+    const reviews = content.reviews.map(buildReviewQuote)
     // ของที่ไม่มีอยู่ข้ามไป: validateContent() รายงานให้ build พังก่อนอยู่แล้ว
     const featured = site.featured.flatMap((item): FeaturedCard[] => {
       const label = nonEmpty(item.label)
       if (item.type === 'set') {
         const set = sets.find((s) => s.slug === item.slug)
         if (!set) return []
-        return [{ kind: 'set', card: buildSetListCard(set, courses, site), contactItem: { kind: 'set', slug: set.slug, title: set.title }, ...(label && { label }) }]
+        const card = buildSetListCard(set, courses, site)
+        const eyebrow = [set.courseSlugs.length === 2 ? 'แพ็กคู่' : `SET ${card.courseCount}`, card.savings && `ประหยัด ${card.savings.amount}`].filter(Boolean).join(' · ')
+        return [{ kind: 'set', card, eyebrow, contactItem: { kind: 'set', slug: set.slug, title: set.title }, ...(label && { label }) }]
       }
       const course = courses.find((c) => c.slug === item.slug)
       if (!course) return []
       return [{ kind: 'course', card: buildCourseCard(course, site), contactItem: { kind: 'course', slug: course.slug, title: course.title }, ...(label && { label }) }]
     })
-    const countIn = (group: string) => courses.filter((c) => c.group === group).length
-
     return {
       hero: {
         badge: site.brand.heroBadge,
@@ -107,15 +106,14 @@ export function createCatalog(content: Content) {
         photoAlt: main?.name ?? site.brand.name,
         showClipsLink: clips.length > 0,
       },
-      groups: site.groups.map((g) => ({ label: g.label, count: `${countIn(g.key)} คอร์ส`, href: listHref({ group: g.key }) })),
+      promos: buildPromos(site, sets, courses, now()),
       ...(teacher && { teacher }),
       clips,
       reviews,
       featured,
-      faqs: site.faqs,
       nav: [
         { label: 'คอร์สเรียน', href: '/courses' },
-        { label: 'เซ็ตคอร์ส', href: '/sets' },
+        { label: 'SET คอร์ส', href: '/sets' },
         ...(teacher ? [{ label: 'แนะนำครู', href: '/#teacher' }] : []),
         ...(reviews.length > 0 ? [{ label: 'รีวิว', href: '/#reviews' }] : []),
       ],

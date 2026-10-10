@@ -7,9 +7,10 @@ const SOCIAL_BADGE: Record<SocialLink['kind'], string> = { instagram: 'IG', face
 
 // ไม่มี "วิธีชำระเงิน": เฟส 1 ยังไม่มีระบบจ่ายเงิน
 // ไม่มีเงื่อนไขการใช้งาน / นโยบายความเป็นส่วนตัว: ยังไม่มีหน้า
+// ชี้ไป FAQ ของหน้ารายการคอร์สชั่วคราว จนกว่าจะเปลี่ยนเป็น modal (issue #16)
 const HELP_LINKS = [
-  { label: 'วิธีสมัครเรียน', href: '/#faq' },
-  { label: 'คำถามที่พบบ่อย', href: '/#faq' },
+  { label: 'วิธีสมัครเรียน', href: '/courses#faq' },
+  { label: 'คำถามที่พบบ่อย', href: '/courses#faq' },
 ]
 
 function ColumnTitle({ children }: { children: React.ReactNode }) {
@@ -47,7 +48,7 @@ export function SiteFooter() {
               </Link>
             ))}
             <Link href="/sets" className={linkClass}>
-              เซ็ตคอร์ส
+              SET คอร์ส
             </Link>
           </div>
         </div>

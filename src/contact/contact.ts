@@ -8,8 +8,8 @@ import type { Site } from '@content/types'
 
 export type ContactChannel = 'line' | 'facebook'
 
-/** ของที่ผู้ชมสนใจ ไม่ระบุได้ (เช่น ปุ่มในหน้าแรก) */
-export type ContactItem = { kind: 'course' | 'set'; slug: string; title: string }
+/** ของที่ผู้ชมสนใจ ไม่ระบุได้ (เช่น ปุ่มในหน้าแรก) · promo = โปรโมชัน title คือชื่อโปรที่ลูกค้าบอกแอดมิน */
+export type ContactItem = { kind: 'course' | 'set' | 'promo'; slug: string; title: string }
 
 export function createContact(site: Site) {
   const { line, facebook } = site.contact
@@ -22,7 +22,7 @@ export function createContact(site: Site) {
       return `${chat}?${encodeURIComponent(text)}`
     }
 
-    // ref บอกเพจว่าแชทนี้มาจากคอร์สหรือเซ็ตไหน
+    // ref บอกเพจว่าแชทนี้มาจากคอร์ส เซ็ต หรือโปรไหน
     const chat = `https://m.me/${facebook.pageId}`
     return item ? `${chat}?ref=${item.kind}_${item.slug}` : chat
   }

@@ -19,7 +19,7 @@ export type SetDetail = {
   price: string
   /** ไม่มีค่าเมื่อประหยัดไม่ถึงเกณฑ์ใน site.json ให้แสดงราคาเซ็ตราคาเดียว ไม่ขีดฆ่า */
   savings?: SetSavings
-  /** เช่น "ดูได้ตลอดชีพ" */
+  /** เช่น "ดูได้ไม่จำกัดอายุ" */
   lifetime: string
   /** เช่น "3 คอร์ส" */
   courseCount: string

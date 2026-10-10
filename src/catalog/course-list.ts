@@ -76,7 +76,13 @@ export function filterCourseList(index: CourseListIndex, filters: CourseFilters)
 /** การ์ด "ไม่แน่ใจว่าเรียนอะไรดี" ท้ายหน้า · กดแล้วไปรายการที่กรองไว้ */
 export type GoalLink = { title: string; desc: string; href: string }
 
-export type ReviewQuote = { quote: string; by: string }
+/** รีวิวหนึ่งใบ · cover ไม่มีค่าเมื่อยังไม่มีรูปปกรีวิว ให้ใช้กล่องสีที่มีชื่อผู้รีวิวแทน */
+export type ReviewQuote = { quote: string; /** เช่น "น้องมายด์ · ม.5" */ by: string; name: string; cover?: string }
+
+export function buildReviewQuote(r: Review): ReviewQuote {
+  const cover = nonEmpty(r.coverImage)
+  return { quote: r.quote, by: `${r.studentName} · ${r.grade}`, name: r.studentName, ...(cover && { cover }) }
+}
 
 /** ส่วนท้ายหน้ารายการคอร์ส ที่ไม่ขึ้นกับตัวกรอง */
 export type CoursesPage = {
@@ -97,7 +103,7 @@ export function buildCoursesPage(site: Site, reviews: Review[]): CoursesPage {
       desc: g.desc,
       href: listHref({ ...(g.filter.group && { group: g.filter.group }), ...(g.filter.category && { track: g.filter.category }) }),
     })),
-    reviews: reviews.map((r) => ({ quote: r.quote, by: `${r.studentName} · ${r.grade}` })),
+    reviews: reviews.map(buildReviewQuote),
     faqs: site.faqs,
     ...(hours && { hours }),
   }

@@ -45,6 +45,13 @@
   --color-ring-dashed: #9fddee;
   --color-ring-faint: #dcf2f8;
 
+  /* ของบนพื้นเข้ม (การ์ดโปรตามฤดู, การ์ด SET, hero ของหน้า SET) */
+  --color-dot-dark: #1f5360;
+  --color-on-dark-soft: #c6dee4;
+  /* พื้นอ่อนของการ์ด SET / โปรตลอดปี และตัวอักษรเล็กหัวการ์ด */
+  --color-set-wash: #f4fcff;
+  --color-eyebrow: #3e7784;
+
   /* ระยะขอบซ้ายขวาของทุก section: กว้างสุด 1180px แล้วจัดกึ่งกลาง */
   --spacing-gutter: max(clamp(18px, 5vw, 56px), calc((100% - 1180px) / 2));
 }

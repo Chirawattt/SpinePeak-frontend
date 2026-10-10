@@ -136,5 +136,14 @@ export function validateContent(content: Content): ContentProblem[] {
     }
   })
 
+  // โปรตามฤดู: วันหมดเขตต้องอ่านได้และระบุ timezone ไม่งั้นการ์ดจะหายหรือค้างผิดวัน
+  site.promos.seasonal.forEach((promo, i) => {
+    const where = `โปรตามฤดู #${i + 1} (${promo.name})`
+    if (!/(Z|[+-]\d\d:\d\d)$/.test(promo.endsAt) || Number.isNaN(new Date(promo.endsAt).getTime())) {
+      report(where, `endsAt "${promo.endsAt}" ต้องเป็นวันเวลาพร้อม timezone เช่น "2026-10-31T23:59:59+07:00"`)
+    }
+    if (promo.headline.length === 0) report(where, 'headline ว่าง')
+  })
+
   return problems
 }

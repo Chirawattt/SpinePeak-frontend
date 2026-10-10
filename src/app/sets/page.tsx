@@ -11,7 +11,7 @@ import { SetFilterBar, SetFilterBarFromUrl, SetGrid, SetGridFromUrl, SetTabs, Se
 // fallback ของ Suspense คือรายการที่ยังไม่กรอง HTML ที่ build ไว้จึงมีการ์ดจริงตั้งแต่แรก
 
 const TITLE = 'เซ็ตคอร์ส'
-const INTRO = 'รวมคอร์สที่เรียนต่อเนื่องกันไว้ในเซ็ตเดียว ซื้อเป็นเซ็ตคุ้มกว่าซื้อแยก ทุกเซ็ตซื้อครั้งเดียวดูได้ตลอดชีพ'
+const INTRO = 'รวมคอร์สที่เรียนต่อเนื่องกันไว้ในเซ็ตเดียว ซื้อเป็นเซ็ตคุ้มกว่าซื้อแยก ทุก SET ซื้อครั้งเดียวดูได้ไม่จำกัดอายุ'
 
 export const metadata: Metadata = { title: TITLE, description: INTRO }
 

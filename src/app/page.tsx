@@ -1,19 +1,18 @@
 import { catalog } from '@/catalog'
 import { Hero } from '@/components/landing/hero'
-import { ClipsSection, ClosingBand, FaqSection, FeaturedSection, FloatingContact, GroupEntries, ReviewsSection, TeacherSection } from '@/components/landing/sections'
+import { ClipsSection, ClosingBand, FeaturedSection, FloatingContact, PromoSection, ReviewsSection, TeacherSection } from '@/components/landing/sections'
 
 export default function LandingPage() {
-  const { hero, groups, featured, teacher, clips, reviews, faqs } = catalog.landing()
+  const { hero, promos, featured, teacher, clips, reviews } = catalog.landing()
 
   return (
     <>
       <Hero hero={hero} />
-      <GroupEntries groups={groups} />
+      {promos.length > 0 && <PromoSection promos={promos} />}
       {featured.length > 0 && <FeaturedSection items={featured} />}
       {teacher && <TeacherSection teacher={teacher} photoAlt={teacher.name} />}
       {clips.length > 0 && <ClipsSection clips={clips} />}
       {reviews.length > 0 && <ReviewsSection reviews={reviews} />}
-      <FaqSection faqs={faqs} />
       <ClosingBand />
       <FloatingContact />
     </>

@@ -104,6 +104,39 @@ export type FeaturedItem = {
   label?: string
 }
 
+/**
+ * โปรโมชันบนหน้าแรก · ลูกค้าใช้โปรโดยบอกชื่อโปรกับแอดมินตอนทัก ไม่มีโค้ด
+ * โปรตามฤดูมีวันหมดเขต พ้นแล้วไม่แสดง · โปรตลอดปีไม่มีวันหมด
+ */
+export type Promotions = {
+  seasonal: {
+    /** ชื่อโปรที่ลูกค้าบอกแอดมิน และอยู่ในข้อความทัก LINE */
+    name: string
+    /** หัวการ์ด แต่ละช่องขึ้นบรรทัดใหม่ เช่น ["โปรเปิดเทอม 2", "ลดเพิ่ม 15% ทุก SET"] */
+    headline: string[]
+    /** บรรทัดเล็กใต้หัว เช่น "ทุก SET · ถึง 31 ต.ค. 69" */
+    detail: string
+    /** ISO 8601 พร้อม timezone เช่น "2026-10-31T23:59:59+07:00" */
+    endsAt: string
+  }[]
+  evergreen: (
+    | {
+        /** ตัวเลขใหญ่คำนวณจาก SET ที่ประหยัดสูงสุด กดแล้วไปหน้า SET */
+        kind: 'set-savings'
+        name: string
+        desc: string
+      }
+    | {
+        /** กดแล้วทักแอดมินพร้อมชื่อโปร */
+        kind: 'contact'
+        name: string
+        /** ตัวเลขใหญ่บนการ์ด เช่น "100.-" */
+        value: string
+        desc: string
+      }
+  )[]
+}
+
 export type Site = {
   brand: {
     name: string
@@ -134,6 +167,8 @@ export type Site = {
   }[]
   /** ของแนะนำบนหน้าแรก เรียงตามลำดับนี้ · ว่าง = ซ่อนส่วน "คอร์สขายดี" ทั้งส่วน */
   featured: FeaturedItem[]
+  /** แถบโปรโมชันบนหน้าแรก · ไม่มีโปรเลย = ซ่อนทั้งแถบ */
+  promos: Promotions
   faqs: { q: string; a: string }[]
   config: {
     lifetimeLabel: string

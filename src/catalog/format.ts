@@ -38,7 +38,7 @@ export function formatBaht(amount: number): string {
   return `${amount.toLocaleString('en-US')}.-`
 }
 
-/** ป้ายดูได้ตลอดชีพ เช่น "ดูได้ตลอดชีพ" จาก site.json → config.lifetimeLabel */
+/** ป้ายอายุคอร์ส เช่น "ดูได้ไม่จำกัดอายุ" จาก site.json → config.lifetimeLabel */
 export function lifetimeLabel(site: Site): string {
   return `ดูได้${site.config.lifetimeLabel}`
 }
@@ -63,20 +63,25 @@ function present(value: number | undefined): value is number {
   return value != null && value > 0
 }
 
-/** ตัวเลขทั้งแถวในบรรทัดเดียว เช่น "150 ข้อ · 6 ชม." สำหรับการ์ด · ว่างเมื่อไม่มีตัวเลขเลย */
+/** ตัวเลขทั้งแถวในบรรทัดเดียว เช่น "VDO 6 ชม. · PDF 80 หน้า · 150 ข้อ" สำหรับการ์ด · ว่างเมื่อไม่มีตัวเลขเลย */
 export function statsLine(stats: CourseStats): string {
-  return statsRow(stats)
-    .map((s) => s.value)
+  return statParts(stats)
+    .map((s) => (s.prefix ? `${s.prefix} ${s.value}` : s.value))
     .join(' · ')
 }
 
-/** แถว ข้อสอบ / หน้า PDF / ชั่วโมงวิดีโอ เฉพาะตัวที่มีค่า */
-export function statsRow({ questionCount, pdfPages, videoHours }: CourseStats): Stat[] {
-  const out: Stat[] = []
-  if (present(questionCount)) out.push({ value: `${questionCount} ข้อ`, label: 'ข้อสอบ' })
+/** แถว ชั่วโมงวิดีโอ / หน้า PDF / ข้อสอบ เฉพาะตัวที่มีค่า */
+export function statsRow(stats: CourseStats): Stat[] {
+  return statParts(stats).map(({ value, label }) => ({ value, label }))
+}
+
+/** prefix ใช้ในบรรทัดย่อของการ์ดเท่านั้น */
+function statParts({ questionCount, pdfPages, videoHours }: CourseStats): (Stat & { prefix?: string })[] {
+  const out: (Stat & { prefix?: string })[] = []
+  if (present(videoHours)) out.push({ value: `${videoHours} ชม.`, label: 'วิดีโอ', prefix: 'VDO' })
   // หน้า PDF เป็นช่วงได้ ({min,max}) ตัวเลขเดี่ยวใช้กฎ 0 = ไม่มีข้อมูลเหมือนตัวอื่น
   const pages = typeof pdfPages === 'number' && !present(pdfPages) ? null : formatPages(pdfPages)
-  if (pages) out.push({ value: pages, label: 'ไฟล์ PDF' })
-  if (present(videoHours)) out.push({ value: `${videoHours} ชม.`, label: 'วิดีโอ' })
+  if (pages) out.push({ value: pages, label: 'ไฟล์ PDF', prefix: 'PDF' })
+  if (present(questionCount)) out.push({ value: `${questionCount} ข้อ`, label: 'ข้อสอบ' })
   return out
 }

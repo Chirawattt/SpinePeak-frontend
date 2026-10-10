@@ -11,7 +11,7 @@ export function SiteHeader() {
       <Link href="/" className="shrink-0">
         <Logo size={44} priority />
       </Link>
-      <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-sm font-semibold sm:gap-x-5 sm:text-[15px]">
+      <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-sm font-medium sm:gap-x-5 sm:text-[15px]">
         {nav.map((item) => (
           <Link key={item.href} href={item.href} className="hover:text-link-hover">
             {item.label}

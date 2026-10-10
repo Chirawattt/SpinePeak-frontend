@@ -30,7 +30,7 @@ export type CourseDetail = {
   statusLabel?: string
   /** ราคาเดียว คอร์สเดี่ยวไม่มีราคาขีดฆ่า */
   price: string
-  /** เช่น "ดูได้ตลอดชีพ" */
+  /** เช่น "ดูได้ไม่จำกัดอายุ" */
   lifetime: string
   /** ข้อสอบ / หน้า PDF / ชั่วโมงวิดีโอ เฉพาะตัวที่มีค่า */
   stats: Stat[]

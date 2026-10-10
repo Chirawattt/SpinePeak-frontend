@@ -1,44 +1,148 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import type { ClipCard, FeaturedCard as FeaturedCardData, GroupEntry, Landing, ReviewQuote, Teacher } from '@/catalog'
+import type { ClipCard, FeaturedCard as FeaturedCardData, Promo, ReviewQuote, Teacher } from '@/catalog'
+import { Carousel } from '@/components/carousel'
 import { ContactButton } from '@/components/contact-button'
 import { CoverBox } from '@/components/cover-box'
-import { FaqList } from '@/components/faq-list'
+import { SeasonalPromo } from '@/components/landing/seasonal-promo'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
+import { contactHref } from '@/contact'
 
-// ส่วนต่าง ๆ ของหน้าแรก ตาม design-landing.html · ส่วนที่ design ไม่มี (ทางเข้า 3 กลุ่ม, FAQ) ใช้โทนเดียวกัน
-// แต่ละส่วนที่ซ่อนได้ (คลิป, รีวิว) ให้ผู้เรียกไม่ render เมื่อว่าง
+// ส่วนต่าง ๆ ของหน้าแรก ตาม docs/design-landing.dc.html
+// แต่ละส่วนที่ซ่อนได้ (โปรโมชัน, คลิป, รีวิว) ให้ผู้เรียกไม่ render เมื่อว่าง
 
 const SECTION_TITLE = 'font-heading text-[clamp(24px,3.8vw,32px)] font-bold'
 
-/** ทางเข้า 3 กลุ่ม · กดแล้วไปรายการคอร์สที่กรองกลุ่มนั้น */
-export function GroupEntries({ groups }: { groups: GroupEntry[] }) {
+/** แถบโปรโมชัน ต่อจาก hero · เลื่อนไปการ์ดถัดไปเองทุก 4 วินาที */
+export function PromoSection({ promos }: { promos: Promo[] }) {
   return (
-    <section aria-labelledby="group-entries" className="px-gutter pt-2 pb-14">
-      <Reveal>
-        <h2 id="group-entries" className={`${SECTION_TITLE} mb-6`}>
-          น้องอยู่ชั้นไหน
-        </h2>
-      </Reveal>
-      <Stagger as="ul" className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,240px),1fr))] gap-4">
-        {groups.map((group) => (
-          <StaggerItem key={group.href} as="li" lift className="flex">
-            <Link
-              href={group.href}
-              className="flex w-full items-center justify-between gap-3 rounded-[18px] border border-line bg-white p-6 transition-colors hover:border-brand hover:bg-brand-wash"
-            >
-              <span>
-                <span className="block font-heading text-2xl font-semibold">{group.label}</span>
-                <span className="text-[14.5px] text-muted">{group.count}</span>
-              </span>
-              <span aria-hidden className="text-xl">
-                →
-              </span>
+    <Reveal as="section" className="px-gutter pt-5 pb-2">
+      <Carousel
+        label="โปรโมชัน"
+        autoplaySeconds={4}
+        gap={18}
+        className="snap-x snap-mandatory gap-[18px] pb-2"
+        header={
+          <div className="flex flex-1 flex-wrap items-baseline justify-between gap-3">
+            <h2 id="promo" className={`${SECTION_TITLE} scroll-mt-[90px]`}>
+              โปรโมชัน
+            </h2>
+            <Link href="/sets" className="text-[15px] font-semibold hover:text-link-hover">
+              ดู SET ทั้งหมด →
             </Link>
+          </div>
+        }
+      >
+        {promos.map((promo) =>
+          promo.kind === 'seasonal' ? (
+            <SeasonalPromo key={promo.name} name={promo.name} headline={promo.headline} detail={promo.detail} endsAt={promo.endsAt} href={contactHref(promo.contactItem, 'line')} />
+          ) : (
+            <li key={promo.name} className="flex w-[min(72vw,300px)] shrink-0 snap-start">
+              <EvergreenPromo promo={promo} />
+            </li>
+          ),
+        )}
+      </Carousel>
+    </Reveal>
+  )
+}
+
+function EvergreenPromo({ promo }: { promo: Extract<Promo, { kind: 'evergreen' }> }) {
+  const body = (
+    <>
+      <span className="font-mono text-xs font-semibold text-eyebrow">ตลอดปี</span>
+      <span className="font-heading text-[42px] leading-none font-bold">{promo.value}</span>
+      <span className="font-heading text-lg font-bold">{promo.name}</span>
+      <span className="text-[14.5px] leading-[1.6] text-ink-soft">{promo.desc}</span>
+    </>
+  )
+  // การ์ดที่ลิงก์ในเว็บพื้นฟ้าอ่อน การ์ดทักแอดมินพื้นขาวมีขอบ ตาม design
+  const card = 'flex w-full flex-col gap-2.5 rounded-[22px] p-[26px] transition-colors'
+  if (promo.href) {
+    return (
+      <Link href={promo.href} className={`${card} bg-brand-wash hover:bg-brand-soft/60`}>
+        {body}
+      </Link>
+    )
+  }
+  return (
+    <a
+      href={promo.contactItem && contactHref(promo.contactItem, 'line')}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${promo.name} · ทักแอดมินเพื่อใช้โปรนี้`}
+      className={`${card} border border-line bg-set-wash hover:border-brand`}
+    >
+      {body}
+    </a>
+  )
+}
+
+/** "คอร์สขายดี": ของแนะนำที่เจ้าของเลือกใน site.json ผสมคอร์สกับ SET · ว่างให้ผู้เรียกไม่ render */
+export function FeaturedSection({ items }: { items: FeaturedCardData[] }) {
+  return (
+    <section aria-labelledby="featured-title" className="px-gutter pt-[52px] pb-16">
+      <Reveal className="mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+        <h2 id="featured-title" className={SECTION_TITLE}>
+          คอร์สขายดี
+        </h2>
+        <Link href="/courses" className="text-[15px] font-semibold hover:text-link-hover">
+          ดูคอร์สทั้งหมด →
+        </Link>
+      </Reveal>
+      <Stagger as="ul" className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-[22px]">
+        {items.map((item) => (
+          <StaggerItem key={`${item.kind}:${item.card.slug}`} as="li" lift className="flex">
+            <FeaturedCard item={item} />
           </StaggerItem>
         ))}
       </Stagger>
     </section>
+  )
+}
+
+/**
+ * ใช้ข้อมูลการ์ดเดิมของคอร์ส / SET · ชื่อกดเข้าหน้ารายละเอียด ส่วนปุ่มสมัครเป็นปุ่มติดต่อ (จึงไม่ห่อทั้งใบด้วยลิงก์)
+ * การ์ด SET ใช้โทนเข้ม (ขอบเข้ม ปกเข้ม ปุ่มเข้ม) ให้แยกออกจากคอร์สเดี่ยวได้ทันที
+ */
+function FeaturedCard({ item }: { item: FeaturedCardData }) {
+  const { card } = item
+  const isSet = item.kind === 'set'
+  return (
+    <article
+      className={`relative flex w-full flex-col overflow-hidden rounded-[18px] transition-shadow hover:shadow-card ${isSet ? 'border-[1.5px] border-ink bg-set-wash' : 'border border-line bg-white'}`}
+    >
+      <div className="relative">
+        {isSet && !card.cover.image ? (
+          <div className="flex h-[150px] items-center justify-center bg-ink px-5 text-center font-heading text-[26px] leading-tight font-bold text-brand">{card.title}</div>
+        ) : (
+          <CoverBox cover={card.cover} label={isSet ? item.card.codeLabel : item.card.label} title={card.title} className="aspect-auto! h-[150px] rounded-none!" />
+        )}
+        {item.label && <span className="absolute top-3 left-3 rounded-full bg-ink px-3 py-1 text-xs font-semibold text-white ring-1 ring-brand/40">{item.label}</span>}
+      </div>
+      <div className="flex flex-1 flex-col gap-2.5 px-[22px] pt-5 pb-[22px]">
+        <div className="font-mono text-xs font-semibold text-eyebrow">{isSet ? item.eyebrow : item.card.label}</div>
+        <h3 className="font-heading text-[21px] leading-[1.3] font-semibold">
+          <Link href={card.href} className="after:absolute after:inset-0 hover:text-link-hover">
+            {card.title}
+          </Link>
+        </h3>
+        <p className="flex-1 text-[14.5px] leading-[1.6] text-muted">{card.tagline}</p>
+        {card.facts && <p className="text-[13.5px] text-muted">{card.facts}</p>}
+        <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+          <span className="font-heading text-[26px] font-bold">{card.price}</span>
+          {isSet && item.card.savings && (
+            <span className="text-[15px] text-strike line-through">
+              <span className="sr-only">ราคาปกติ </span>
+              {item.card.savings.regularPrice}
+            </span>
+          )}
+        </div>
+        <ContactButton item={item.contactItem} variant={isSet ? 'dark' : 'brand'} className="relative z-10 mt-1 p-[13px] text-base">
+          สมัครเรียนเลย
+        </ContactButton>
+      </div>
+    </article>
   )
 }
 
@@ -108,46 +212,41 @@ export function ClipsSection({ clips }: { clips: ClipCard[] }) {
   )
 }
 
-/** รีวิวจากนักเรียน · id="reviews" เป็นปลายทางของเมนู · เลื่อนแนวนอนด้วย scroll-snap ไม่ต้องใช้ JS */
+/** รีวิวจากนักเรียน · id="reviews" เป็นปลายทางของเมนู · ปุ่ม ‹ › เลื่อนทีละใบ */
 export function ReviewsSection({ reviews }: { reviews: ReviewQuote[] }) {
+  // ต่อจากคลิปไม่ต้องเว้นบนซ้ำ คลิปเว้นล่างไว้แล้ว
   return (
-    <section id="reviews" aria-labelledby="reviews-title" className="scroll-mt-[90px] px-gutter pb-14">
-      <Reveal>
-        <h2 id="reviews-title" className={`${SECTION_TITLE} mb-6`}>
-          รีวิวจากนักเรียน
-        </h2>
-      </Reveal>
-      {/* ไล่จากซ้าย: เข้ามาทางข้าง ตามทิศที่เลื่อนดู */}
-      <Stagger as="ul" className="flex snap-x snap-proximity gap-5 overflow-x-auto pb-1 [scrollbar-width:none]">
+    <Reveal as="section" className="px-gutter pt-14 pb-14 [#clips+&]:pt-0">
+      <Carousel
+        label="รีวิวจากนักเรียน"
+        gap={20}
+        className="snap-x snap-proximity gap-5 pb-1"
+        header={
+          <h2 id="reviews" className={`${SECTION_TITLE} scroll-mt-[90px]`}>
+            รีวิวจากนักเรียน
+          </h2>
+        }
+      >
         {reviews.map((review, i) => (
-          <StaggerItem
-            key={i}
-            as="li"
-            from={{ opacity: 0, x: 24 }}
-            className="flex w-[min(340px,80vw)] shrink-0 snap-start flex-col rounded-2xl border border-line bg-white p-6"
-          >
-            <p className="mb-4 text-base leading-[1.75]">“{review.quote}”</p>
-            <p className="mt-auto text-sm text-muted">{review.by}</p>
-          </StaggerItem>
+          <li key={i} className="flex w-[min(340px,80vw)] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-white">
+            <div className="relative flex h-[150px] items-center justify-center bg-brand-wash">
+              {review.cover ? (
+                <Image src={review.cover} alt="" fill sizes="340px" className="object-cover" />
+              ) : (
+                // ยังไม่มีรูปปกรีวิว: กล่องสีที่มีชื่อผู้รีวิว
+                <span aria-hidden className="font-heading text-xl font-semibold text-eyebrow">
+                  {review.name}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-1 flex-col p-6">
+              <p className="mb-4 text-base leading-[1.75]">“{review.quote}”</p>
+              <p className="mt-auto text-sm text-muted">{review.by}</p>
+            </div>
+          </li>
         ))}
-      </Stagger>
-    </section>
-  )
-}
-
-/** คำถามที่พบบ่อย · id="faq" เป็นปลายทางของลิงก์ใน footer */
-export function FaqSection({ faqs }: { faqs: Landing['faqs'] }) {
-  return (
-    <section id="faq" aria-labelledby="faq-title" className="scroll-mt-[90px] border-t border-line bg-tint px-gutter py-14">
-      <Reveal>
-        <h2 id="faq-title" className={`${SECTION_TITLE} mb-4`}>
-          คำถามที่พบบ่อย
-        </h2>
-      </Reveal>
-      <Reveal className="max-w-[820px]">
-        <FaqList faqs={faqs} />
-      </Reveal>
-    </section>
+      </Carousel>
+    </Reveal>
   )
 }
 
@@ -156,7 +255,7 @@ export function ClosingBand() {
     <section className="bg-brand px-gutter py-14">
       <Stagger className="flex flex-wrap items-center justify-between gap-x-8 gap-y-6">
         <StaggerItem>
-          <h2 className="mb-2.5 font-heading text-[clamp(26px,4.4vw,36px)] font-bold text-band-ink">เริ่มเรียนวันนี้ ดูได้ตลอดชีพ</h2>
+          <h2 className="mb-2.5 font-heading text-[clamp(26px,4.4vw,36px)] font-bold text-band-ink">เริ่มเรียนวันนี้ ดูได้ไม่จำกัดอายุ</h2>
           <p className="text-[17px]">ไม่มีวันหมดอายุ ทบทวนก่อนสอบกี่รอบก็ได้</p>
         </StaggerItem>
         <StaggerItem>
@@ -176,69 +275,5 @@ export function FloatingContact() {
         ทักแอดมิน
       </ContactButton>
     </Reveal>
-  )
-}
-
-/** "คอร์สขายดี": ของแนะนำที่เจ้าของเลือกใน site.json ผสมคอร์สกับเซ็ต · ว่างให้ผู้เรียกไม่ render */
-export function FeaturedSection({ items }: { items: FeaturedCardData[] }) {
-  return (
-    <section aria-labelledby="featured-title" className="px-gutter py-14">
-      <Reveal className="mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-        <h2 id="featured-title" className={SECTION_TITLE}>
-          คอร์สขายดี
-        </h2>
-        <Link href="/courses" className="text-[15px] font-semibold hover:text-link-hover">
-          ดูคอร์สทั้งหมด →
-        </Link>
-      </Reveal>
-      <Stagger as="ul" className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-[22px]">
-        {items.map((item) => (
-          <StaggerItem key={`${item.kind}:${item.card.slug}`} as="li" lift className="flex">
-            <FeaturedCard item={item} />
-          </StaggerItem>
-        ))}
-      </Stagger>
-    </section>
-  )
-}
-
-/** ใช้ข้อมูลการ์ดเดิมของคอร์ส / เซ็ต · ชื่อกดเข้าหน้ารายละเอียด ส่วนปุ่มสมัครเป็นปุ่มติดต่อ (จึงไม่ห่อทั้งใบด้วยลิงก์) */
-function FeaturedCard({ item }: { item: FeaturedCardData }) {
-  const { card } = item
-  const isCourse = item.kind === 'course'
-  return (
-    <article className="relative flex w-full flex-col overflow-hidden rounded-[18px] border border-line bg-white transition-shadow hover:shadow-card">
-      <div className="relative">
-        <CoverBox cover={card.cover} label={isCourse ? item.card.label : item.card.codeLabel} title={card.title} className="rounded-none!" />
-        {item.label && <span className="absolute top-3 left-3 rounded-full bg-ink px-3 py-1 text-xs font-semibold text-white">{item.label}</span>}
-      </div>
-      <div className="flex flex-1 flex-col gap-[9px] px-5 pt-[18px] pb-5">
-        <div className="font-mono text-xs font-semibold text-link-hover">{isCourse ? item.card.label : `${item.card.codeLabel} · ${item.card.group}`}</div>
-        <h3 className="font-heading text-xl leading-[1.3] font-semibold">
-          <Link href={card.href} className="after:absolute after:inset-0 hover:text-link-hover">
-            {card.title}
-          </Link>
-        </h3>
-        <p className="flex-1 text-[14.5px] leading-relaxed text-muted">{isCourse ? item.card.tagline : `รวม ${item.card.courseCount}`}</p>
-        {isCourse && item.card.facts && <p className="text-[13.5px] text-muted">{item.card.facts}</p>}
-        <div className="mt-1 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-          <span className="font-heading text-[26px] font-bold">{card.price}</span>
-          {!isCourse && item.card.savings && (
-            <span className="text-[15px] text-strike line-through">
-              <span className="sr-only">ราคาปกติ </span>
-              {item.card.savings.regularPrice}
-            </span>
-          )}
-        </div>
-        {!isCourse && item.card.savings && (
-          <div className="text-sm font-semibold text-link-hover">
-            ประหยัด {item.card.savings.amount} ({item.card.savings.percent})
-          </div>
-        )}
-        <ContactButton item={item.contactItem} variant="brand" className="relative z-10 mt-1 p-[13px] text-base">
-          สมัครเรียนเลย
-        </ContactButton>
-      </div>
-    </article>
   )
 }

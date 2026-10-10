@@ -1,7 +1,7 @@
 import { content } from '@/content'
 import { createCatalog } from './catalog'
 
-export type { Catalog, ClipCard, Content, FeaturedCard, Footer, GroupEntry, HeroStat, Landing, SocialLink, Teacher } from './catalog'
+export type { Catalog, ClipCard, Content, FeaturedCard, Footer, HeroStat, Landing, SocialLink, Teacher } from './catalog'
 export type { CourseCard } from './course-card'
 export type { OgCard, OgPage } from './og'
 export type { CourseFilters } from './course-filters'
@@ -12,6 +12,7 @@ export type { Cover, CoverTone, Faq, NavLink, Stat } from './format'
 export type { SetCard, SetSavings } from './set-card'
 export type { SetFilters, SetList, SetListCard, SetListIndex } from './set-list'
 export type { SetDetail } from './set-detail'
+export type { Promo } from './promos'
 export type { ContentProblem } from './validate-content'
 
 export const catalog = createCatalog(content)

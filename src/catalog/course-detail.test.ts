@@ -62,20 +62,20 @@ describe('courseDetail()', () => {
   })
 
   describe('stats row', () => {
-    it('shows questions, PDF pages and video hours in that order when all exist', () => {
+    it('shows video hours, PDF pages and questions in that order when all exist', () => {
       const detail = detailOf(testCourse({ stats: { questionCount: 100, pdfPages: 86, videoHours: 10 } }))
 
       expect(detail?.stats).toEqual([
-        { value: '100 ข้อ', label: 'ข้อสอบ' },
-        { value: '86 หน้า', label: 'ไฟล์ PDF' },
         { value: '10 ชม.', label: 'วิดีโอ' },
+        { value: '86 หน้า', label: 'ไฟล์ PDF' },
+        { value: '100 ข้อ', label: 'ข้อสอบ' },
       ])
     })
 
     it('leaves out questions when the course has no question count', () => {
       const detail = detailOf(testCourse({ stats: { pdfPages: 85, videoHours: 5 } }))
 
-      expect(detail?.stats.map((s) => s.label)).toEqual(['ไฟล์ PDF', 'วิดีโอ'])
+      expect(detail?.stats.map((s) => s.label)).toEqual(['วิดีโอ', 'ไฟล์ PDF'])
     })
 
     it('shows a PDF page range as a range', () => {
@@ -165,7 +165,7 @@ describe('courseDetail()', () => {
   })
 
   it('builds the lifetime badge from the label in site.json', () => {
-    expect(detailOf(testCourse())?.lifetime).toBe('ดูได้ตลอดชีพ')
+    expect(detailOf(testCourse())?.lifetime).toBe('ดูได้ไม่จำกัดอายุ')
   })
 
   describe('cover', () => {
@@ -255,7 +255,7 @@ describe('courseDetail()', () => {
       const set = setWith('pair-bundle', 499)
       const sets = createCatalog(testContent({ courses: [subject, other], sets: [set] })).courseDetail(subject.slug)?.sets
 
-      expect(sets?.top[0]?.summary).toBe('รวม 2 คอร์ส · 150 ข้อ · 80 หน้า · 4 ชม.')
+      expect(sets?.top[0]?.summary).toBe('รวม 2 คอร์ส · VDO 4 ชม. · PDF 80 หน้า · 150 ข้อ')
     })
 
     it('shows the three best sets first and folds the rest behind a "see N more" button', () => {

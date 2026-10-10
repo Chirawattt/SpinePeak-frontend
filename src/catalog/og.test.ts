@@ -20,12 +20,12 @@ describe('courseOg()', () => {
       title: 'สอวน. ชีววิทยา',
       tagline: 'ตะลุยโจทย์',
       price: '500.-',
-      badges: ['ดูได้ตลอดชีพ'],
+      badges: ['ดูได้ไม่จำกัดอายุ'],
     })
   })
 
   it('adds the coming-soon badge, and names the group once when category repeats it', () => {
-    expect(catalog.courseOg('c2')).toMatchObject({ eyebrow: 'ม.ปลาย', badges: ['ดูได้ตลอดชีพ', 'เร็ว ๆ นี้'] })
+    expect(catalog.courseOg('c2')).toMatchObject({ eyebrow: 'ม.ปลาย', badges: ['ดูได้ไม่จำกัดอายุ', 'เร็ว ๆ นี้'] })
   })
 
   it('is undefined for a slug that does not exist', () => {

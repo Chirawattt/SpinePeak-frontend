@@ -32,7 +32,7 @@ describe('setDetail()', () => {
   })
 
   it('builds the lifetime badge from the label in site.json', () => {
-    expect(detailOf(testSet(), [])?.lifetime).toBe('ดูได้ตลอดชีพ')
+    expect(detailOf(testSet(), [])?.lifetime).toBe('ดูได้ไม่จำกัดอายุ')
   })
 
   it('shows a coming-soon badge only for a set that is not open yet', () => {
@@ -149,7 +149,7 @@ describe('setDetail()', () => {
       ]
       const cards = detailOf(testSet({ courseSlugs: ['course-a', 'course-b'] }), courses)?.courses
 
-      expect(cards?.[0]?.facts).toBe('150 ข้อ · 6 ชม.')
+      expect(cards?.[0]?.facts).toBe('VDO 6 ชม. · 150 ข้อ')
       expect(cards?.[1]).not.toHaveProperty('facts')
     })
 
@@ -174,9 +174,9 @@ describe('setDetail()', () => {
       const detail = setOf({ questionCount: 100, pdfPages: 80, videoHours: 5 }, { questionCount: 50, videoHours: 3 }, {})
 
       expect(detail?.stats).toEqual([
-        { value: '150 ข้อ', label: 'ข้อสอบ' },
-        { value: '80 หน้า', label: 'ไฟล์ PDF' },
         { value: '8 ชม.', label: 'วิดีโอ' },
+        { value: '80 หน้า', label: 'ไฟล์ PDF' },
+        { value: '150 ข้อ', label: 'ข้อสอบ' },
       ])
     })
 

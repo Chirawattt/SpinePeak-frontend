@@ -68,9 +68,10 @@ export function testSite(overrides: Partial<Site> = {}): Site {
     },
     goalCards: [],
     featured: [],
+    promos: { seasonal: [], evergreen: [] },
     faqs: [],
     config: {
-      lifetimeLabel: 'ตลอดชีพ',
+      lifetimeLabel: 'ไม่จำกัดอายุ',
       savingsBadge: { minPercent: 10, minBaht: 100 },
       listPageSize: 9,
       listPageIncrement: 6,

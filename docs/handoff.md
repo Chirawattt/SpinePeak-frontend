@@ -29,10 +29,13 @@ SpinPeak-frontend/
 │   ├── requirement.md
 │   ├── data-schema.md
 │   ├── content.md
-│   ├── design-landing.html
-│   ├── design-courses.html
-│   ├── design-course-detail.html
-│   └── design-support.js
+│   ├── design-landing.dc.html
+│   ├── design-courses.dc.html
+│   ├── design-course-detail.dc.html
+│   ├── design-sets.dc.html
+│   ├── design-set-detail.dc.html
+│   ├── support.js
+│   └── spine-sets.js
 └── public/
     ├── spine-peak-logo.png      ← จาก assets/
     ├── kru-nam-hero.png         ← จาก assets/
@@ -188,7 +191,7 @@ type: `Group` `Subject` `Status` `SaleMode` `PageCount` `CourseStats` `Chapter` 
 
 ## 6. ไฟล์ design — จุดที่ design ขัดกับเฟส 1
 
-`docs/design-*.html` เป็น mockup 3 หน้า เปิดในเบราว์เซอร์ดูได้เลย (`design-support.js` เป็นตัวช่วยของ mockup ไม่ต้องเอาไปใช้ใน production)
+`docs/design-*.dc.html` เป็น mockup 5 หน้า (หน้าแรก, รายการคอร์ส, รายละเอียดคอร์ส, รายการ SET, รายละเอียด SET) เปิดในเบราว์เซอร์ดูได้เลย (`support.js` เป็นตัวช่วยของ mockup และ `spine-sets.js` เป็นข้อมูลตัวอย่างของ mockup ทั้งสองไฟล์ไม่ต้องเอาไปใช้ใน production)
 
 ใช้เป็นแบบได้ แต่ **ข้อมูลในนั้นเป็นของปลอมทั้งหมด** ไม่ใช่ catalog จริง และมี 6 จุดที่ต้องแก้ตอนทำจริง
 

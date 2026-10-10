@@ -49,7 +49,7 @@ describe('courseList()', () => {
   it('labels each card with its subject and the lifetime badge', () => {
     const list = createCatalog(testContent({ courses: [testCourse({ subject: 'chemistry' })] })).courseList({})
 
-    expect(list.cards[0]).toMatchObject({ subject: 'เคมี', lifetime: 'ดูได้ตลอดชีพ' })
+    expect(list.cards[0]).toMatchObject({ subject: 'เคมี', lifetime: 'ดูได้ไม่จำกัดอายุ' })
   })
 
   it('never puts a zero or an empty number on a card', () => {
@@ -58,7 +58,7 @@ describe('courseList()', () => {
     const cards = createCatalog(testContent({ courses: [empty, partial] })).courseList({}).cards
 
     expect(cards[0]).not.toHaveProperty('facts')
-    expect(cards[1]?.facts).toBe('30-70 หน้า')
+    expect(cards[1]?.facts).toBe('PDF 30-70 หน้า')
   })
 
   it('pages the grid by the sizes in site.json: first page, then more per scroll', () => {
@@ -203,7 +203,7 @@ describe('coursesPage()', () => {
   it('shows each review with who wrote it once reviews.json has some', () => {
     const reviews = [{ id: 'r1', quote: 'คุ้มมากครับ', studentName: 'น้องเจได', grade: 'ม.4' }]
 
-    expect(createCatalog(testContent({ reviews })).coursesPage().reviews).toEqual([{ quote: 'คุ้มมากครับ', by: 'น้องเจได · ม.4' }])
+    expect(createCatalog(testContent({ reviews })).coursesPage().reviews).toEqual([{ quote: 'คุ้มมากครับ', by: 'น้องเจได · ม.4', name: 'น้องเจได' }])
   })
 
   it('shows the FAQ from site.json, and the office hours only when site.json has them', () => {

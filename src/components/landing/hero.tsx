@@ -4,7 +4,7 @@ import { ContactButton } from '@/components/contact-button'
 import { PressAnchor } from '@/components/motion/press'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 
-// ตัดรูปครูเป็นวงกลม โดยให้หัวโผล่พ้นวงขึ้นไป (ลอกจาก design-landing.html)
+// ตัดรูปครูเป็นวงกลม โดยให้หัวโผล่พ้นวงขึ้นไป (ลอกจาก docs/design-landing.dc.html)
 const PHOTO_MASK = [
   'radial-gradient(ellipse 41% 41% at 50% 55.95%, #000 99%, transparent 100%)',
   'radial-gradient(ellipse 25.7% 41.7% at 50% 41.7%, #000 94%, transparent 100%)',

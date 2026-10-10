@@ -4,7 +4,7 @@
 import { deriveSet, type Course, type CourseSet, type Group, type Site } from '@content/types'
 import type { Paging } from './course-list'
 import { listHref, parseFilters, type CourseFilters } from './course-filters'
-import { cover, formatBaht, groupLabel, type Cover } from './format'
+import { cover, formatBaht, groupLabel, statsLine, type Cover } from './format'
 import { buildGroupTabs, type GroupTab } from './group-tabs'
 import { setSavings, type SetSavings } from './set-card'
 
@@ -24,10 +24,13 @@ export type SetListCard = {
   /** เช่น "เซ็ต PR-01" */
   codeLabel: string
   title: string
+  tagline: string
   /** เช่น "ประถม" */
   group: string
   /** เช่น "2 คอร์ส" */
   courseCount: string
+  /** ยอดรวมของคอร์สในเซ็ต เช่น "VDO 20 ชม. · PDF 166 หน้า · 220 ข้อ" · ไม่มีค่าเมื่อไม่มีตัวเลขเลย */
+  facts?: string
   cover: Cover
   price: string
   /** ไม่มีค่าเมื่อประหยัดไม่ถึงเกณฑ์ใน site.json ให้แสดงราคาเซ็ตราคาเดียว ไม่ขีดฆ่า */
@@ -58,13 +61,16 @@ export type SetList = {
 export function buildSetListCard(set: CourseSet, courses: Course[], site: Site): SetListCard {
   const derived = deriveSet(set, courses, site.config)
   const savings = setSavings(derived)
+  const facts = statsLine(derived.totals)
   return {
     slug: set.slug,
     href: `/sets/${set.slug}`,
     codeLabel: `เซ็ต ${set.code}`,
     title: set.title,
+    tagline: set.tagline,
     group: groupLabel(site, set.group),
     courseCount: `${derived.courseCount} คอร์ส`,
+    ...(facts && { facts }),
     cover: cover(set.group, set.coverImage),
     price: formatBaht(set.price),
     ...(savings && { savings }),

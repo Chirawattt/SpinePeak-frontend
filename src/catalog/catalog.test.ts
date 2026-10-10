@@ -105,18 +105,6 @@ describe('landing() sections', () => {
   ]
   const landingOf = (over: Parameters<typeof testContent>[0] = {}) => createCatalog(testContent({ courses, ...over })).landing()
 
-  it('gives one entry per group with its real course count, linking to the filtered list', () => {
-    expect(landingOf().groups).toEqual([
-      { label: 'ประถม', count: '1 คอร์ส', href: '/courses?group=prathom' },
-      { label: 'ม.ต้น', count: '0 คอร์ส', href: '/courses?group=mton' },
-      { label: 'ม.ปลาย', count: '2 คอร์ส', href: '/courses?group=mplai' },
-    ])
-  })
-
-  it('counts the real courses per group on content/', () => {
-    expect(catalog.landing().groups.map((g) => g.count)).toEqual(['8 คอร์ส', '12 คอร์ส', '24 คอร์ส'])
-  })
-
   it('introduces the main instructor from site.json', () => {
     const instructor = { slug: 'kru-nam', name: 'ครูพี่หนาม', role: '', shortBio: 'สั้น', longBio: 'ยาว', tags: ['สอนจากข้อสอบจริง'] }
 
@@ -140,17 +128,23 @@ describe('landing() sections', () => {
     const landing = landingOf({ clips: [clip], reviews: [review] })
 
     expect(landing.clips).toEqual([{ title: 'ไมโอซิส', meta: 'ตัดจากคอร์ส ม.ปลาย · 8 นาที', href: 'https://youtu.be/x' }])
-    expect(landing.reviews).toEqual([{ quote: 'คุ้มมากครับ', by: 'น้องเจได · ม.4' }])
+    expect(landing.reviews).toEqual([{ quote: 'คุ้มมากครับ', by: 'น้องเจได · ม.4', name: 'น้องเจได' }])
     expect(landing.hero.showClipsLink).toBe(true)
     expect(landing.nav.map((l) => l.href)).toContain('/#reviews')
   })
 
-  it('always links the teacher section in the menu, and shows the FAQ from site.json', () => {
-    const faqs = [{ q: 'ดูได้นานแค่ไหน', a: 'ตลอดชีพ' }]
-    const landing = landingOf({ site: testSite({ faqs }) })
+  it('passes a review cover through when reviews.json has one', () => {
+    const landing = landingOf({ reviews: [{ ...review, coverImage: '/reviews/jedi.jpg' }] })
 
-    expect(landing.nav.map((l) => l.href)).toEqual(['/courses', '/sets', '/#teacher'])
-    expect(landing.faqs).toEqual(faqs)
+    expect(landing.reviews[0]?.cover).toBe('/reviews/jedi.jpg')
+  })
+
+  it('always links the teacher section in the menu', () => {
+    expect(landingOf().nav).toEqual([
+      { label: 'คอร์สเรียน', href: '/courses' },
+      { label: 'SET คอร์ส', href: '/sets' },
+      { label: 'แนะนำครู', href: '/#teacher' },
+    ])
   })
 })
 
@@ -180,6 +174,20 @@ describe('landing() featured', () => {
     expect(course).toMatchObject({ kind: 'course', card: { href: '/courses/c1', price: '500.-' }, contactItem: { kind: 'course', slug: 'c1', title: 'คอร์ส 1' } })
   })
 
+  it('names a 2-course set a pair pack and adds the saving above its title', () => {
+    const [set] = featuredOf([{ type: 'set', slug: 'pr-01-bundle' }])
+
+    expect(set?.kind === 'set' && set.eyebrow).toBe('แพ็กคู่ · ประหยัด 200.-')
+  })
+
+  it('names a bigger set by its course count', () => {
+    const big = [...courses, testCourse({ slug: 'c3', title: 'คอร์ส 3', price: 500 })]
+    const sets3 = [testSet({ code: 'PR-01', slug: 'pr-01-bundle', title: 'เซ็ต 3', price: 1000, courseSlugs: ['c1', 'c2', 'c3'] })]
+    const [set] = createCatalog(testContent({ courses: big, sets: sets3, site: testSite({ featured: [{ type: 'set', slug: 'pr-01-bundle' }] }) })).landing().featured
+
+    expect(set?.kind === 'set' && set.eyebrow).toBe('SET 3 คอร์ส · ประหยัด 500.-')
+  })
+
   it('is empty, so the page hides the section, when site.json has no featured items', () => {
     expect(featuredOf([])).toEqual([])
   })
@@ -191,5 +199,50 @@ describe('landing() featured', () => {
   it('shows the 3 default items of content/site.json', () => {
     expect(catalog.landing().featured).toHaveLength(3)
     expect(catalog.validateContent()).toEqual([])
+  })
+})
+
+describe('landing() promos', () => {
+  const courses = [testCourse({ slug: 'c1', price: 500 }), testCourse({ slug: 'c2', price: 500 }), testCourse({ slug: 'c3', price: 1000 })]
+  const sets = [
+    // ประหยัด 200 จาก 1000 = 20%
+    testSet({ code: 'PR-01', slug: 'pr-01-bundle', price: 800, courseSlugs: ['c1', 'c2'] }),
+    // ประหยัด 299 จาก 1500 = 19.93% → ปัดลงเป็น 19
+    testSet({ code: 'PR-02', slug: 'pr-02-bundle', price: 1201, courseSlugs: ['c1', 'c3'] }),
+  ]
+  const seasonal = { name: 'โปรเปิดเทอม 2', headline: ['โปรเปิดเทอม 2', 'ลด 15%'], detail: 'ถึง 31 ต.ค.', endsAt: '2026-10-31T23:59:59+07:00' }
+  const promosOf = (promos: Site['promos'], now = '2026-10-10T12:00:00+07:00', withSets = sets) =>
+    createCatalog(testContent({ courses, sets: withSets, site: testSite({ promos }) }), { now: () => new Date(now) }).landing().promos
+
+  it('is empty when site.json has no promos, so the strip hides', () => {
+    expect(promosOf({ seasonal: [], evergreen: [] })).toEqual([])
+  })
+
+  it('shows a seasonal promo before its end, contacting the admin with the promo name', () => {
+    expect(promosOf({ seasonal: [seasonal], evergreen: [] })).toEqual([
+      { kind: 'seasonal', ...seasonal, contactItem: { kind: 'promo', slug: 'seasonal-1', title: 'โปรเปิดเทอม 2' } },
+    ])
+  })
+
+  it('drops a seasonal promo that already ended when the site was built', () => {
+    expect(promosOf({ seasonal: [seasonal], evergreen: [] }, '2026-11-01T00:00:00+07:00')).toEqual([])
+  })
+
+  it('advertises the best real set saving, rounded down, linking to the sets page', () => {
+    const [card] = promosOf({ seasonal: [], evergreen: [{ kind: 'set-savings', name: 'ซื้อเป็น SET', desc: 'ประหยัดสูงสุด' }] })
+
+    expect(card).toEqual({ kind: 'evergreen', name: 'ซื้อเป็น SET', value: '-20%', desc: 'ประหยัดสูงสุด', href: '/sets' })
+  })
+
+  it('skips the set saving card when no set is cheaper than buying separately', () => {
+    const noSaving = [testSet({ code: 'PR-01', slug: 'pr-01-bundle', price: 1000, courseSlugs: ['c1', 'c2'] })]
+
+    expect(promosOf({ seasonal: [], evergreen: [{ kind: 'set-savings', name: 'ซื้อเป็น SET', desc: '' }] }, undefined, noSaving)).toEqual([])
+  })
+
+  it('lets an evergreen promo contact the admin with its own value', () => {
+    const [card] = promosOf({ seasonal: [], evergreen: [{ kind: 'contact', name: 'ชวนเพื่อนเรียน', value: '100.-', desc: 'ลดทั้งคุณและเพื่อน' }] })
+
+    expect(card).toMatchObject({ value: '100.-', contactItem: { kind: 'promo', title: 'ชวนเพื่อนเรียน' } })
   })
 })

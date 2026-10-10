@@ -19,7 +19,7 @@ export type CourseCard = {
   price: string
   /** เช่น "150 ข้อ · 6 ชม." · ไม่มีค่าเมื่อคอร์สไม่มีตัวเลขเลย */
   facts?: string
-  /** เช่น "ดูได้ตลอดชีพ" */
+  /** เช่น "ดูได้ไม่จำกัดอายุ" */
   lifetime: string
   statusLabel?: string
 }

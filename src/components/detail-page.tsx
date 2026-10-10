@@ -118,7 +118,7 @@ export function PriceCard({
     >
       <CoverBox cover={cover} label={coverLabel} title={title} className="mb-[18px] hidden lg:block" />
       {savings ? (
-        // เซ็ต: ราคา + ราคาปกติขีดฆ่า แล้วป้ายประหยัดกับป้ายตลอดชีพอยู่แถวเดียวกัน ปุ่มติดต่อจะได้ไม่ตกขอบจอมือถือ
+        // เซ็ต: ราคา + ราคาปกติขีดฆ่า แล้วป้ายประหยัดกับป้ายอายุคอร์สอยู่แถวเดียวกัน ปุ่มติดต่อจะได้ไม่ตกขอบจอมือถือ
         <div className="mb-[18px] flex flex-col gap-1.5">
           <div className="flex flex-wrap items-baseline gap-x-3">
             <span className="font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</span>
