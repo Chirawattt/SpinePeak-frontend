@@ -162,7 +162,7 @@ export function createCatalog(content: Content, { now = () => new Date() }: { no
   /** undefined เมื่อไม่มีเซ็ต slug นี้ ให้หน้าขึ้น 404 */
   function setDetail(slug: string): SetDetail | undefined {
     const set = sets.find((s) => s.slug === slug)
-    return set && buildSetDetail(set, courses, site)
+    return set && buildSetDetail(set, courses, site, content.reviews)
   }
 
   /** ข้อมูลบนรูป OG ของคอร์ส · undefined เมื่อไม่มีคอร์ส slug นี้ */

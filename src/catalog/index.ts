@@ -11,7 +11,7 @@ export type { CourseContent, CourseDetail, CourseInstructor, CoursePreview, Cour
 export type { Cover, CoverTone, Faq, NavLink, Stat } from './format'
 export type { SetCard, SetSavings } from './set-card'
 export type { SetFilters, SetList, SetListCard, SetListIndex } from './set-list'
-export type { SetDetail } from './set-detail'
+export type { SetDetail, SetGet, SetTeacher } from './set-detail'
 export type { Promo } from './promos'
 export type { ContentProblem } from './validate-content'
 

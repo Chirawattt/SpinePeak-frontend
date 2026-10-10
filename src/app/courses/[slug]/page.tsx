@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { catalog, type CourseDetail, type CourseInstructor, type CoursePreview, type ReviewQuote } from '@/catalog'
-import { ClosingBand, DetailHeading, DetailTop, PriceCard, Pill, SectionTitle } from '@/components/detail-page'
+import { catalog, type CourseDetail, type CourseInstructor } from '@/catalog'
+import { ClosingBand, DetailHeading, DetailTop, OUTLINE_BUTTON, Pill, PreviewClip, PriceCard, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetOffers } from '@/components/set-offers'
 
@@ -26,12 +25,10 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
     <>
       <Top detail={detail} />
       <Body detail={detail} />
-      <ClosingBand price={detail.price} lifetime={detail.lifetime} contactItem={detail.contactItem} />
+      <ClosingBand line={`${detail.price} ครั้งเดียว ${detail.lifetime}`} contactItem={detail.contactItem} />
     </>
   )
 }
-
-const OUTLINE_BUTTON = 'block rounded-full border-[1.5px] border-outline py-3.5 text-center font-semibold transition-colors hover:border-brand hover:bg-brand-wash'
 
 function Top({ detail }: { detail: CourseDetail }) {
   return (
@@ -39,7 +36,7 @@ function Top({ detail }: { detail: CourseDetail }) {
       crumbs={[{ label: 'หน้าแรก', href: '/' }, detail.group]}
       current={detail.title}
       stats={detail.stats}
-      after={detail.preview && <Preview preview={detail.preview} />}
+      after={detail.preview && <PreviewClip preview={detail.preview} title="คลิปตัวอย่างจากคอร์สนี้" />}
       aside={
         <PriceCard
           cover={detail.cover}
@@ -68,36 +65,10 @@ function Top({ detail }: { detail: CourseDetail }) {
   )
 }
 
-/** คลิปตัวอย่างใต้แถวตัวเลข · id="preview" เป็นปลายทางของปุ่ม "ดูคลิปตัวอย่างฟรี" */
-function Preview({ preview }: { preview: CoursePreview }) {
-  return (
-    <div id="preview" className="max-w-[600px] scroll-mt-[calc(var(--header-h)+16px)]">
-      <div className="mb-3 flex items-baseline justify-between gap-4">
-        <h2 className="font-heading text-[19px] font-semibold">คลิปตัวอย่างจากคอร์สนี้</h2>
-        {preview.channelUrl && (
-          <a href={preview.channelUrl} target="_blank" rel="noopener noreferrer" className="text-[14.5px] font-semibold hover:text-link-hover">
-            ดูช่อง YouTube →
-          </a>
-        )}
-      </div>
-      <div className="relative aspect-video overflow-hidden rounded-2xl border border-card-line bg-brand-wash shadow-card">
-        <iframe
-          src={preview.embedUrl}
-          title="คลิปตัวอย่างจากคอร์สนี้"
-          loading="lazy"
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          className="absolute inset-0 h-full w-full"
-        />
-      </div>
-      <p className="mt-2.5 text-sm text-muted">ดูฟรีไม่ต้องสมัคร</p>
-    </div>
-  )
-}
-
 function Body({ detail }: { detail: CourseDetail }) {
   return (
-    <div className="grid gap-x-9 gap-y-10 px-gutter py-12 lg:grid-cols-[minmax(0,1fr)_340px]">
+    // คอลัมน์ขวายืดตามจอแบบ design (flex 520px / 290px แบ่งที่เหลือเท่ากัน): ขวา = ครึ่งหนึ่ง − 133px · 1180px → 457px
+    <div className="grid gap-x-9 gap-y-10 px-gutter py-12 lg:grid-cols-[minmax(0,1fr)_calc(50%-133px)]">
       <div className="flex min-w-0 flex-col gap-10">
         {detail.content && (
           <Reveal as="section">
@@ -132,7 +103,7 @@ function Body({ detail }: { detail: CourseDetail }) {
         <Reveal className="flex min-w-0 flex-col gap-5 self-start">
           {detail.sets && <SetOffers sets={detail.sets} />}
           {detail.instructor && <Instructor instructor={detail.instructor} />}
-          {detail.reviews.length > 0 && <Reviews reviews={detail.reviews} />}
+          {detail.reviews.length > 0 && <ReviewsCard title="รีวิวจากผู้เรียนคอร์สนี้" reviews={detail.reviews} />}
         </Reveal>
       )}
     </div>
@@ -143,40 +114,13 @@ function Instructor({ instructor }: { instructor: CourseInstructor }) {
   return (
     <aside className="rounded-[20px] border border-line p-6">
       <div className="mb-3.5 flex items-center gap-3.5">
-        {instructor.photo ? (
-          <div className="flex h-16 w-16 flex-none items-end justify-center overflow-hidden rounded-full bg-brand">
-            <Image src={instructor.photo} alt={instructor.name} width={78} height={78} className="-mb-1.5 h-auto w-[78px] max-w-none" />
-          </div>
-        ) : (
-          // ยังไม่มีรูปครู: วงกลมลายทางแทนที่ไว้ตาม design
-          <div
-            aria-hidden
-            className="flex h-16 w-16 flex-none items-center justify-center rounded-full bg-[repeating-linear-gradient(135deg,var(--color-brand-wash),var(--color-brand-wash)_8px,#d4f2fb_8px,#d4f2fb_16px)] font-mono text-[10px] text-eyebrow"
-          >
-            รูปครู
-          </div>
-        )}
+        <TeacherAvatar name={instructor.name} {...(instructor.photo && { photo: instructor.photo })} />
         <div>
           <div className="font-heading text-xl font-semibold">{instructor.name}</div>
           <div className="text-sm text-muted">{instructor.role}</div>
         </div>
       </div>
       <p className="text-[15px] leading-[1.75] text-ink-soft">{instructor.bio}</p>
-    </aside>
-  )
-}
-
-function Reviews({ reviews }: { reviews: ReviewQuote[] }) {
-  return (
-    <aside className="rounded-[20px] border border-line p-6">
-      <h2 className="mb-3.5 font-heading text-lg font-semibold">รีวิวจากผู้เรียนคอร์สนี้</h2>
-      <ul className="flex flex-col">
-        {reviews.map((review, i) => (
-          <li key={i} className="border-b border-divider-soft py-3.5 text-[15px] leading-[1.75] first:pt-0 last:border-b-0 last:pb-0">
-            “{review.quote}”<div className="mt-2 text-[13.5px] text-muted">{review.by}</div>
-          </li>
-        ))}
-      </ul>
     </aside>
   )
 }
