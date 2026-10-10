@@ -71,7 +71,6 @@ export function testSite(overrides: Partial<Site> = {}): Site {
     setsFaqs: [],
     config: {
       lifetimeLabel: 'ไม่จำกัดอายุ',
-      savingsBadge: { minPercent: 10, minBaht: 100 },
       listPageSize: 9,
       listPageIncrement: 6,
     },

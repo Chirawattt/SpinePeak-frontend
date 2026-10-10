@@ -37,7 +37,7 @@ describe('setOg()', () => {
   it('shows the set code, group, name, price and the savings badge when the set saves enough', () => {
     // 750 จาก 1,000 ประหยัด 250 บาท 25%
     expect(catalog.setOg('nat-01-bundle')).toEqual({
-      eyebrow: 'เซ็ต NAT-01 · ม.ปลาย',
+      eyebrow: 'SET NAT-01 · ม.ปลาย',
       title: 'รวม สวช. ม.ปลาย',
       tagline: 'ครบทุกวิชา',
       price: '750.-',
@@ -46,11 +46,8 @@ describe('setOg()', () => {
     })
   })
 
-  it('has no struck-through price or savings badge when the saving is under the threshold', () => {
-    const og = catalog.setOg('pr-01-bundle')
-
-    expect(og).not.toHaveProperty('regularPrice')
-    expect(og?.badges).toEqual(['รวม 2 คอร์ส'])
+  it('shows a small saving too, like the set page', () => {
+    expect(catalog.setOg('pr-01-bundle')).toHaveProperty('regularPrice')
   })
 
   it('is undefined for a slug that does not exist', () => {
@@ -64,7 +61,7 @@ describe('pageOg()', () => {
 
     expect(c.pageOg('landing')).toEqual({ title: 'Spine Peak', tagline: 'คำโปรย', badges: [] })
     expect(c.pageOg('courses')).toMatchObject({ eyebrow: 'คอร์สเรียน', title: 'Spine Peak' })
-    expect(c.pageOg('sets')).toMatchObject({ eyebrow: 'เซ็ตคอร์ส', title: 'Spine Peak' })
+    expect(c.pageOg('sets')).toMatchObject({ eyebrow: 'SET คอร์ส', title: 'Spine Peak' })
   })
 })
 

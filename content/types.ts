@@ -170,7 +170,6 @@ export type Site = {
   setsFaqs: { q: string; a: string }[]
   config: {
     lifetimeLabel: string
-    savingsBadge: { minPercent: number; minBaht: number }
     listPageSize: number
     listPageIncrement: number
   }
@@ -210,8 +209,6 @@ export type SetDerived = {
   savings: number
   /** 0-100 */
   savingsPercent: number
-  /** false = ซ่อนป้ายประหยัดไปเลย อย่าโชว์ "ประหยัด 10 บาท" */
-  showSavingsBadge: boolean
   courseCount: number
   /**
    * ยอดรวม ข้อสอบ / หน้า PDF / ชั่วโมงวิดีโอ ของคอร์สสมาชิก ข้ามคอร์สที่ไม่มีค่า
@@ -259,9 +256,6 @@ export function deriveSet(
     compareAtPrice,
     savings,
     savingsPercent,
-    showSavingsBadge:
-      savings >= config.savingsBadge.minBaht ||
-      savingsPercent >= config.savingsBadge.minPercent,
     courseCount: members.length,
     totals: sumStats(members.map((c) => c.stats)),
   }

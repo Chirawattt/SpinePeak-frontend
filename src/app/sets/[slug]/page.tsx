@@ -37,7 +37,7 @@ function Top({ detail }: { detail: SetDetail }) {
     <DetailTop
       crumbs={[
         { label: 'หน้าแรก', href: '/' },
-        { label: 'เซ็ตคอร์ส', href: '/sets' },
+        { label: 'SET คอร์ส', href: '/sets' },
       ]}
       current={detail.title}
       stats={[{ value: detail.courseCount, label: 'ในเซ็ตนี้' }, ...detail.stats]}

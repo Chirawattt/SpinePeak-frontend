@@ -230,12 +230,11 @@ describe('courseDetail()', () => {
       })
     })
 
-    it('uses the same savings badge rule as the set page: too small a saving shows one price', () => {
-      // ประหยัด 10 บาท (1.3%) ไม่ถึงเกณฑ์ 10% หรือ 100 บาท
+    it('uses the same savings rule as the set page: even a small saving shows', () => {
       const [card] = setsOf([setWith('tiny-bundle', 789)])?.top ?? []
 
       expect(card?.price).toBe('789.-')
-      expect(card).not.toHaveProperty('savings')
+      expect(card?.savings).toMatchObject({ amount: '10.-' })
     })
 
     it('sums up each set in one line: how many courses and the totals it has', () => {

@@ -12,9 +12,9 @@ export type SetSavings = {
   percent: string
 }
 
-/** undefined เมื่อประหยัดไม่ถึงเกณฑ์ใน site.json ให้แสดงราคาเซ็ตราคาเดียว ไม่ขีดฆ่า */
+/** แสดงทุก SET ที่ถูกกว่าซื้อแยก · undefined เมื่อไม่ได้ถูกกว่า (validateContent รายงานไว้แล้ว) ให้แสดงราคาเดียว */
 export function setSavings(derived: SetDerived): SetSavings | undefined {
-  if (!derived.showSavingsBadge) return undefined
+  if (derived.savings <= 0) return undefined
   return {
     regularPrice: formatBaht(derived.compareAtPrice),
     amount: formatBaht(derived.savings),

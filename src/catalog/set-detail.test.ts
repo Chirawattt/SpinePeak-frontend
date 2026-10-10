@@ -20,7 +20,7 @@ describe('setDetail()', () => {
 
     expect(detail).toMatchObject({
       slug: 'nat-senior-bundle',
-      codeLabel: 'เซ็ต NAT-01',
+      codeLabel: 'SET NAT-01',
       title: 'รวม สวช. ม.ปลาย',
       tagline: 'ครบ 3 วิชา',
       group: { label: 'ม.ปลาย', href: '/courses?group=mplai' },
@@ -69,11 +69,11 @@ describe('setDetail()', () => {
       expect(pairAt(1000, 1880)?.savings).toEqual({ regularPrice: '2,000.-', amount: '120.-', percent: '6%' })
     })
 
-    it('shows one set price with nothing crossed out when the set saves too little', () => {
+    it('shows even a small saving, rounded down', () => {
       const detail = pairAt(449, 888)
 
       expect(detail?.price).toBe('888.-')
-      expect(detail?.savings).toBeUndefined()
+      expect(detail?.savings).toEqual({ regularPrice: '898.-', amount: '10.-', percent: '1%' })
     })
 
     it('shows the savings at exactly 10%', () => {
@@ -82,10 +82,6 @@ describe('setDetail()', () => {
 
     it('shows the savings at exactly 100 baht', () => {
       expect(pairAt(1500, 2900)?.savings).toEqual({ regularPrice: '3,000.-', amount: '100.-', percent: '3%' })
-    })
-
-    it('hides the savings just under both thresholds: 99 baht and 9.9%', () => {
-      expect(pairAt(500, 901)?.savings).toBeUndefined()
     })
 
     it('hides the savings when the set costs more than buying the courses separately', () => {

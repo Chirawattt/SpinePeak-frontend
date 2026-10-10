@@ -191,6 +191,11 @@ export function createCatalog(content: Content, { now = () => new Date() }: { no
     /** ข้อมูลที่หน้ารายการเซ็ตส่งให้ client ไปกรองเอง */
     setListIndex: () => setListIndex,
     courseList,
+    /** ส่วนท้ายหน้ารายการ SET: FAQ และช่องทางรองของกล่องติดต่อ */
+    setsPage: () => {
+      const instagramHref = nonEmpty(site.contact.instagram?.url)
+      return { faqs: site.setsFaqs, ...(instagramHref && { instagramHref }) }
+    },
     /** ส่วนท้ายหน้ารายการคอร์ส: goal cards, รีวิว, FAQ, เวลาทำการ */
     coursesPage: () => buildCoursesPage(site, content.reviews),
     /** ข้อมูลที่หน้ารายการคอร์สส่งให้ client ไปกรองเอง */

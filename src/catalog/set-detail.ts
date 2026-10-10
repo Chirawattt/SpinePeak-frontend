@@ -45,7 +45,7 @@ export function buildSetDetail(set: CourseSet, courses: Course[], site: Site): S
 
   return {
     slug: set.slug,
-    codeLabel: `เซ็ต ${set.code}`,
+    codeLabel: `SET ${set.code}`,
     title: set.title,
     tagline: set.tagline,
     group: groupLink(set.group, groupName),

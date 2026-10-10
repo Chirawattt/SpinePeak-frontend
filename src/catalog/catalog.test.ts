@@ -170,7 +170,7 @@ describe('landing() featured', () => {
   it('reuses the course card and the set card, and points the contact button at the item', () => {
     const [set, course] = featuredOf([{ type: 'set', slug: 'pr-01-bundle' }, { type: 'course', slug: 'c1' }])
 
-    expect(set).toMatchObject({ kind: 'set', card: { href: '/sets/pr-01-bundle', codeLabel: 'เซ็ต PR-01', price: '800.-' }, contactItem: { kind: 'set', slug: 'pr-01-bundle', title: 'เซ็ต 1' } })
+    expect(set).toMatchObject({ kind: 'set', card: { href: '/sets/pr-01-bundle', codeLabel: 'SET PR-01', price: '800.-' }, contactItem: { kind: 'set', slug: 'pr-01-bundle', title: 'เซ็ต 1' } })
     expect(course).toMatchObject({ kind: 'course', card: { href: '/courses/c1', price: '500.-' }, contactItem: { kind: 'course', slug: 'c1', title: 'คอร์ส 1' } })
   })
 

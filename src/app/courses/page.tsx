@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { catalog, type GoalLink, type ReviewQuote } from '@/catalog'
+import { ContactBox } from '@/components/contact-box'
 import { ContactButton } from '@/components/contact-button'
 import { CourseGrid, CourseFilterBar, CourseGridFromUrl, FilterBarFromUrl, GroupTabs, GroupTabsFromUrl } from '@/components/course-browser'
 import { StickyFilterBand } from '@/components/list-browser'
@@ -66,27 +67,13 @@ export default function CoursesPage() {
           <h2 id="faq" className="mb-3 scroll-mt-[90px] font-heading text-[30px] font-bold">คำถามที่พบบ่อย</h2>
           <FaqList faqs={page.faqs} />
         </StaggerItem>
-        <StaggerItem className="rounded-[20px] border border-line bg-footer p-7">
-          <h2 className="mb-2.5 font-heading text-[clamp(22px,3.2vw,26px)] font-bold">ยังเลือกไม่ถูก ทักมาได้เลย</h2>
-          {page.hours && <p className="mb-5 text-[15.5px] leading-[1.75] text-ink-soft">ตอบกลับภายในวันทำการ {page.hours}</p>}
-          <div className="mt-5 flex flex-col gap-2.5">
-            <ContactButton variant="brand" className="text-base">ทักทาง LINE</ContactButton>
-            {page.instagramHref && (
-              <a
-                href={page.instagramHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-full border-[1.5px] border-outline py-[13px] text-center text-base font-semibold transition-colors hover:border-brand hover:bg-brand-wash"
-              >
-                ส่งข้อความทาง Instagram
-              </a>
-            )}
-            {page.email && (
-              <a href={`mailto:${page.email}`} className="py-1.5 text-center text-[15px] text-eyebrow hover:text-ink">
-                {page.email}
-              </a>
-            )}
-          </div>
+        <StaggerItem>
+          <ContactBox
+            title="ยังเลือกไม่ถูก ทักมาได้เลย"
+            {...(page.hours && { text: `ตอบกลับภายในวันทำการ ${page.hours}` })}
+            instagramHref={page.instagramHref}
+            email={page.email}
+          />
         </StaggerItem>
       </Stagger>
     </>
