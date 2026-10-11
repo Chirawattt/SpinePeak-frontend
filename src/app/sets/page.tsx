@@ -7,6 +7,7 @@ import { FaqList } from '@/components/faq-list'
 import { StickyFilterBand } from '@/components/list-browser'
 import { Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetFilterBar, SetFilterBarFromUrl, SetGrid, SetGridFromUrl, SetTabs, SetTabsFromUrl } from '@/components/set-browser'
+import { badgeVariants } from '@/components/ui/badge'
 
 // ตาม docs/design-sets.dc.html · hero พื้นเข้มให้ต่างจากหน้ารายการคอร์ส
 // build แบบ static ทั้งหน้า แล้วกรองฝั่ง client ตาม query string (?group=mplai&category=สอวน.&q=ชีวะ)
@@ -37,7 +38,7 @@ export default function SetsPage() {
           <span className="text-white">{TITLE}</span>
         </nav>
         <Stagger trigger="mount" className="relative px-gutter pt-[22px] pb-11">
-          <StaggerItem as="p" className="mb-4 inline-block rounded-full bg-brand px-4 py-[7px] text-[13px] font-semibold text-ink">
+          <StaggerItem as="p" className={badgeVariants({ className: 'mb-4 inline-block' })}>
             ซื้อเป็น SET ถูกกว่าซื้อแยก
           </StaggerItem>
           <StaggerItem>

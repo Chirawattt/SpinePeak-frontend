@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { CourseCard as CourseCardData } from '@/catalog'
 import { CoverBox } from '@/components/cover-box'
+import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 
 /** การ์ดคอร์สตาม docs/design-courses.dc.html · ทั้งใบกดเข้าหน้ารายละเอียดคอร์ส (design ให้กดแค่ปุ่ม แต่ทั้งใบกดง่ายกว่าบนมือถือ) */
@@ -23,7 +24,7 @@ export function CourseCard({ card }: { card: CourseCardData }) {
         )}
         <div className="mt-1 flex flex-wrap items-center justify-between gap-2.5">
           <span className="font-heading text-[25px] font-bold">{card.price}</span>
-          {card.setCount && <span className="rounded-full bg-brand-wash px-[11px] py-[5px] text-[12.5px] font-semibold">{card.setCount}</span>}
+          {card.setCount && <Badge variant="wash" size="sm">{card.setCount}</Badge>}
         </div>
         <span className={buttonVariants({ variant: 'brand', className: 'mt-1 group-hover:bg-brand/85' })}>ดูรายละเอียด</span>
       </div>

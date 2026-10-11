@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { SetListCard as SetListCardData } from '@/catalog/set-list'
+import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 
 // มุมเอียงของปกในกอง ใบหน้าสุดก่อน ตาม docs/design-sets.dc.html
@@ -16,7 +17,7 @@ export function SetListCard({ card }: { card: SetListCardData }) {
       <div className="relative overflow-hidden bg-ink px-[22px] pt-5 pb-[22px]">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot-dark)_1.3px,transparent_1.4px)] bg-size-[22px_22px] opacity-70" />
         <div className="relative mb-[18px] flex items-center justify-between gap-2.5">
-          <span className="rounded-full bg-brand px-3.5 py-1.5 text-[13px] font-bold">SET · {card.courseCount}</span>
+          <Badge className="font-bold">SET · {card.courseCount}</Badge>
           {card.savings && <span className="font-mono text-[12.5px] font-semibold text-brand">ประหยัด {card.savings.percent}</span>}
         </div>
         <div aria-hidden className="relative flex items-center">

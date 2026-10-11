@@ -6,6 +6,7 @@ import { ContactButton } from '@/components/contact-button'
 import { CoverBox } from '@/components/cover-box'
 import { SeasonalPromo } from '@/components/landing/seasonal-promo'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
+import { Badge, badgeVariants } from '@/components/ui/badge'
 import { contactHref } from '@/contact'
 
 // ส่วนต่าง ๆ ของหน้าแรก ตาม docs/design-landing.dc.html
@@ -118,7 +119,11 @@ function FeaturedCard({ item }: { item: FeaturedCardData }) {
         ) : (
           <CoverBox cover={card.cover} label={isSet ? item.card.codeLabel : item.card.label} title={card.title} className="aspect-auto! h-[150px] rounded-none!" />
         )}
-        {item.label && <span className="absolute top-3 left-3 rounded-full bg-ink px-3 py-1 text-xs font-semibold text-white ring-1 ring-brand/40">{item.label}</span>}
+        {item.label && (
+          <Badge variant="ink" size="sm" className="absolute top-3 left-3 leading-4 text-white ring-1 ring-brand/40">
+            {item.label}
+          </Badge>
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-2.5 px-[22px] pt-5 pb-[22px]">
         <div className="font-mono text-xs font-semibold text-eyebrow">{isSet ? item.eyebrow : item.card.label}</div>
@@ -172,7 +177,7 @@ export function TeacherSection({ teacher, photoAlt }: { teacher: Teacher; photoA
           </StaggerItem>
           <StaggerItem as="ul" className="flex flex-wrap gap-2.5">
             {teacher.tags.map((tag) => (
-              <li key={tag} className="rounded-full border border-outline bg-white px-4 py-[9px] text-sm">
+              <li key={tag} className={badgeVariants({ variant: 'outline', className: 'text-sm font-normal' })}>
                 {tag}
               </li>
             ))}

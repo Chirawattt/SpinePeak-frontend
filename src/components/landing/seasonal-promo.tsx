@@ -4,6 +4,7 @@
 // ก่อน hydrate ยังไม่รู้เวลาจริง ช่องนับถอยหลังจึงว่างไว้ก่อน (ไม่ให้ข้อความตอน build ค้าง)
 
 import { useEffect, useState } from 'react'
+import { Badge } from '@/components/ui/badge'
 
 const DAY = 86_400_000
 
@@ -38,7 +39,7 @@ export function SeasonalPromo({ name, headline, detail, endsAt, href }: { name: 
       >
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot-dark)_1.4px,transparent_1.5px)] bg-size-[24px_24px] opacity-70" />
         <div className="relative flex flex-wrap justify-between gap-2.5">
-          <span className="rounded-full bg-brand px-3.5 py-1.5 text-[13px] font-bold text-ink">โปรตามฤดู</span>
+          <Badge className="font-bold">โปรตามฤดู</Badge>
           <span className="min-h-5 font-mono text-[13px] font-medium text-brand">{left}</span>
         </div>
         <div className="relative font-heading text-[clamp(23px,3.4vw,30px)] leading-[1.25] font-bold">

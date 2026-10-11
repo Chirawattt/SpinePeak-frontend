@@ -2,10 +2,11 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { catalog, type CourseCard, type SetDetail, type SetTeacher } from '@/catalog'
+import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { ContactButton } from '@/components/contact-button'
 import { CoverBox } from '@/components/cover-box'
-import { Bullets, ClosingBand, DetailHeading, DetailTop, Pill, PreviewClip, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
+import { Bullets, ClosingBand, DetailHeading, DetailTop, PreviewClip, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 
 // ตาม docs/design-set-detail.dc.html · hero พื้นเข้มเหมือนหน้ารายการ SET
@@ -57,8 +58,8 @@ function Top({ detail }: { detail: SetDetail }) {
       aside={<SetPriceCard detail={detail} />}
     >
       <div className="mb-4 flex flex-wrap gap-2">
-        <Pill>SET · {detail.courseCount}</Pill>
-        <Pill variant="onDark">{detail.categoriesLabel}</Pill>
+        <Badge>SET · {detail.courseCount}</Badge>
+        <Badge variant="onDark">{detail.categoriesLabel}</Badge>
       </div>
       <DetailHeading title={detail.title} tagline={detail.tagline} tone="dark" />
     </DetailTop>
@@ -79,7 +80,7 @@ function SetPriceCard({ detail }: { detail: SetDetail }) {
     >
       <div className="mb-1.5 flex items-center justify-between gap-2.5">
         <div className="font-mono text-xs font-semibold text-eyebrow">ราคา SET</div>
-        {savings && <span className="rounded-full bg-ink px-3 py-[5px] font-mono text-[12.5px] font-semibold text-brand">-{savings.percent}</span>}
+        {savings && <Badge variant="ink" size="sm" className="font-mono">-{savings.percent}</Badge>}
       </div>
       <div className="mb-1 flex flex-wrap items-baseline gap-x-2.5">
         <span className="font-heading text-[clamp(34px,4.6vw,42px)] font-bold">{detail.price}</span>

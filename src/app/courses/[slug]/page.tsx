@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { catalog, type CourseDetail, type CourseInstructor } from '@/catalog'
-import { ClosingBand, DetailHeading, DetailTop, Pill, PreviewClip, PriceCard, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
+import { ClosingBand, DetailHeading, DetailTop, PreviewClip, PriceCard, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetOffers } from '@/components/set-offers'
+import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 
 // ตาม docs/design-course-detail.dc.html · build ทุกคอร์สล่วงหน้า slug ที่ไม่มีอยู่ขึ้น 404
@@ -59,7 +60,7 @@ function Top({ detail }: { detail: CourseDetail }) {
       }
     >
       <div className="mb-4 flex flex-wrap gap-2">
-        <Pill>{detail.badge}</Pill>
+        <Badge>{detail.badge}</Badge>
       </div>
       <DetailHeading title={detail.title} tagline={detail.tagline} />
     </DetailTop>

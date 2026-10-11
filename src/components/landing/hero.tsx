@@ -3,6 +3,7 @@ import type { Landing } from '@/catalog'
 import { ContactButton } from '@/components/contact-button'
 import { PressAnchor } from '@/components/motion/press'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
+import { badgeVariants } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 
 // ตัดรูปครูเป็นวงกลม โดยให้หัวโผล่พ้นวงขึ้นไป (ลอกจาก docs/design-landing.dc.html)
@@ -18,7 +19,7 @@ export function Hero({ hero }: { hero: Landing['hero'] }) {
 
       {/* ขึ้นไล่กัน: badge → หัวข้อทีละบรรทัด → subtitle → ปุ่ม → ตัวเลข */}
       <Stagger trigger="mount" className="relative min-w-0">
-        <StaggerItem className="mb-[22px] inline-flex items-center gap-2 rounded-full bg-brand-wash px-3.5 py-[7px] text-[13px] font-semibold tracking-[.02em]">
+        <StaggerItem className={badgeVariants({ variant: 'wash', className: 'mb-[22px] inline-flex items-center gap-2 tracking-[.02em]' })}>
           {hero.badge}
         </StaggerItem>
         <h1 className="mb-[18px] font-heading text-[clamp(33px,6.4vw,58px)] leading-[1.12] font-bold tracking-[-.01em] text-pretty">

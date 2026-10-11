@@ -101,15 +101,6 @@ export function DetailTop({
   )
 }
 
-/** ป้ายเม็ดยาในส่วนหัว · onDark = ขอบอ่อนบนพื้นเข้ม */
-export function Pill({ variant = 'brand', children }: { variant?: 'brand' | 'onDark'; children: React.ReactNode }) {
-  const style = {
-    brand: 'bg-brand px-4 py-[7px] text-ink',
-    onDark: 'border-[1.5px] border-[#3e6b76] px-[15px] py-1.5 text-on-dark-soft',
-  }[variant]
-  return <span className={`rounded-full text-[13px] font-semibold ${style}`}>{children}</span>
-}
-
 export function DetailHeading({ title, tagline, tone = 'light' }: { title: string; tagline: string; tone?: Tone }) {
   return (
     <>
