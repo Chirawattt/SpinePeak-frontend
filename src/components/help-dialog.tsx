@@ -8,6 +8,7 @@ import { XIcon } from 'lucide-react'
 import type { ReactNode, RefObject } from 'react'
 import type { Faq, HelpStep } from '@/catalog'
 import { FaqList } from '@/components/faq-list'
+import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
@@ -60,7 +61,7 @@ export function HelpDialog({ open, onOpenChange, section, onSectionChange, secti
           <div className="flex min-h-0 flex-1 flex-col">
             <DialogClose
               aria-label="ปิดหน้าต่าง"
-              className="absolute top-3 right-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-brand-wash text-ink transition-colors outline-none hover:bg-brand-soft focus-visible:ring-3 focus-visible:ring-ink/60 md:top-4 md:right-4"
+              render={<Button variant="wash" size="icon" className="absolute top-3 right-3 outline-none focus-visible:ring-3 focus-visible:ring-ink/60 md:top-4 md:right-4" />}
             >
               <XIcon className="h-[18px] w-[18px]" aria-hidden />
             </DialogClose>

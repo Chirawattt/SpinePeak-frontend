@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { catalog, type CourseCard, type SetDetail, type SetTeacher } from '@/catalog'
+import { buttonVariants } from '@/components/ui/button'
 import { ContactButton } from '@/components/contact-button'
 import { CoverBox } from '@/components/cover-box'
-import { Bullets, ClosingBand, DetailHeading, DetailTop, OUTLINE_BUTTON, Pill, PreviewClip, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
+import { Bullets, ClosingBand, DetailHeading, DetailTop, Pill, PreviewClip, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 
 // ตาม docs/design-set-detail.dc.html · hero พื้นเข้มเหมือนหน้ารายการ SET
@@ -90,10 +91,10 @@ function SetPriceCard({ detail }: { detail: SetDetail }) {
         )}
       </div>
       <div className="mb-[18px] text-[14.5px] text-eyebrow">{savings ? `ประหยัด ${savings.amount} เทียบกับซื้อแยก` : detail.lifetime}</div>
-      <ContactButton item={detail.contactItem} className="mb-2.5 py-4 text-[17px]">
+      <ContactButton item={detail.contactItem} size="lg" className="mb-2.5">
         สมัคร SET นี้
       </ContactButton>
-      <a href="#courses" className={OUTLINE_BUTTON}>
+      <a href="#courses" className={buttonVariants({ variant: 'outline' })}>
         ดูคอร์สใน SET
       </a>
 

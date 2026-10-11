@@ -138,7 +138,7 @@ function FeaturedCard({ item }: { item: FeaturedCardData }) {
             </span>
           )}
         </div>
-        <ContactButton item={item.contactItem} variant={isSet ? 'dark' : 'brand'} className="relative z-10 mt-1 p-[13px] text-base">
+        <ContactButton item={item.contactItem} variant={isSet ? 'dark' : 'brand'} className="relative z-10 mt-1 text-base">
           สมัครเรียนเลย
         </ContactButton>
       </div>
@@ -259,7 +259,7 @@ export function ClosingBand() {
           <p className="text-[17px]">ไม่มีวันหมดอายุ ทบทวนก่อนสอบกี่รอบก็ได้</p>
         </StaggerItem>
         <StaggerItem>
-          <ContactButton className="px-10 py-[18px] text-lg whitespace-nowrap">สมัครเรียนเลย</ContactButton>
+          <ContactButton size="xl" className="whitespace-nowrap">สมัครเรียนเลย</ContactButton>
         </StaggerItem>
       </Stagger>
     </section>
@@ -271,7 +271,7 @@ export function FloatingContact() {
   return (
     // เลื่อนขึ้นจากขอบล่างหลังโหลดหน้าครู่หนึ่ง ไม่แย่งจังหวะกับ hero
     <Reveal trigger="mount" delay={0.8} from={{ opacity: 0, y: 80 }} className="fixed right-4 bottom-4 z-20 md:hidden">
-      <ContactButton variant="brand" className="px-6 py-3 text-[15px] shadow-card">
+      <ContactButton variant="brand" className="text-[15px] shadow-card">
         ทักแอดมิน
       </ContactButton>
     </Reveal>

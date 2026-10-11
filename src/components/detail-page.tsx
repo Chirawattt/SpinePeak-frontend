@@ -151,10 +151,6 @@ export function PreviewClip({ preview, title, tone = 'light' }: { preview: Cours
   )
 }
 
-/** ปุ่มรองในการ์ดราคา (ขอบบาง) */
-export const OUTLINE_BUTTON =
-  'block rounded-full border-[1.5px] border-outline py-3.5 text-center font-semibold transition-colors hover:border-brand hover:bg-brand-wash'
-
 const COURSE_BULLETS = ['ดูย้อนหลังได้ไม่จำกัดอายุ', 'ไฟล์ PDF ดาวน์โหลดได้', 'เรียนได้ทั้งคอมและมือถือ']
 
 /** การ์ดราคาของหน้าคอร์ส · ปกแสดงทุกขนาดจอ */
@@ -191,7 +187,7 @@ export function PriceCard({
         <div className="mb-1 font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</div>
         <div className="text-sm text-eyebrow">{note ?? lifetime}</div>
       </div>
-      <ContactButton item={contactItem} className="mb-2.5 py-4 text-[17px]">
+      <ContactButton item={contactItem} size="lg" className="mb-2.5">
         สมัครเรียนเลย
       </ContactButton>
       {secondary}
@@ -270,7 +266,7 @@ export function ClosingBand({
           <p className="text-base">{line}</p>
         </StaggerItem>
         <StaggerItem>
-          <ContactButton item={contactItem} className="px-10 py-[17px] text-lg whitespace-nowrap">
+          <ContactButton item={contactItem} size="xl" className="whitespace-nowrap">
             {button}
           </ContactButton>
         </StaggerItem>

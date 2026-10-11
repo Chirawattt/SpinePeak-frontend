@@ -95,7 +95,7 @@ function Goals({ goals }: { goals: GoalLink[] }) {
           <p className="mb-[22px] max-w-[380px] text-[16.5px] leading-[1.75] text-ink-soft">
             ทักมาบอกว่าอยู่ชั้นไหน คะแนนตอนนี้ประมาณเท่าไหร่ และอยากไปถึงไหน ครูพี่หนามจะแนะนำลำดับคอร์สที่ควรเรียนให้
           </p>
-          <ContactButton className="w-fit px-[30px] py-[15px] text-base">ขอคำแนะนำจากครู</ContactButton>
+          <ContactButton size="lg" className="w-fit text-base">ขอคำแนะนำจากครู</ContactButton>
         </Reveal>
         <Stagger as="ul" className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,200px),1fr))] gap-3.5">
           {goals.map((goal) => (

@@ -5,9 +5,10 @@
 
 import { useReducedMotion } from 'motion/react'
 import { useEffect, useRef } from 'react'
+import { Button } from '@/components/ui/button'
 
-const BUTTON =
-  'flex h-[42px] w-[42px] cursor-pointer items-center justify-center rounded-full border border-ring bg-white text-[17px] leading-none transition-colors hover:border-brand hover:bg-brand-wash pointer-coarse:hidden'
+// เส้นบาง 1px สี ring พื้นขาว ต่างจากปุ่ม outline ทั่วไป (1.5px สี outline)
+const ARROW = 'border border-ring bg-white text-[17px] leading-none pointer-coarse:hidden'
 
 export function Carousel({
   header,
@@ -79,12 +80,12 @@ export function Carousel({
       <div className="mb-5 flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
         {header}
         <div className="flex gap-2.5">
-          <button type="button" aria-label="เลื่อนไปทางซ้าย" onClick={() => step(-1)} className={BUTTON}>
+          <Button variant="outline" size="icon" aria-label="เลื่อนไปทางซ้าย" onClick={() => step(-1)} className={ARROW}>
             ‹
-          </button>
-          <button type="button" aria-label="เลื่อนไปทางขวา" onClick={() => step(1)} className={BUTTON}>
+          </Button>
+          <Button variant="outline" size="icon" aria-label="เลื่อนไปทางขวา" onClick={() => step(1)} className={ARROW}>
             ›
-          </button>
+          </Button>
         </div>
       </div>
       <ul

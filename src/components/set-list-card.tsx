@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { SetListCard as SetListCardData } from '@/catalog/set-list'
+import { buttonVariants } from '@/components/ui/button'
 
 // มุมเอียงของปกในกอง ใบหน้าสุดก่อน ตาม docs/design-sets.dc.html
 const TILT = ['-rotate-3', 'rotate-[1.5deg]', 'rotate-[4deg]']
@@ -72,7 +73,7 @@ export function SetListCard({ card }: { card: SetListCardData }) {
             </div>
             {card.savings && <div className="text-[13.5px] text-eyebrow">ประหยัด {card.savings.amount} เทียบกับซื้อแยก</div>}
           </div>
-          <span className="rounded-full bg-brand px-6 py-3 text-[15.5px] font-semibold transition-colors group-hover:bg-brand/85">ดู SET นี้</span>
+          <span className={buttonVariants({ variant: 'brand', className: 'group-hover:bg-brand/85' })}>ดู SET นี้</span>
         </div>
       </div>
     </Link>

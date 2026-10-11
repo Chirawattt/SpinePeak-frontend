@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { CourseSets } from '@/catalog'
 import { Stagger, StaggerItem } from '@/components/motion/reveal'
+import { buttonVariants } from '@/components/ui/button'
 
 /** การ์ด SET ที่มีคอร์สนี้ (ไม่เกิน 2 ใบ) ในคอลัมน์ขวาของหน้าคอร์ส ตาม docs/design-course-detail.dc.html · ที่เหลือลิงก์ไปหน้ารายการ SET */
 export function SetOffers({ sets }: { sets: CourseSets }) {
@@ -22,7 +23,7 @@ export function SetOffers({ sets }: { sets: CourseSets }) {
               )}
             </div>
             {set.savings && <div className="mb-4 text-sm text-eyebrow">ประหยัด {set.savings.amount}</div>}
-            <span className="block rounded-full bg-brand p-3.5 text-center font-semibold transition-colors group-hover:bg-brand/85">ดู SET นี้</span>
+            <span className={buttonVariants({ variant: 'brand', className: 'group-hover:bg-brand/85' })}>ดู SET นี้</span>
           </Link>
         </StaggerItem>
       ))}

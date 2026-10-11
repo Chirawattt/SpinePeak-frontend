@@ -1,11 +1,6 @@
 import { contactHref, type ContactChannel, type ContactItem } from '@/contact'
 import { PressAnchor } from '@/components/motion/press'
-
-const VARIANT = {
-  dark: 'bg-ink text-white hover:bg-ink/90',
-  brand: 'bg-brand text-ink hover:bg-brand/85',
-  outline: 'border-[1.5px] border-outline text-ink hover:border-brand hover:bg-brand-wash',
-}
+import { buttonVariants, type ButtonSize, type ButtonVariant } from '@/components/ui/button'
 
 const DEFAULT_LABEL: Record<ContactChannel, string> = {
   line: 'ทักแอดมินเพื่อสมัคร',
@@ -17,12 +12,14 @@ export function ContactButton({
   item,
   channel = 'line',
   variant = 'dark',
-  className = '',
+  size,
+  className,
   children,
 }: {
   item?: ContactItem
   channel?: ContactChannel
-  variant?: keyof typeof VARIANT
+  variant?: Exclude<ButtonVariant, 'wash'>
+  size?: Exclude<ButtonSize, 'icon'>
   className?: string
   children?: React.ReactNode
 }) {
@@ -31,7 +28,7 @@ export function ContactButton({
       href={contactHref(item, channel)}
       target="_blank"
       rel="noopener noreferrer"
-      className={`block rounded-full px-6 py-3.5 text-center font-semibold transition-colors ${VARIANT[variant]} ${className}`}
+      className={buttonVariants({ variant, size, className })}
     >
       {children ?? DEFAULT_LABEL[channel]}
     </PressAnchor>

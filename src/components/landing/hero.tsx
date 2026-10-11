@@ -3,6 +3,7 @@ import type { Landing } from '@/catalog'
 import { ContactButton } from '@/components/contact-button'
 import { PressAnchor } from '@/components/motion/press'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
+import { buttonVariants } from '@/components/ui/button'
 
 // ตัดรูปครูเป็นวงกลม โดยให้หัวโผล่พ้นวงขึ้นไป (ลอกจาก docs/design-landing.dc.html)
 const PHOTO_MASK = [
@@ -32,9 +33,9 @@ export function Hero({ hero }: { hero: Landing['hero'] }) {
         </StaggerItem>
 
         <StaggerItem className="mt-8 flex flex-wrap gap-3.5">
-          <ContactButton className="px-[34px] py-4 text-[17px]">สมัครเรียนเลย</ContactButton>
+          <ContactButton size="lg" className="px-[34px]">สมัครเรียนเลย</ContactButton>
           {hero.showClipsLink && (
-            <PressAnchor href="#clips" className="rounded-full border-[1.5px] border-outline px-[26px] py-4 text-[17px] font-semibold transition-colors hover:border-brand hover:bg-brand-wash">
+            <PressAnchor href="#clips" className={buttonVariants({ variant: 'outline', size: 'lg' })}>
               ดูตัวอย่างคลิปสอน
             </PressAnchor>
           )}

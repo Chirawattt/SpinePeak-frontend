@@ -1,4 +1,5 @@
 import { ContactButton } from '@/components/contact-button'
+import { buttonVariants } from '@/components/ui/button'
 
 /** กล่อง "ทักมาได้เลย" ท้ายหน้ารายการคอร์ส / SET · LINE เป็นปุ่มหลัก Instagram กับอีเมลแสดงเมื่อ site.json มี */
 export function ContactBox({ title, text, instagramHref, email }: { title: string; text?: string; instagramHref?: string; email?: string }) {
@@ -15,7 +16,7 @@ export function ContactBox({ title, text, instagramHref, email }: { title: strin
             href={instagramHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="block rounded-full border-[1.5px] border-outline py-[13px] text-center text-base font-semibold transition-colors hover:border-brand hover:bg-brand-wash"
+            className={buttonVariants({ variant: 'outline', className: 'text-base' })}
           >
             ส่งข้อความทาง Instagram
           </a>

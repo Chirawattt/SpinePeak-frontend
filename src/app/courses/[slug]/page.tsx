@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { catalog, type CourseDetail, type CourseInstructor } from '@/catalog'
-import { ClosingBand, DetailHeading, DetailTop, OUTLINE_BUTTON, Pill, PreviewClip, PriceCard, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
+import { ClosingBand, DetailHeading, DetailTop, Pill, PreviewClip, PriceCard, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetOffers } from '@/components/set-offers'
+import { buttonVariants } from '@/components/ui/button'
 
 // ตาม docs/design-course-detail.dc.html · build ทุกคอร์สล่วงหน้า slug ที่ไม่มีอยู่ขึ้น 404
 export const dynamicParams = false
@@ -49,7 +50,7 @@ function Top({ detail }: { detail: CourseDetail }) {
           // มีคลิปตัวอย่างก็ชวนดูคลิปก่อน ไม่มีก็ให้ทักทาง Messenger เป็นทางเลือก
           {...(detail.preview && {
             secondary: (
-              <a href="#preview" className={OUTLINE_BUTTON}>
+              <a href="#preview" className={buttonVariants({ variant: 'outline' })}>
                 ดูคลิปตัวอย่างฟรี
               </a>
             ),
