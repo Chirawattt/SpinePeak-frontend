@@ -138,6 +138,18 @@ def split_content(detail):
     return chapters, points
 
 
+COVER_DIR = os.path.join(ROOT, "public", "courses")
+COVER_EXTS = (".png", ".jpg", ".jpeg", ".webp")
+
+
+def find_cover(slug):
+    """ชื่อไฟล์รูปปกใน public/courses/ ที่ตั้งชื่อตาม slug · ไม่มี = None"""
+    for ext in COVER_EXTS:
+        if os.path.isfile(os.path.join(COVER_DIR, slug + ext)):
+            return slug + ext
+    return None
+
+
 def build_courses():
     rows = read_csv(os.path.join(RAW, "courses.csv"))
     courses = []
@@ -215,8 +227,9 @@ def build_courses():
         if sale_mode == "standalone_and_set" and not set_codes:
             err("%s เขียน 'อยู่ใน SET' แต่ไม่ได้ระบุรหัส" % where)
 
+        cover_file = find_cover(slug)
         cover = row.get("รูปอ้างอิง", "")
-        if cover:
+        if cover and not cover_file:
             cover_refs.append((slug, cover))
 
         course = OrderedDict()
@@ -235,6 +248,9 @@ def build_courses():
         course["contentPoints"] = content_points
         course["deliverables"] = row.get("สิ่งที่ได้รับ", "")
         course["setCodes"] = set_codes
+        # รูปปก · วางไฟล์ไว้ที่ public/courses/<slug>.png|jpg|jpeg|webp ไม่มีไฟล์ = ไม่ใส่ฟิลด์ ใช้กล่องสีแทน
+        if cover_file:
+            course["coverImage"] = "/courses/" + cover_file
         # คลิปตัวอย่าง (ลิงก์ YouTube) · เว้นว่าง = หน้าคอร์สซ่อนกล่องคลิป
         clip = row.get("คลิปตัวอย่าง", "").strip()
         if clip:
@@ -541,8 +557,8 @@ def main():
 
     need = os.path.join(OUT, "cover-images-needed.txt")
     with io.open(need, "w", encoding="utf-8") as f:
-        f.write("# ชื่อไฟล์รูปจากคอลัมน์ 'รูปอ้างอิง' ในชีต ยังไม่มีไฟล์จริง\n")
-        f.write("# วางไฟล์ใน public/courses/<slug>.jpg แล้วเติม coverImage ในสคริปต์\n")
+        f.write("# คอร์สที่ยังไม่มีรูปปก (ชื่อไฟล์จากคอลัมน์ 'รูปอ้างอิง' ในชีต)\n")
+        f.write("# วางไฟล์ใน public/courses/<slug>.png แล้วรันสคริปต์ใหม่ สคริปต์จะใส่ coverImage ให้เอง\n")
         for slug, ref in cover_refs:
             f.write("%s\t%s\n" % (slug, ref))
     print("  เขียน %s (%d รูป)" % (need, len(cover_refs)))

@@ -47,7 +47,8 @@
       "PR-06",
       "PR-07",
       "PR-08"
-    ]
+    ],
+    "coverImage": "/courses/primary-science-p4.png"
   },
   {
     "slug": "primary-science-p5",
@@ -94,7 +95,8 @@
       "PR-06",
       "PR-07",
       "PR-08"
-    ]
+    ],
+    "coverImage": "/courses/primary-science-p5.png"
   },
   {
     "slug": "primary-science-p6",
@@ -144,7 +146,8 @@
       "PR-06",
       "PR-07",
       "PR-08"
-    ]
+    ],
+    "coverImage": "/courses/primary-science-p6.png"
   },
   {
     "slug": "primary-exercise-p4",
@@ -180,7 +183,8 @@
       "PR-08",
       "PR-09",
       "PR-10"
-    ]
+    ],
+    "coverImage": "/courses/primary-exercise-p4.png"
   },
   {
     "slug": "primary-exercise-p5",
@@ -216,7 +220,8 @@
       "PR-08",
       "PR-09",
       "PR-10"
-    ]
+    ],
+    "coverImage": "/courses/primary-exercise-p5.png"
   },
   {
     "slug": "primary-exercise-p6",
@@ -252,7 +257,8 @@
       "PR-08",
       "PR-09",
       "PR-10"
-    ]
+    ],
+    "coverImage": "/courses/primary-exercise-p6.png"
   },
   {
     "slug": "m1-entrance-science-special",
@@ -282,7 +288,8 @@
     "setCodes": [
       "PR-08",
       "PR-10"
-    ]
+    ],
+    "coverImage": "/courses/m1-entrance-science-special.png"
   },
   {
     "slug": "m1-entrance-science-regular",
@@ -310,7 +317,8 @@
     "setCodes": [
       "PR-07",
       "PR-09"
-    ]
+    ],
+    "coverImage": "/courses/m1-entrance-science-regular.png"
   },
   {
     "slug": "triam-udom-m4-biology",
@@ -338,7 +346,8 @@
     "setCodes": [
       "JH-03",
       "JH-06"
-    ]
+    ],
+    "coverImage": "/courses/triam-udom-m4-biology.png"
   },
   {
     "slug": "nat-junior-science",
@@ -370,7 +379,8 @@
       "JH-04",
       "JH-05",
       "JH-06"
-    ]
+    ],
+    "coverImage": "/courses/nat-junior-science.png"
   },
   {
     "slug": "ijso-biology",
@@ -396,7 +406,8 @@
       "สรุปเนื้อหาท้ายข้อสอบ"
     ],
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
-    "setCodes": []
+    "setCodes": [],
+    "coverImage": "/courses/ijso-biology.png"
   },
   {
     "slug": "onet-m3-science",
@@ -426,7 +437,8 @@
       "JH-04",
       "JH-05",
       "JH-06"
-    ]
+    ],
+    "coverImage": "/courses/onet-m3-science.png"
   },
   {
     "slug": "m4-entrance-math",
@@ -450,7 +462,8 @@
       "ข้อสอบ 50 ข้อ เฉลยแบบละเอียด"
     ],
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
-    "setCodes": []
+    "setCodes": [],
+    "coverImage": "/courses/m4-entrance-math.png"
   },
   {
     "slug": "m4-entrance-smte-science",
@@ -480,7 +493,8 @@
       "JH-02",
       "JH-05",
       "JH-06"
-    ]
+    ],
+    "coverImage": "/courses/m4-entrance-smte-science.png"
   },
   {
     "slug": "foundation-science-m1-term-1",
@@ -522,7 +536,8 @@
       "JH-02",
       "JH-03",
       "JH-04"
-    ]
+    ],
+    "coverImage": "/courses/foundation-science-m1-term-1.png"
   },
   {
     "slug": "foundation-science-m1-term-2",
@@ -561,7 +576,8 @@
       "JH-02",
       "JH-03",
       "JH-04"
-    ]
+    ],
+    "coverImage": "/courses/foundation-science-m1-term-2.png"
   },
   {
     "slug": "foundation-science-m2-term-1",
@@ -603,7 +619,8 @@
       "JH-02",
       "JH-03",
       "JH-04"
-    ]
+    ],
+    "coverImage": "/courses/foundation-science-m2-term-1.png"
   },
   {
     "slug": "foundation-science-m2-term-2",
@@ -648,7 +665,8 @@
       "JH-02",
       "JH-03",
       "JH-04"
-    ]
+    ],
+    "coverImage": "/courses/foundation-science-m2-term-2.png"
   },
   {
     "slug": "foundation-science-m3-term-1",
@@ -690,7 +708,8 @@
       "JH-02",
       "JH-03",
       "JH-04"
-    ]
+    ],
+    "coverImage": "/courses/foundation-science-m3-term-1.png"
   },
   {
     "slug": "foundation-science-m3-term-2",
@@ -732,7 +751,8 @@
       "JH-02",
       "JH-03",
       "JH-04"
-    ]
+    ],
+    "coverImage": "/courses/foundation-science-m3-term-2.png"
   },
   {
     "slug": "assistant-teacher-biology",
@@ -760,7 +780,8 @@
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
     "setCodes": [
       "HS-02"
-    ]
+    ],
+    "coverImage": "/courses/assistant-teacher-biology.png"
   },
   {
     "slug": "nat-senior-biology",
@@ -787,7 +808,8 @@
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
     "setCodes": [
       "NAT-01"
-    ]
+    ],
+    "coverImage": "/courses/nat-senior-biology.png"
   },
   {
     "slug": "nat-senior-chemistry",
@@ -814,7 +836,8 @@
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
     "setCodes": [
       "NAT-01"
-    ]
+    ],
+    "coverImage": "/courses/nat-senior-chemistry.png"
   },
   {
     "slug": "nat-senior-physics",
@@ -841,7 +864,8 @@
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
     "setCodes": [
       "NAT-01"
-    ]
+    ],
+    "coverImage": "/courses/nat-senior-physics.png"
   },
   {
     "slug": "foundation-biology-m4-term-1",
@@ -883,7 +907,8 @@
       "AL-02",
       "NS-02",
       "BC-02"
-    ]
+    ],
+    "coverImage": "/courses/foundation-biology-m4-term-1.png"
   },
   {
     "slug": "foundation-biology-m4-term-2",
@@ -928,7 +953,8 @@
       "AL-02",
       "NS-02",
       "BC-02"
-    ]
+    ],
+    "coverImage": "/courses/foundation-biology-m4-term-2.png"
   },
   {
     "slug": "foundation-biology-m5-term-1",
@@ -973,7 +999,8 @@
       "AL-02",
       "NS-02",
       "BC-02"
-    ]
+    ],
+    "coverImage": "/courses/foundation-biology-m5-term-1.png"
   },
   {
     "slug": "foundation-biology-m5-term-2",
@@ -1021,7 +1048,8 @@
       "AL-02",
       "NS-02",
       "BC-02"
-    ]
+    ],
+    "coverImage": "/courses/foundation-biology-m5-term-2.png"
   },
   {
     "slug": "foundation-biology-m6-term-1",
@@ -1069,7 +1097,8 @@
       "AL-02",
       "NS-02",
       "BC-02"
-    ]
+    ],
+    "coverImage": "/courses/foundation-biology-m6-term-1.png"
   },
   {
     "slug": "foundation-biology-m6-term-2",
@@ -1111,7 +1140,8 @@
       "AL-02",
       "NS-02",
       "BC-02"
-    ]
+    ],
+    "coverImage": "/courses/foundation-biology-m6-term-2.png"
   },
   {
     "slug": "posn-biology-61-64",
@@ -1140,7 +1170,8 @@
     "setCodes": [
       "POSN-01",
       "POSN-02"
-    ]
+    ],
+    "coverImage": "/courses/posn-biology-61-64.png"
   },
   {
     "slug": "posn-biology-66",
@@ -1169,7 +1200,8 @@
     "setCodes": [
       "POSN-01",
       "POSN-02"
-    ]
+    ],
+    "coverImage": "/courses/posn-biology-66.png"
   },
   {
     "slug": "posn-biology-67",
@@ -1198,7 +1230,8 @@
     "setCodes": [
       "POSN-01",
       "POSN-02"
-    ]
+    ],
+    "coverImage": "/courses/posn-biology-67.png"
   },
   {
     "slug": "posn-biology-68",
@@ -1227,7 +1260,9 @@
     "setCodes": [
       "POSN-01",
       "POSN-02"
-    ]
+    ],
+    "coverImage": "/courses/posn-biology-68.png",
+    "previewVideoUrl": "https://youtu.be/oo9jnLUC0A0?si=M7XODZ9pD7lr9L7w"
   },
   {
     "slug": "a-level-biology-64-66",
@@ -1255,7 +1290,8 @@
     "setCodes": [
       "AL-01",
       "AL-02"
-    ]
+    ],
+    "coverImage": "/courses/a-level-biology-64-66.png"
   },
   {
     "slug": "a-level-biology-67",
@@ -1283,7 +1319,8 @@
     "setCodes": [
       "AL-01",
       "AL-02"
-    ]
+    ],
+    "coverImage": "/courses/a-level-biology-67.png"
   },
   {
     "slug": "a-level-biology-68",
@@ -1311,7 +1348,8 @@
     "setCodes": [
       "AL-01",
       "AL-02"
-    ]
+    ],
+    "coverImage": "/courses/a-level-biology-68.png"
   },
   {
     "slug": "a-level-applied-science",
@@ -1337,7 +1375,8 @@
       "เฉลยแบบละเอียด"
     ],
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
-    "setCodes": []
+    "setCodes": [],
+    "coverImage": "/courses/a-level-applied-science.png"
   },
   {
     "slug": "netsat-biology-65",
@@ -1366,7 +1405,8 @@
     "setCodes": [
       "NS-01",
       "NS-02"
-    ]
+    ],
+    "coverImage": "/courses/netsat-biology-65.png"
   },
   {
     "slug": "netsat-biology-66",
@@ -1394,7 +1434,8 @@
     "setCodes": [
       "NS-01",
       "NS-02"
-    ]
+    ],
+    "coverImage": "/courses/netsat-biology-66.png"
   },
   {
     "slug": "netsat-biology-67",
@@ -1422,7 +1463,8 @@
     "setCodes": [
       "NS-01",
       "NS-02"
-    ]
+    ],
+    "coverImage": "/courses/netsat-biology-67.png"
   },
   {
     "slug": "netsat-biology-68",
@@ -1451,7 +1493,8 @@
     "setCodes": [
       "NS-01",
       "NS-02"
-    ]
+    ],
+    "coverImage": "/courses/netsat-biology-68.png"
   },
   {
     "slug": "biocontest",
@@ -1480,7 +1523,9 @@
     "setCodes": [
       "BC-01",
       "BC-02"
-    ]
+    ],
+    "coverImage": "/courses/biocontest.png",
+    "previewVideoUrl": "https://youtu.be/SoHnv4YaUsc?si=-ieQXjqUdeILNdAj"
   },
   {
     "slug": "biocontest-otter",
@@ -1509,6 +1554,7 @@
     "setCodes": [
       "BC-01",
       "BC-02"
-    ]
+    ],
+    "coverImage": "/courses/biocontest-otter.png"
   }
 ]
