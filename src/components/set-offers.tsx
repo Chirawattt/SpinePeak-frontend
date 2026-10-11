@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { CourseSets } from '@/catalog'
 import { Stagger, StaggerItem } from '@/components/motion/reveal'
 import { buttonVariants } from '@/components/ui/button'
+import { cardVariants } from '@/components/ui/card'
 
 /** การ์ด SET ที่มีคอร์สนี้ (ไม่เกิน 2 ใบ) ในคอลัมน์ขวาของหน้าคอร์ส ตาม docs/design-course-detail.dc.html · ที่เหลือลิงก์ไปหน้ารายการ SET */
 export function SetOffers({ sets }: { sets: CourseSets }) {
@@ -9,7 +10,7 @@ export function SetOffers({ sets }: { sets: CourseSets }) {
     <Stagger as="section" aria-label="SET ที่มีคอร์สนี้" className="flex flex-col gap-5">
       {sets.offers.map((set) => (
         <StaggerItem key={set.slug} lift>
-          <Link href={set.href} className="group block rounded-[20px] border-[1.5px] border-ink bg-set-wash p-6">
+          <Link href={set.href} className={cardVariants({ variant: 'featured', className: 'group block bg-set-wash p-6' })}>
             <div className="mb-2.5 font-mono text-xs font-semibold text-eyebrow">{set.label}</div>
             <div className="mb-2 font-heading text-xl leading-[1.35] font-semibold group-hover:text-link-hover">{set.title}</div>
             <div className="mb-3.5 text-[14.5px] leading-[1.65] text-muted">{set.summary}</div>

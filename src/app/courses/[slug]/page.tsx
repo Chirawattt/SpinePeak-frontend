@@ -6,6 +6,7 @@ import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetOffers } from '@/components/set-offers'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
+import { cardVariants } from '@/components/ui/card'
 
 // ตาม docs/design-course-detail.dc.html · build ทุกคอร์สล่วงหน้า slug ที่ไม่มีอยู่ขึ้น 404
 export const dynamicParams = false
@@ -114,7 +115,7 @@ function Body({ detail }: { detail: CourseDetail }) {
 
 function Instructor({ instructor }: { instructor: CourseInstructor }) {
   return (
-    <aside className="rounded-[20px] border border-line p-6">
+    <aside className={cardVariants()}>
       <div className="mb-3.5 flex items-center gap-3.5">
         <TeacherAvatar name={instructor.name} {...(instructor.photo && { photo: instructor.photo })} />
         <div>

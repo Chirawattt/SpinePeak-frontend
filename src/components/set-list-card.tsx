@@ -3,6 +3,7 @@ import Link from 'next/link'
 import type { SetListCard as SetListCardData } from '@/catalog/set-list'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
+import { cardVariants } from '@/components/ui/card'
 
 // มุมเอียงของปกในกอง ใบหน้าสุดก่อน ตาม docs/design-sets.dc.html
 const TILT = ['-rotate-3', 'rotate-[1.5deg]', 'rotate-[4deg]']
@@ -12,7 +13,10 @@ export function SetListCard({ card }: { card: SetListCardData }) {
   return (
     <Link
       href={card.href}
-      className="group flex w-full flex-col overflow-hidden rounded-[22px] border-[1.5px] border-ink bg-white shadow-[0_12px_32px_rgb(11_43_51/0.08)] transition-shadow hover:shadow-[0_18px_40px_rgb(11_43_51/0.14)]"
+      className={cardVariants({
+        variant: 'featured',
+        className: 'group flex w-full flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_12px_32px_rgb(11_43_51/0.08)] transition-shadow hover:shadow-[0_18px_40px_rgb(11_43_51/0.14)]',
+      })}
     >
       <div className="relative overflow-hidden bg-ink px-[22px] pt-5 pb-[22px]">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot-dark)_1.3px,transparent_1.4px)] bg-size-[22px_22px] opacity-70" />

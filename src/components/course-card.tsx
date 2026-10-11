@@ -3,13 +3,14 @@ import type { CourseCard as CourseCardData } from '@/catalog'
 import { CoverBox } from '@/components/cover-box'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
+import { cardVariants } from '@/components/ui/card'
 
 /** การ์ดคอร์สตาม docs/design-courses.dc.html · ทั้งใบกดเข้าหน้ารายละเอียดคอร์ส (design ให้กดแค่ปุ่ม แต่ทั้งใบกดง่ายกว่าบนมือถือ) */
 export function CourseCard({ card }: { card: CourseCardData }) {
   return (
     <Link
       href={card.href}
-      className="group flex w-full flex-col overflow-hidden rounded-[18px] border border-line bg-white transition-shadow hover:shadow-card"
+      className={cardVariants({ variant: 'tile', className: 'group flex w-full flex-col' })}
     >
       <CoverBox cover={card.cover} label={card.label} title={card.title} className="rounded-none!" />
       <div className="flex flex-1 flex-col gap-[9px] px-5 pt-[18px] pb-5">

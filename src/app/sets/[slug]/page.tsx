@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { catalog, type CourseCard, type SetDetail, type SetTeacher } from '@/catalog'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
+import { cardVariants } from '@/components/ui/card'
 import { ContactButton } from '@/components/contact-button'
 import { CoverBox } from '@/components/cover-box'
 import { Bullets, ClosingBand, DetailHeading, DetailTop, PreviewClip, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
@@ -214,7 +215,7 @@ function Body({ detail }: { detail: SetDetail }) {
 
 function Teachers({ heading, teachers }: { heading: string; teachers: SetTeacher[] }) {
   return (
-    <aside className="rounded-[20px] border border-line p-6">
+    <aside className={cardVariants()}>
       <h2 className="mb-4 font-heading text-lg font-semibold">{heading}</h2>
       <ul className="flex flex-col gap-[18px]">
         {teachers.map((teacher) => (

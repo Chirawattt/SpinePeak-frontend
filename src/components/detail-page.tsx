@@ -7,6 +7,7 @@ import type { ContactItem } from '@/contact'
 import { ContactButton } from '@/components/contact-button'
 import { CoverBox } from '@/components/cover-box'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
+import { cardVariants } from '@/components/ui/card'
 
 export type Tone = 'light' | 'dark'
 
@@ -204,7 +205,7 @@ export function SectionTitle({ children, className = '' }: { children: React.Rea
 /** การ์ดรีวิวในคอลัมน์ขวา */
 export function ReviewsCard({ title, reviews }: { title: string; reviews: ReviewQuote[] }) {
   return (
-    <aside className="rounded-[20px] border border-line p-6">
+    <aside className={cardVariants()}>
       <h2 className="mb-3.5 font-heading text-lg font-semibold">{title}</h2>
       <ul className="flex flex-col">
         {reviews.map((review, i) => (

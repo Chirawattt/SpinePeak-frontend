@@ -8,6 +8,7 @@ import { CourseGrid, CourseFilterBar, CourseGridFromUrl, FilterBarFromUrl, Group
 import { StickyFilterBand } from '@/components/list-browser'
 import { FaqList } from '@/components/faq-list'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
+import { cardVariants } from '@/components/ui/card'
 
 // build แบบ static ทั้งหน้า แล้วกรองฝั่ง client ตาม query string (?group=mplai)
 // fallback ของ Suspense คือรายการที่ยังไม่กรอง HTML ที่ build ไว้จึงมีการ์ดจริงตั้งแต่แรก
@@ -120,7 +121,7 @@ function Reviews({ reviews }: { reviews: ReviewQuote[] }) {
       </Reveal>
       <Stagger as="ul" className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-5">
         {reviews.map((review, i) => (
-          <StaggerItem key={i} as="li" className="rounded-2xl border border-line p-6">
+          <StaggerItem key={i} as="li" className={cardVariants({ className: 'rounded-2xl' })}>
             <p className="mb-4 text-base leading-[1.75]">“{review.quote}”</p>
             <p className="text-sm text-muted">{review.by}</p>
           </StaggerItem>
