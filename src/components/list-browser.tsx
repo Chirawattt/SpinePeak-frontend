@@ -11,6 +11,8 @@ import type { GroupTab } from '@/catalog/group-tabs'
 import { PressLink } from '@/components/motion/press'
 import { Reveal } from '@/components/motion/reveal'
 import { STAGGER, STAGGER_CAP } from '@/components/motion/tokens'
+import { Input } from '@/components/ui/input'
+import { NativeSelect } from '@/components/ui/native-select'
 
 const TAB_TONE = {
   light: { on: 'border-ink bg-ink text-white', off: 'border-outline bg-white hover:border-brand' },
@@ -36,8 +38,6 @@ export function TabNav({ tabs, tone = 'light' }: { tabs: GroupTab[]; tone?: keyo
     </nav>
   )
 }
-
-const CONTROL = 'min-w-0 rounded-full border border-outline bg-white px-5 py-3 text-[15px] outline-none focus:border-brand'
 
 /** แถบที่ติดอยู่ใต้ header ตอนเลื่อน · ใส่ FilterBar ไว้ข้างใน */
 export function StickyFilterBand({ children }: { children: ReactNode }) {
@@ -83,7 +83,7 @@ export function FilterBar({
         go({ ...filters, q: text })
       }}
     >
-      <input
+      <Input
         type="search"
         value={text}
         onChange={(e) => {
@@ -94,13 +94,13 @@ export function FilterBar({
         }}
         placeholder={placeholder}
         aria-label={label}
-        className={`${CONTROL} flex-[3_1_340px]`}
+        className="flex-[3_1_340px]"
       />
-      <select
+      <NativeSelect
         value={filters.category ?? ''}
         onChange={(e) => go({ ...filters, category: e.target.value || undefined, q: text })}
         aria-label="หมวดหมู่"
-        className={`${CONTROL} flex-[1_1_200px] cursor-pointer`}
+        className="flex-[1_1_200px]"
       >
         <option value="">ทุกหมวดหมู่</option>
         {categoryOptions.map((t) => (
@@ -108,7 +108,7 @@ export function FilterBar({
             {t}
           </option>
         ))}
-      </select>
+      </NativeSelect>
     </form>
   )
 }
