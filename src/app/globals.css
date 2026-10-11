@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* เว็บไม่มีโหมดมืด · คงตัวแปรนี้ไว้ให้ dark: ใน component ของ shadcn ไม่ทำงานตาม prefers-color-scheme */
+@custom-variant dark (&:is(.dark *));
 
 /*
  * design token ทั้งหมดของเว็บอยู่ที่นี่ที่เดียว ค่ามาจาก docs/design-*.html
@@ -65,4 +70,48 @@ html {
 body {
   background: #fff;
   color: var(--color-ink);
+}
+
+/*
+ * shadcn/ui ผูกกับ token ด้านบน ไม่สร้างสีใหม่ · แก้สีที่นี่ที่เดียว component ใน src/components/ui/ ตามเอง
+ * ไม่ได้ประกาศ --color-muted และ --color-ring ของ shadcn เพราะชื่อชนกับ token เดิม (สีตัวอักษรรอง / สีเส้นขอบ)
+ * component ที่ copy มาจึงใช้ bg-brand-wash / ring-brand แทน bg-muted / ring-ring
+ */
+:root {
+  --background: #fff;
+  --foreground: var(--color-ink);
+  --card: #fff;
+  --card-foreground: var(--color-ink);
+  --popover: #fff;
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-ink);
+  --primary-foreground: #fff;
+  --secondary: var(--color-brand-wash);
+  --secondary-foreground: var(--color-ink);
+  --muted-foreground: var(--color-muted);
+  --accent: var(--color-brand-wash);
+  --accent-foreground: var(--color-ink);
+  /* ไม่มีสีแดงใน token เดิม */
+  --destructive: #d92d20;
+  --border: var(--color-line);
+  --input: var(--color-outline);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
 }
