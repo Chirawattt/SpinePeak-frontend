@@ -95,6 +95,61 @@ describe('footer()', () => {
   })
 })
 
+describe('footer() help', () => {
+  const helpOf = (over: Partial<Site> = {}) => createCatalog(testContent({ site: testSite(over) })).footer().help
+
+  it('lists the how-to-apply steps in the order written in site.json', () => {
+    const howToApply = [
+      { title: 'เลือกคอร์ส', desc: 'ค้นหาตามระดับชั้น' },
+      { title: 'กด "สมัครเรียน"', desc: 'คุยกับแอดมินทาง LINE' },
+    ]
+
+    expect(helpOf({ howToApply }).steps).toEqual(howToApply)
+  })
+
+  it('drops steps with a blank title or description so the modal never shows an empty card', () => {
+    const howToApply = [
+      { title: 'เลือกคอร์ส', desc: '  ค้นหาตามระดับชั้น  ' },
+      { title: '   ', desc: 'ไม่มีหัวข้อ' },
+      { title: 'ไม่มีคำอธิบาย', desc: '' },
+    ]
+
+    expect(helpOf({ howToApply }).steps).toEqual([{ title: 'เลือกคอร์ส', desc: 'ค้นหาตามระดับชั้น' }])
+  })
+
+  it('shows the general FAQ from site.json, not the course-list or set-list FAQ', () => {
+    const faqs = [{ q: 'สมัครเรียนอย่างไร', a: 'ทักแอดมิน' }]
+    const help = helpOf({ faqs, coursesFaqs: [{ q: 'ของหน้าคอร์ส', a: 'x' }], setsFaqs: [{ q: 'ของหน้า SET', a: 'y' }] })
+
+    expect(help.faqs).toEqual(faqs)
+  })
+
+  it('drops FAQ entries with a blank question or answer, like the steps', () => {
+    const faqs = [
+      { q: 'สมัครเรียนอย่างไร', a: '  ทักแอดมิน  ' },
+      { q: '', a: 'ไม่มีคำถาม' },
+      { q: 'ไม่มีคำตอบ', a: '   ' },
+    ]
+
+    expect(helpOf({ faqs }).faqs).toEqual([{ q: 'สมัครเรียนอย่างไร', a: 'ทักแอดมิน' }])
+  })
+
+  it('counts a FAQ list of only blank entries as empty, so the footer hides the link', () => {
+    expect(helpOf({ howToApply: [], faqs: [{ q: '', a: '' }] })).toEqual({ steps: [], faqs: [] })
+  })
+
+  it('has no steps and no FAQ while site.json has none, so the footer can hide the links', () => {
+    expect(helpOf({ howToApply: [], faqs: [] })).toEqual({ steps: [], faqs: [] })
+  })
+
+  it('has real steps and FAQ in content/site.json', () => {
+    const help = catalog.footer().help
+
+    expect(help.steps.length).toBeGreaterThan(0)
+    expect(help.faqs).toEqual(site.faqs)
+  })
+})
+
 describe('landing() sections', () => {
   const clip = { title: 'ไมโอซิส', sourceLabel: 'ตัดจากคอร์ส ม.ปลาย', minutes: 8, youtubeUrl: 'https://youtu.be/x' }
   const review = { id: 'r1', quote: 'คุ้มมากครับ', studentName: 'น้องเจได', grade: 'ม.4' }

@@ -66,6 +66,7 @@ export function testSite(overrides: Partial<Site> = {}): Site {
     featured: [],
     promos: { seasonal: [], evergreen: [] },
     faqs: [],
+    howToApply: [],
     coursesFaqs: [],
     setsFaqs: [],
     config: {

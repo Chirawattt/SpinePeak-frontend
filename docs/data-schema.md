@@ -226,7 +226,8 @@ type Site = {
 
   goalCards: { title: string; desc: string; filter: object }[]  // "ไม่แน่ใจว่าเรียนอะไรดี"
 
-  faqs: { q: string; a: string }[]      // FAQ กลาง ใช้เมื่อคอร์สไม่ได้เขียนเอง
+  faqs: { q: string; a: string }[]      // FAQ กลาง ใช้เมื่อคอร์สไม่ได้เขียนเอง และใน modal "คำถามที่พบบ่อย" จาก footer
+  howToApply: { title: string; desc: string }[]   // ขั้นตอนใน modal "วิธีสมัครเรียน" จาก footer เรียงตามลำดับ เลขข้อนับให้เอง ว่าง = ซ่อนลิงก์
 
   config: {
     lifetimeLabel: string               // "ตลอดชีพ"

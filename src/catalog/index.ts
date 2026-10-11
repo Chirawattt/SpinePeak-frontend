@@ -1,7 +1,7 @@
 import { content } from '@/content'
 import { createCatalog } from './catalog'
 
-export type { Catalog, ClipCard, Content, FeaturedCard, Footer, HeroStat, Landing, SocialLink, Teacher } from './catalog'
+export type { Catalog, ClipCard, Content, FeaturedCard, Footer, HelpStep, HeroStat, Landing, SocialLink, Teacher } from './catalog'
 export type { CourseCard } from './course-card'
 export type { OgCard, OgPage } from './og'
 export type { CourseFilters } from './course-filters'

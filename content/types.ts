@@ -160,8 +160,10 @@ export type Site = {
   featured: FeaturedItem[]
   /** แถบโปรโมชันบนหน้าแรก · ไม่มีโปรเลย = ซ่อนทั้งแถบ */
   promos: Promotions
-  /** FAQ ทั่วไป (modal จาก footer) */
+  /** FAQ ทั่วไป (modal จาก footer) · ว่าง = ซ่อนลิงก์ "คำถามที่พบบ่อย" */
   faqs: { q: string; a: string }[]
+  /** ขั้นตอนใน modal "วิธีสมัครเรียน" จาก footer · เรียงตามลำดับที่แสดง เลขข้อนับให้เอง ไม่ต้องพิมพ์ในชื่อ · ว่าง = ซ่อนลิงก์ */
+  howToApply: { title: string; desc: string }[]
   /** FAQ ท้ายหน้ารายการคอร์ส */
   coursesFaqs: { q: string; a: string }[]
   /** FAQ ท้ายหน้ารายการ SET */

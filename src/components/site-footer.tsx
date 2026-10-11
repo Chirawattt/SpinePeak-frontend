@@ -1,17 +1,11 @@
 import Link from 'next/link'
+import { ContactButton } from '@/components/contact-button'
+import { FooterHelp } from '@/components/footer-help'
 import { Logo } from '@/components/logo'
 import { catalog } from '@/catalog'
 import type { SocialLink } from '@/catalog'
 
 const SOCIAL_BADGE: Record<SocialLink['kind'], string> = { instagram: 'IG', facebook: 'FB' }
-
-// ไม่มี "วิธีชำระเงิน": เฟส 1 ยังไม่มีระบบจ่ายเงิน
-// ไม่มีเงื่อนไขการใช้งาน / นโยบายความเป็นส่วนตัว: ยังไม่มีหน้า
-// ชี้ไป FAQ ของหน้ารายการคอร์สชั่วคราว จนกว่าจะเปลี่ยนเป็น modal (issue #16)
-const HELP_LINKS = [
-  { label: 'วิธีสมัครเรียน', href: '/courses#faq' },
-  { label: 'คำถามที่พบบ่อย', href: '/courses#faq' },
-]
 
 function ColumnTitle({ children }: { children: React.ReactNode }) {
   return <div className="mb-3.5 font-heading text-base font-semibold">{children}</div>
@@ -29,6 +23,7 @@ export function SiteFooter() {
   const { name } = catalog.siteInfo()
   const footer = catalog.footer()
   const linkClass = 'text-muted hover:text-ink'
+  const { steps, faqs } = footer.help
 
   return (
     <footer className="border-t border-divider bg-footer">
@@ -53,16 +48,20 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div>
-          <ColumnTitle>ช่วยเหลือ</ColumnTitle>
-          <div className="flex flex-col gap-2.5 text-[14.5px]">
-            {HELP_LINKS.map((l) => (
-              <Link key={l.label} href={l.href} className={linkClass}>
-                {l.label}
-              </Link>
-            ))}
+        {/* ไม่มี "วิธีชำระเงิน": เฟส 1 ยังไม่มีระบบจ่ายเงิน · ไม่มีเงื่อนไขการใช้งาน / นโยบายความเป็นส่วนตัว: ยังไม่มีเนื้อหา
+            ไม่มีทั้งขั้นตอนและ FAQ ใน site.json = ซ่อนทั้งคอลัมน์ */}
+        {(steps.length > 0 || faqs.length > 0) && (
+          <div>
+            <ColumnTitle>ช่วยเหลือ</ColumnTitle>
+            <div className="flex flex-col items-start gap-2.5 text-[14.5px]">
+              <FooterHelp steps={steps} faqs={faqs} linkClassName={linkClass}>
+                <ContactButton variant="brand" className="w-full whitespace-nowrap sm:w-fit">
+                  ทักแอดมินทาง LINE
+                </ContactButton>
+              </FooterHelp>
+            </div>
           </div>
-        </div>
+        )}
 
         <div>
           <ColumnTitle>ติดต่อเรา</ColumnTitle>

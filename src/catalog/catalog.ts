@@ -7,7 +7,7 @@ import { buildCourseCard, type CourseCard } from './course-card'
 import { buildCourseDetail, type CourseDetail } from './course-detail'
 import type { CourseFilters } from './course-filters'
 import { buildCourseListIndex, buildCoursesPage, buildReviewQuote, filterCourseList, type CourseList, type ReviewQuote } from './course-list'
-import { groupLink, nonEmpty, type NavLink } from './format'
+import { groupLink, nonEmpty, type Faq, type NavLink } from './format'
 import { buildPromos, type Promo } from './promos'
 import { courseOgCard, pageOgCard, setOgCard, type OgCard, type OgPage } from './og'
 import { buildSetDetail, type SetDetail } from './set-detail'
@@ -71,6 +71,28 @@ export type Footer = {
   email?: string
   /** ไม่มี TikTok: ตัดออกในเฟส 1 แม้ site.json จะมีก็ตาม */
   socials: SocialLink[]
+  /** เนื้อหา modal จากลิงก์ "ช่วยเหลือ" · ส่วนที่ว่างให้ซ่อนลิงก์และแท็บของส่วนนั้น */
+  help: { steps: HelpStep[]; faqs: Faq[] }
+}
+
+export type HelpStep = { title: string; desc: string }
+
+/** ข้ามขั้นที่ชื่อหรือคำอธิบายว่าง จะได้ไม่มีการ์ดเปล่าใน modal */
+function helpSteps(steps: Site['howToApply']): HelpStep[] {
+  return steps.flatMap((s) => {
+    const title = nonEmpty(s.title)
+    const desc = nonEmpty(s.desc)
+    return title && desc ? [{ title, desc }] : []
+  })
+}
+
+/** เหมือน helpSteps: ข้ามข้อที่คำถามหรือคำตอบว่าง จะได้ไม่มีแถวเปล่าและไม่โชว์ลิงก์ที่เปิดไปเจอแต่ของว่าง */
+function helpFaqs(faqs: Site['faqs']): Faq[] {
+  return faqs.flatMap((f) => {
+    const q = nonEmpty(f.q)
+    const a = nonEmpty(f.a)
+    return q && a ? [{ q, a }] : []
+  })
 }
 
 /** now: เวลาที่ใช้ตัดโปรที่หมดเขต (ค่าเริ่มต้น = ตอน build) */
@@ -136,6 +158,7 @@ export function createCatalog(content: Content, { now = () => new Date() }: { no
       hours: nonEmpty(site.contact.hours),
       email: nonEmpty(site.contact.email),
       socials,
+      help: { steps: helpSteps(site.howToApply), faqs: helpFaqs(site.faqs) },
     }
   }
 
