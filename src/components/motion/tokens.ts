@@ -3,6 +3,9 @@
 /** spring เด้งนิด ๆ ใช้เป็นค่าเริ่มต้นของทุก animation (ตั้งไว้ที่ MotionProvider) */
 export const SPRING = { type: 'spring', bounce: 0.22, visualDuration: 0.5 } as const
 
+/** spring ที่เร็วกว่าและเด้งน้อยกว่า ใช้กับสิ่งที่ตามเมาส์ (เช่น เส้นใต้เมนูตอน hover) */
+export const QUICK = { type: 'spring', bounce: 0.1, visualDuration: 0.3 } as const
+
 /** ระยะที่ของเลื่อนขึ้นมาตอนปรากฏ (px) */
 export const RISE = 16
 
