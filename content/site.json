@@ -69,9 +69,9 @@
   ],
 
   "featured": [
-    { "type": "course", "slug": "posn-biology-66", "label": "ขายดี" },
-    { "type": "set", "slug": "biocontest-bundle", "label": "เซ็ตคุ้มกว่า" },
-    { "type": "course", "slug": "nat-senior-biology" }
+    { "type": "set", "slug": "biocontest-bundle" },
+    { "type": "set", "slug": "foundation-science-smte-nat-bundle" },
+    { "type": "set", "slug": "m1-entrance-special-complete-bundle" }
   ],
 
   "promos": {

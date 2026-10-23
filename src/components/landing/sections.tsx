@@ -5,6 +5,7 @@ import { Carousel } from '@/components/carousel'
 import { ContactButton } from '@/components/contact-button'
 import { CoverBox } from '@/components/cover-box'
 import { SeasonalPromo } from '@/components/landing/seasonal-promo'
+import { SetCoverStack } from '@/components/set-cover-stack'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { Badge, badgeVariants } from '@/components/ui/badge'
 import { contactHref } from '@/contact'
@@ -87,8 +88,8 @@ export function FeaturedSection({ items }: { items: FeaturedCardData[] }) {
         <h2 id="featured-title" className={SECTION_TITLE}>
           คอร์สขายดี
         </h2>
-        <Link href="/courses" className="text-[15px] font-semibold hover:text-link-hover">
-          ดูคอร์สทั้งหมด →
+        <Link href="/sets" className="text-[15px] font-semibold hover:text-link-hover">
+          ดู SET ทั้งหมด →
         </Link>
       </Reveal>
       <Stagger as="ul" className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-[22px]">
@@ -115,7 +116,10 @@ function FeaturedCard({ item }: { item: FeaturedCardData }) {
     >
       <div className="relative">
         {isSet && !card.cover.image ? (
-          <div className="flex h-[150px] items-center justify-center bg-ink px-5 text-center font-heading text-[26px] leading-tight font-bold text-brand">{card.title}</div>
+          <div className="relative flex h-[150px] items-center justify-center overflow-hidden bg-ink px-5">
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot-dark)_1.3px,transparent_1.4px)] bg-size-[22px_22px] opacity-70" />
+            <SetCoverStack stack={item.card.stack} more={item.card.moreInStack} size="sm" className="w-full justify-center" />
+          </div>
         ) : (
           <CoverBox cover={card.cover} label={isSet ? item.card.codeLabel : item.card.label} title={card.title} className="aspect-auto! h-[150px] rounded-none!" />
         )}

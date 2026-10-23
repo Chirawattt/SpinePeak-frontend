@@ -1,12 +1,9 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import type { SetListCard as SetListCardData } from '@/catalog/set-list'
+import { SetCoverStack } from '@/components/set-cover-stack'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { cardVariants } from '@/components/ui/card'
-
-// มุมเอียงของปกในกอง ใบหน้าสุดก่อน ตาม docs/design-sets.dc.html
-const TILT = ['-rotate-3', 'rotate-[1.5deg]', 'rotate-[4deg]']
 
 /** การ์ด SET ในหน้ารายการ SET · ทั้งใบกดเข้าหน้ารายละเอียด SET */
 export function SetListCard({ card }: { card: SetListCardData }) {
@@ -24,22 +21,7 @@ export function SetListCard({ card }: { card: SetListCardData }) {
           <Badge className="font-bold">SET · {card.courseCount}</Badge>
           {card.savings && <span className="font-mono text-[12.5px] font-semibold text-brand">ประหยัด {card.savings.percent}</span>}
         </div>
-        <div aria-hidden className="relative flex items-center">
-          {card.stack.map((tile, i) => (
-            <div
-              key={tile.title}
-              style={{ zIndex: 4 - i }}
-              className={`relative flex aspect-[4/3] w-[clamp(96px,28%,128px)] flex-none items-end overflow-hidden rounded-xl border-[3px] border-ink bg-[repeating-linear-gradient(135deg,var(--color-brand-wash),var(--color-brand-wash)_9px,#d4f2fb_9px,#d4f2fb_18px)] p-2 text-[11px] leading-[1.3] font-semibold ${i > 0 ? '-ml-[18px]' : ''} ${TILT[i]}`}
-            >
-              {tile.image ? <Image src={tile.image} alt="" fill sizes="128px" className="object-cover" /> : tile.title}
-            </div>
-          ))}
-          {card.moreInStack > 0 && (
-            <div className="relative z-[5] -ml-3.5 flex h-[52px] w-[52px] flex-none items-center justify-center rounded-full border-[3px] border-ink bg-brand font-mono text-sm font-bold">
-              +{card.moreInStack}
-            </div>
-          )}
-        </div>
+        <SetCoverStack stack={card.stack} more={card.moreInStack} />
       </div>
 
       <div className="flex flex-1 flex-col gap-2.5 px-[22px] pt-5 pb-[22px]">
