@@ -10,9 +10,9 @@
  * ฟอนต์โหลดผ่าน next/font ใน src/app/fonts.ts แล้วส่งเข้ามาเป็น CSS variable
  */
 @theme inline {
-  --font-sans: var(--font-plex-thai), system-ui, sans-serif;
-  --font-heading: var(--font-anuphan), var(--font-plex-thai), sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-sans: var(--font-anuphan), system-ui, sans-serif;
+  --font-heading: var(--font-anuphan), sans-serif;
+  --font-mono: var(--font-plex-mono), var(--font-anuphan), ui-monospace, monospace;
 }
 
 @theme {

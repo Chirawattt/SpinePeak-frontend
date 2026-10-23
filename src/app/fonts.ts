@@ -1,17 +1,10 @@
-import { Anuphan, IBM_Plex_Mono, IBM_Plex_Sans_Thai } from 'next/font/google'
+import { Anuphan, IBM_Plex_Mono } from 'next/font/google'
 
-/** หัวข้อ */
+/** ฟอนต์ไทยตัวเดียวของเว็บ ใช้ทั้งหัวข้อและเนื้อความ */
 export const anuphan = Anuphan({
-  weight: ['600', '700'],
+  weight: ['400', '500', '600', '700'],
   subsets: ['thai', 'latin'],
   variable: '--font-anuphan',
-})
-
-/** เนื้อความ · ที่ design ใช้ 500 ให้ใช้ 600 แทน */
-export const plexThai = IBM_Plex_Sans_Thai({
-  weight: ['400', '600'],
-  subsets: ['thai', 'latin'],
-  variable: '--font-plex-thai',
 })
 
 /** ตัวอักษรละตินเล็ก ๆ เช่นป้ายกำกับ */

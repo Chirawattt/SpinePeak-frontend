@@ -4,7 +4,7 @@ import { SiteFooter } from '@/components/site-footer'
 import { MotionProvider } from '@/components/motion/motion-provider'
 import { SiteHeader } from '@/components/site-header'
 import { siteUrl } from '@/lib/site-url'
-import { anuphan, plexMono, plexThai } from './fonts'
+import { anuphan, plexMono } from './fonts'
 import './globals.css'
 
 const { name, description } = catalog.siteInfo()
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="th" className={`${anuphan.variable} ${plexThai.variable} ${plexMono.variable}`}>
+    <html lang="th" className={`${anuphan.variable} ${plexMono.variable}`}>
       <body className="font-sans antialiased">
         <MotionProvider>
           <SiteHeader />
