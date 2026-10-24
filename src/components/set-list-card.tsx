@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { SetListCard as SetListCardData } from '@/catalog/set-list'
-import { SetCoverStack } from '@/components/set-cover-stack'
+import { SetCoverFan } from '@/components/set-cover-stack'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { cardVariants } from '@/components/ui/card'
@@ -12,16 +12,19 @@ export function SetListCard({ card }: { card: SetListCardData }) {
       href={card.href}
       className={cardVariants({
         variant: 'featured',
-        className: 'group flex w-full flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_12px_32px_rgb(11_43_51/0.08)] transition-shadow hover:shadow-[0_18px_40px_rgb(11_43_51/0.14)]',
+        className: 'group group/card flex w-full flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_12px_32px_rgb(11_43_51/0.08)] transition-shadow hover:shadow-[0_18px_40px_rgb(11_43_51/0.14)]',
       })}
     >
-      <div className="relative overflow-hidden bg-ink px-[22px] pt-5 pb-[22px]">
+      <div className="relative isolate overflow-hidden bg-ink pt-5 pb-2">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot-dark)_1.3px,transparent_1.4px)] bg-size-[22px_22px] opacity-70" />
-        <div className="relative mb-[18px] flex items-center justify-between gap-2.5">
+        <div className="relative z-10 flex items-center justify-between gap-2.5 px-[22px]">
           <Badge className="font-bold">SET · {card.courseCount}</Badge>
           {card.savings && <span className="font-mono text-[12.5px] font-semibold text-brand">ประหยัด {card.savings.percent}</span>}
         </div>
-        <SetCoverStack stack={card.stack} more={card.moreInStack} />
+        {/* กว้างไม่เกิน 460px: การ์ดกว้างเต็มแถวบนแท็บเล็ตแล้วปกไม่ใหญ่เกิน */}
+        <div className="relative mx-auto aspect-[2/1] w-full max-w-[460px]">
+          <SetCoverFan stack={card.stack} more={card.moreInStack} />
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col gap-2.5 px-[22px] pt-5 pb-[22px]">

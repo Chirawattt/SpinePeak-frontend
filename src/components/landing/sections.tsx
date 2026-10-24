@@ -6,7 +6,7 @@ import { ContactButton } from '@/components/contact-button'
 import { ContactNote } from '@/components/contact-note'
 import { CoverBox } from '@/components/cover-box'
 import { SeasonalPromo } from '@/components/landing/seasonal-promo'
-import { SetCoverStack } from '@/components/set-cover-stack'
+import { SetCoverFan } from '@/components/set-cover-stack'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { Badge, badgeVariants } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
@@ -120,12 +120,12 @@ function FeaturedCard({ item }: { item: FeaturedCardData }) {
     >
       <div className="relative">
         {isSet && !card.cover.image ? (
-          <div className="relative flex h-[150px] items-center justify-center overflow-hidden bg-ink px-5">
+          <div className="relative h-[184px] overflow-hidden bg-ink">
             <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot-dark)_1.3px,transparent_1.4px)] bg-size-[22px_22px] opacity-70" />
-            <SetCoverStack stack={item.card.stack} more={item.card.moreInStack} size="sm" className="w-full justify-center" />
+            <SetCoverFan stack={item.card.stack} more={item.card.moreInStack} />
           </div>
         ) : (
-          <CoverBox cover={card.cover} label={isSet ? item.card.codeLabel : item.card.label} title={card.title} className="aspect-auto! h-[150px] rounded-none!" />
+          <CoverBox cover={card.cover} label={isSet ? item.card.codeLabel : item.card.label} title={card.title} className="aspect-auto! h-[184px] rounded-none!" />
         )}
         {item.label && (
           <Badge variant="ink" size="sm" className="absolute top-3 left-3 leading-4 text-white ring-1 ring-brand/40">
