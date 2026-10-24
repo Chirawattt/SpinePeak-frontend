@@ -200,9 +200,10 @@ export function PagedGrid<T extends { slug: string }>({
   return (
     <>
       <div className="flex items-baseline justify-between gap-4 px-gutter pt-[26px] pb-2.5">
-        <p className="font-mono text-[13px] font-semibold text-eyebrow" aria-live="polite">
+        {/* h2: หัวข้อของรายการ ให้การ์ด (h3) มีหัวข้อแม่ และโปรแกรมอ่านหน้าจอได้ยินจำนวนผลลัพธ์ */}
+        <h2 className="font-mono text-[13px] font-semibold text-eyebrow" aria-live="polite">
           {resultText}
-        </p>
+        </h2>
         <Link href={resetHref} scroll={false} className="border-b border-ring text-[14.5px] text-eyebrow hover:text-ink">
           ล้างตัวกรองทั้งหมด
         </Link>
