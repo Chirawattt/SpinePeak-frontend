@@ -48,7 +48,7 @@ export function SiteNav({ items }: { items: NavLink[] }) {
 
   return (
     // layoutRoot: header เป็น sticky ให้วัดตำแหน่งเส้นเทียบกับเมนู ไม่ใช่ทั้งหน้า (ไม่งั้นเส้นจะลอยตามระยะ scroll)
-    <motion.nav layoutRoot className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-sm font-medium sm:gap-x-5 sm:text-[15px]">
+    <motion.nav layoutRoot className="flex flex-wrap items-center justify-end gap-x-4 gap-y-3 text-sm font-medium sm:gap-x-5 sm:text-[15px]">
       {items.map((item) => (
         <NavItem
           key={item.href}
@@ -84,7 +84,8 @@ function NavItem({
     <MotionLink
       href={item.href}
       aria-current={active ? 'page' : undefined}
-      className="relative transition-colors hover:text-link-hover aria-[current=page]:text-link-hover"
+      // before: ขยายพื้นที่กดเป็น 44px โดยตัวอักษรและเส้นใต้อยู่ที่เดิม
+      className="relative transition-colors before:absolute before:-inset-x-1.5 before:-inset-y-3 before:content-[''] hover:text-link-hover aria-[current=page]:text-link-hover"
       // motion ไม่นับการแตะบนจอสัมผัสเป็น hover เส้นจึงไม่ค้าง
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}

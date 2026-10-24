@@ -8,7 +8,7 @@ colors:
   ink: "#0b2b33"
   band-ink: "#08232b"
   ink-soft: "#4a6c75"
-  muted: "#5a7a82"
+  muted: "#56767e"
   eyebrow: "#3e7784"
   link-hover: "#12707f"
   strike: "#6a868e"
@@ -205,7 +205,7 @@ Spine Peak คือห้องแล็บชีววิทยาที่เ
 - **Body lead** (400, 18px, 1.7): คำโปรยใต้หัวข้อ hero กว้างไม่เกิน 460px
 - **Body** (400, 14.5–15px, 1.6): คำโปรยและเนื้อความบนการ์ด
 - **Label** (600, 12.5–13px): ป้ายแคปซูล
-- **Eyebrow** (Plex Mono, 12px, ใช้ font-semibold แต่โหลดมาแค่ 500): ป้ายหมวดหมู่หรือรหัสหัวการ์ด สี eyebrow
+- **Eyebrow** (Plex Mono, 12px, โหลดน้ำหนัก 500 600 700): ป้ายหมวดหมู่หรือรหัสหัวการ์ด สี eyebrow
 
 ### Named Rules
 **The One Thai Face Rule.** ภาษาไทยใช้ Anuphan ตัวเดียว (commit `4fdda7c`) ห้ามเพิ่มฟอนต์ไทยตัวที่สอง

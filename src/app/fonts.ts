@@ -9,7 +9,8 @@ export const anuphan = Anuphan({
 
 /** ตัวอักษรละตินเล็ก ๆ เช่นป้ายกำกับ */
 export const plexMono = IBM_Plex_Mono({
-  weight: '500',
+  // ป้าย mono ใช้ทั้ง 500 600 700 · โหลดให้ครบ เบราว์เซอร์จะได้ไม่ทำตัวหนาปลอม
+  weight: ['500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-plex-mono',
 })
