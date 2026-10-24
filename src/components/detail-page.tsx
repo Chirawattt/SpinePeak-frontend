@@ -175,7 +175,7 @@ export function PriceCard({
       delay={0.12}
       className="min-w-0 self-start rounded-[20px] border border-card-line bg-white p-5 shadow-card lg:col-start-2 lg:row-span-2 lg:row-start-1"
     >
-      <CoverBox cover={cover} label={coverLabel} title={title} className="mb-[18px]" />
+      <CoverBox cover={cover} label={coverLabel} title={title} eager className="mb-[18px]" />
       <div className="mb-[18px]">
         <div className="mb-1 font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</div>
         <div className="text-sm text-eyebrow">{note ?? lifetime}</div>

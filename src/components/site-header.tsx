@@ -11,7 +11,7 @@ export function SiteHeader() {
   return (
     <header id="site-header" className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-divider bg-white/95 px-gutter py-3 backdrop-blur-sm">
       <Link href="/" className="shrink-0">
-        <Logo size={50} priority />
+        <Logo size={50} eager />
       </Link>
       <SiteNav items={nav} />
       <HeaderHeight targetId="site-header" />

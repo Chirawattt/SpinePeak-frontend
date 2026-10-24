@@ -36,13 +36,13 @@ export default function CoursesPage() {
           <span className="text-ink">{TITLE}</span>
         </nav>
         <Stagger trigger="mount" className="relative px-gutter pt-[22px] pb-10">
-          <StaggerItem>
+          <StaggerItem order={0}>
             <h1 className="mb-3 font-heading text-[clamp(29px,5.6vw,46px)] leading-[1.15] font-bold tracking-[-0.01em]">{TITLE}</h1>
           </StaggerItem>
-          <StaggerItem as="p" className="mb-[26px] max-w-[560px] text-[17px] leading-[1.7] text-ink-soft">
+          <StaggerItem order={1} as="p" className="mb-[26px] max-w-[560px] text-[17px] leading-[1.7] text-ink-soft">
             {INTRO}
           </StaggerItem>
-          <StaggerItem>
+          <StaggerItem order={2}>
             <Suspense fallback={<GroupTabs index={index} filters={{}} />}>
               <GroupTabsFromUrl index={index} />
             </Suspense>

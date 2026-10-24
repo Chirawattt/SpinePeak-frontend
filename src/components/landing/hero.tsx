@@ -24,21 +24,21 @@ export function Hero({ hero, entry }: { hero: Landing['hero']; entry?: React.Rea
 
       {/* ขึ้นไล่กัน: badge → หัวข้อทีละบรรทัด → subtitle → ปุ่ม → ตัวเลข */}
       <Stagger trigger="mount" className="relative order-1 min-w-0">
-        <StaggerItem className={badgeVariants({ variant: 'wash', className: 'mb-[22px] inline-flex items-center gap-2 tracking-[.02em]' })}>
+        <StaggerItem order={0} className={badgeVariants({ variant: 'wash', className: 'mb-[22px] inline-flex items-center gap-2 tracking-[.02em]' })}>
           {hero.badge}
         </StaggerItem>
         <h1 className="mb-[18px] font-heading text-[clamp(33px,6.4vw,58px)] leading-[1.12] font-bold tracking-[-.01em] text-pretty">
           {hero.titleLines.map((line, i) => (
-            <StaggerItem key={i} as="span" className="block">
+            <StaggerItem key={i} order={1 + i} as="span" className="block">
               {line}
             </StaggerItem>
           ))}
         </h1>
-        <StaggerItem as="p" className="max-w-[460px] text-lg leading-[1.7] text-ink-soft">
+        <StaggerItem order={hero.titleLines.length + 1} as="p" className="max-w-[460px] text-lg leading-[1.7] text-ink-soft">
           {hero.subtitle}
         </StaggerItem>
 
-        <StaggerItem className="mt-8">
+        <StaggerItem order={hero.titleLines.length + 2} className="mt-8">
           <div className="flex flex-wrap gap-3.5">
             <ContactButton size="lg" className="px-[34px]" />
             {hero.showClipsLink && (
@@ -50,7 +50,7 @@ export function Hero({ hero, entry }: { hero: Landing['hero']; entry?: React.Rea
           <ContactNote className="mt-3 text-muted" />
         </StaggerItem>
 
-        <StaggerItem as="dl" className="mt-[38px] flex flex-wrap gap-x-[34px] gap-y-[22px]">
+        <StaggerItem order={hero.titleLines.length + 3} as="dl" className="mt-[38px] flex flex-wrap gap-x-[34px] gap-y-[22px]">
           {hero.stats.map((stat) => (
             <div key={stat.label} className="flex flex-col-reverse">
               <dt className="text-sm text-muted">{stat.label}</dt>
@@ -71,7 +71,7 @@ export function Hero({ hero, entry }: { hero: Landing['hero']; entry?: React.Rea
               alt={hero.photoAlt}
               width={1080}
               height={1080}
-              priority
+              preload
               sizes="(max-width: 584px) 72vw, 420px"
               className="absolute top-0 left-0 block h-auto w-full"
               style={{ maskImage: PHOTO_MASK, WebkitMaskImage: PHOTO_MASK }}

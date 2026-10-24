@@ -115,3 +115,26 @@ body {
   --color-border: var(--border);
   --color-input: var(--input);
 }
+
+/*
+ * ของที่ "ปรากฏ" ตอนโหลดหน้า (Reveal / Stagger trigger="mount")
+ * เล่นด้วย CSS ไม่รอ JS: HTML จาก server แสดงได้ทันทีที่วาด แทนที่จะโปร่งใสจนกว่า React จะโหลดเสร็จ
+ * สภาพตอนเริ่มมาจาก --rise-* ที่ Reveal ใส่ให้ · เครื่องที่ตั้งลดการเคลื่อนไหวไว้ ไม่เล่นเลย
+ * เริ่มที่ opacity 0.01 ไม่ใช่ 0: Chrome ไม่นับของที่โปร่งใสสนิทเป็น LCP จนกว่าจะ fade จบ (LCP ช้าไป ~0.75 วิ) ตาเปล่าดูไม่ต่าง
+ */
+@keyframes rise {
+  from {
+    opacity: max(var(--rise-opacity, 0), 0.01);
+    transform: translateY(var(--rise-y, 16px)) scale(var(--rise-scale, 1));
+  }
+}
+
+.rise {
+  animation: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--rise-delay, 0s) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}
