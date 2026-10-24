@@ -5,7 +5,7 @@
 
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { filtersToQuery } from '@/catalog/course-filters'
+import { filterBarKey, filtersToQuery } from '@/catalog/course-filters'
 import { filterSetList, parseSetFilters, type SetFilters, type SetListIndex } from '@/catalog/set-list'
 import { FilterBar, PagedGrid, TabNav } from '@/components/list-browser'
 import { SetListCard } from '@/components/set-list-card'
@@ -26,7 +26,7 @@ export function SetTabs({ index, filters }: { index: SetListIndex; filters: SetF
 /** ช่องค้นหา + เลือกหมวดหมู่ ตามตัวกรองใน URL · ใช้ใน <Suspense> */
 export function SetFilterBarFromUrl({ index }: { index: SetListIndex }) {
   const filters = useFilters()
-  return <SetFilterBar key={filtersToQuery(filters)} index={index} filters={filters} />
+  return <SetFilterBar key={filterBarKey(filters)} index={index} filters={filters} />
 }
 
 export function SetFilterBar({ index, filters }: { index: SetListIndex; filters: SetFilters }) {

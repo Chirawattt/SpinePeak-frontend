@@ -35,3 +35,16 @@ export function listHref(filters: CourseFilters, base: '/courses' | '/sets' = '/
   const query = filtersToQuery(filters)
   return query ? `${base}?${query}` : base
 }
+
+/** คำค้นแบบที่เก็บใน URL: ตัดช่องว่างหัวท้าย · ว่าง = ไม่ได้ค้น · ใช้เทียบว่าคำค้นใน URL ตรงกับที่ช่องค้นหาส่งไปหรือเปล่า */
+export function normalizeQuery(q: string | undefined): string | undefined {
+  return q?.trim() || undefined
+}
+
+/**
+ * key ของช่องค้นหา: เปลี่ยนเมื่อกลุ่มหรือหมวดหมู่เปลี่ยนเท่านั้น ไม่รวมคำค้น
+ * รวมคำค้นด้วยจะทำให้ช่องค้นหาถูกสร้างใหม่ทุกครั้งที่ค้นหา focus หายระหว่างพิมพ์
+ */
+export function filterBarKey(filters: CourseFilters): string {
+  return filtersToQuery({ ...filters, q: undefined })
+}

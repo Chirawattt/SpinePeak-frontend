@@ -6,7 +6,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { listHref, type CourseFilters } from '@/catalog/course-filters'
+import { listHref, normalizeQuery, type CourseFilters } from '@/catalog/course-filters'
 import type { GroupTab } from '@/catalog/group-tabs'
 import { PressLink } from '@/components/motion/press'
 import { Reveal } from '@/components/motion/reveal'
@@ -44,10 +44,14 @@ export function StickyFilterBand({ children }: { children: ReactNode }) {
   return <div className="sticky top-(--header-h) z-[5] border-b border-divider-soft bg-footer px-gutter py-5">{children}</div>
 }
 
+/** หยุดพิมพ์นานเท่านี้ (ms) แล้วค้นหาเอง · กด Enter ค้นหาทันทีไม่ต้องรอ */
+const SEARCH_DELAY = 700
+
 /**
  * ช่องค้นหา + เลือกหมวดหมู่
  * เลือกหมวดหมู่เปลี่ยน URL แบบ push (ย้อนกลับได้) · พิมพ์ค้นหาเปลี่ยน URL แบบ replace หลังหยุดพิมพ์ จะได้ไม่เต็มประวัติ
- * ใส่ key ตามตัวกรองไว้ที่ผู้เรียก: กดย้อนกลับหรือล้างตัวกรองแล้วช่องค้นหาจะตามค่าใน URL
+ * ผู้เรียกใส่ key={filterBarKey(filters)} (ไม่รวมคำค้น): ช่องค้นหาไม่ถูกสร้างใหม่ระหว่างพิมพ์ focus จึงไม่หาย
+ * คำค้นใน URL ที่เปลี่ยนจากที่อื่น (ล้างตัวกรอง, ย้อนกลับ) ซิงก์เข้าช่องค้นหาเอง · ที่ช่องค้นหาส่งไปเองไม่ซิงก์กลับ จะได้ไม่ทับตัวที่พิมพ์ต่อ
  */
 export function FilterBar({
   base,
@@ -63,14 +67,38 @@ export function FilterBar({
   label: string
 }) {
   const router = useRouter()
+  const input = useRef<HTMLInputElement>(null)
   const [text, setText] = useState(filters.q ?? '')
+  // คำค้นใน URL ล่าสุดที่เห็น กับคำค้นล่าสุดที่ช่องนี้ส่งไปเอง · ใช้แยกว่าคำค้นใน URL เปลี่ยนเพราะเราหรือเพราะที่อื่น
+  const [seenQuery, setSeenQuery] = useState(normalizeQuery(filters.q))
+  const [sentQuery, setSentQuery] = useState(normalizeQuery(filters.q))
+  const [externalChanges, setExternalChanges] = useState(0)
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
   useEffect(() => () => clearTimeout(timer.current), [])
+
+  const urlQuery = normalizeQuery(filters.q)
+  if (urlQuery !== seenQuery) {
+    setSeenQuery(urlQuery)
+    if (urlQuery !== sentQuery) {
+      // ล้างตัวกรอง / ย้อนกลับ: ช่องค้นหาตาม URL และยกเลิกการค้นหาที่รออยู่ (ดู effect ข้างล่าง)
+      setText(filters.q ?? '')
+      setSentQuery(urlQuery)
+      setExternalChanges((n) => n + 1)
+    }
+  }
+  useEffect(() => {
+    if (externalChanges > 0) clearTimeout(timer.current)
+  }, [externalChanges])
 
   const go = (next: CourseFilters, replace = false) => {
     const href = listHref(next, base)
     if (replace) router.replace(href, { scroll: false })
     else router.push(href, { scroll: false })
+  }
+
+  const search = (q: string) => {
+    setSentQuery(normalizeQuery(q))
+    go({ ...filters, q }, true)
   }
 
   return (
@@ -80,17 +108,21 @@ export function FilterBar({
       onSubmit={(e) => {
         e.preventDefault()
         clearTimeout(timer.current)
-        go({ ...filters, q: text })
+        search(text)
+        // มือถือ: กด "ค้นหา" แปลว่าพิมพ์เสร็จแล้ว ปิดคีย์บอร์ดให้เห็นผลเต็มจอ · จอที่ใช้เมาส์ focus อยู่ที่ช่องเดิม
+        if (window.matchMedia('(pointer: coarse)').matches) input.current?.blur()
       }}
     >
       <Input
+        ref={input}
         type="search"
+        enterKeyHint="search"
         value={text}
         onChange={(e) => {
           const q = e.target.value
           setText(q)
           clearTimeout(timer.current)
-          timer.current = setTimeout(() => go({ ...filters, q }, true), 350)
+          timer.current = setTimeout(() => search(q), SEARCH_DELAY)
         }}
         placeholder={placeholder}
         aria-label={label}

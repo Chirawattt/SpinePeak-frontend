@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { catalog as realCatalog } from '.'
 import { createCatalog } from './catalog'
-import { filtersToQuery, listHref, parseFilters } from './course-filters'
+import { filterBarKey, filtersToQuery, listHref, normalizeQuery, parseFilters } from './course-filters'
 import { testContent, testCourse, testSite } from './test-content'
 
 // คอร์สตัวอย่างตามลำดับในชีต: กลุ่มสลับกันเพื่อให้เห็นว่าไม่ได้เรียงตามกลุ่ม
@@ -240,5 +240,21 @@ describe('course card eyebrow', () => {
 
   it('does not repeat a category that has the same name as the group', () => {
     expect(cardOf({ group: 'prathom', subject: 'science', category: 'ประถม' })?.eyebrow).toBe('ประถม · วิทยาศาสตร์')
+  })
+})
+
+describe('filterBarKey()', () => {
+  it('changes with the group or category but not with the search text, so typing never remounts the search box', () => {
+    expect(filterBarKey({ group: 'mplai', q: 'ไมโอซิส' })).toBe(filterBarKey({ group: 'mplai', q: 'ไมโ' }))
+    expect(filterBarKey({ group: 'mplai' })).not.toBe(filterBarKey({ group: 'mton' }))
+    expect(filterBarKey({ category: 'A-Level' })).not.toBe(filterBarKey({}))
+  })
+})
+
+describe('normalizeQuery()', () => {
+  it('trims the search text the way the URL stores it, and treats blank as no search', () => {
+    expect(normalizeQuery('  พันธุ  ')).toBe('พันธุ')
+    expect(normalizeQuery('   ')).toBeUndefined()
+    expect(normalizeQuery(undefined)).toBeUndefined()
   })
 })

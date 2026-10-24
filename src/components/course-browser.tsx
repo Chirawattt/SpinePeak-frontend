@@ -4,7 +4,7 @@
 // import จาก course-filters / course-list ตรง ๆ ไม่ผ่าน '@/catalog' เพราะตัวนั้นโหลดข้อมูล content/ ทั้งก้อนเข้ามาใน bundle
 
 import { useSearchParams } from 'next/navigation'
-import { filtersToQuery, parseFilters, type CourseFilters } from '@/catalog/course-filters'
+import { filterBarKey, filtersToQuery, parseFilters, type CourseFilters } from '@/catalog/course-filters'
 import { filterCourseList, type CourseListIndex } from '@/catalog/course-list'
 import { CourseCard } from '@/components/course-card'
 import { FilterBar, PagedGrid, TabNav } from '@/components/list-browser'
@@ -25,7 +25,7 @@ export function GroupTabs({ index, filters }: { index: CourseListIndex; filters:
 /** ช่องค้นหา + เลือกหมวดหมู่ ตามตัวกรองใน URL · ใช้ใน <Suspense> */
 export function FilterBarFromUrl({ index }: { index: CourseListIndex }) {
   const filters = useFilters()
-  return <CourseFilterBar key={filtersToQuery(filters)} index={index} filters={filters} />
+  return <CourseFilterBar key={filterBarKey(filters)} index={index} filters={filters} />
 }
 
 export function CourseFilterBar({ index, filters }: { index: CourseListIndex; filters: CourseFilters }) {
