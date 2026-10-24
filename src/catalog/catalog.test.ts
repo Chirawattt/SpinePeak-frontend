@@ -312,9 +312,29 @@ describe('landing() promos', () => {
   })
 
   it('advertises the best real set saving, rounded down, linking to the sets page', () => {
-    const [card] = promosOf({ seasonal: [], evergreen: [{ kind: 'set-savings', name: 'ซื้อเป็น SET', desc: 'ประหยัดสูงสุด' }] })
+    const [, card] = promosOf({ seasonal: [seasonal], evergreen: [{ kind: 'set-savings', name: 'ซื้อเป็น SET', desc: 'ประหยัดสูงสุด' }] })
 
     expect(card).toEqual({ kind: 'evergreen', name: 'ซื้อเป็น SET', value: '-20%', desc: 'ประหยัดสูงสุด', href: '/sets' })
+  })
+
+  it('hides the strip when the set saving card would be alone, and moves the number under the best-sellers heading', () => {
+    const landing = createCatalog(
+      testContent({ courses, sets, site: testSite({ promos: { seasonal: [], evergreen: [{ kind: 'set-savings', name: 'ซื้อเป็น SET', desc: '' }] } }) }),
+      { now: () => new Date('2026-10-10T12:00:00+07:00') },
+    ).landing()
+
+    expect(landing.promos).toEqual([])
+    expect(landing.featuredNote).toBe('ซื้อเป็น SET ประหยัดสูงสุด 20%')
+  })
+
+  it('keeps the strip, without the best-sellers note, when another promo runs too', () => {
+    const landing = createCatalog(
+      testContent({ courses, sets, site: testSite({ promos: { seasonal: [seasonal], evergreen: [{ kind: 'set-savings', name: 'ซื้อเป็น SET', desc: '' }] } }) }),
+      { now: () => new Date('2026-10-10T12:00:00+07:00') },
+    ).landing()
+
+    expect(landing.promos).toHaveLength(2)
+    expect(landing.featuredNote).toBeUndefined()
   })
 
   it('skips the set saving card when no set is cheaper than buying separately', () => {

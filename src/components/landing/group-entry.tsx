@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { GroupEntry as GroupEntryData } from '@/catalog'
 import { ContactButton } from '@/components/contact-button'
 import { Reveal } from '@/components/motion/reveal'
-import { badgeVariants } from '@/components/ui/badge'
+import { CategoryChips } from '@/components/landing/category-chips'
 
 // ทางเข้าหลักของเว็บ (กลุ่ม → หมวดหมู่) · Hero วางให้เป็นแถวในกริดของตัวเอง (ส่งผ่าน prop entry)
 // ลิงก์ทุกอันไปหน้ารายการคอร์สที่กรองไว้แล้ว · คนที่ยังไม่รู้จะเริ่มตรงไหนมีปุ่มให้แอดมินช่วยเลือกที่แถวล่าง
@@ -37,23 +37,7 @@ export function GroupEntry({ groups }: { groups: GroupEntryData[] }) {
                 </span>
               </Link>
 
-              {group.categories.length > 0 && (
-                <ul aria-label={`สนามสอบของ${group.label}`} className="flex flex-wrap gap-2">
-                  {group.categories.map((category) => (
-                    <li key={category.label}>
-                      <Link
-                        href={category.href}
-                        className={badgeVariants({
-                          variant: 'outline',
-                          className: 'inline-flex min-h-9 items-center font-medium transition-colors hover:border-brand hover:bg-brand-wash',
-                        })}
-                      >
-                        {category.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {group.categories.length > 0 && <CategoryChips groupLabel={group.label} groupHref={group.href} categories={group.categories} />}
             </li>
           ))}
         </ul>

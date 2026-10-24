@@ -27,14 +27,10 @@ export function PromoSection({ promos }: { promos: Promo[] }) {
         gap={18}
         className="snap-x snap-mandatory gap-[18px] pb-2"
         header={
-          <div className="flex flex-1 flex-wrap items-baseline justify-between gap-3">
-            <h2 id="promo" className={`${SECTION_TITLE} scroll-mt-[90px]`}>
-              โปรโมชัน
-            </h2>
-            <Link href="/sets" className="text-[15px] font-semibold hover:text-link-hover">
-              ดู SET ทั้งหมด →
-            </Link>
-          </div>
+          // ไม่มีลิงก์ "ดู SET ทั้งหมด" ที่นี่: หัวข้อคอร์สขายดีถัดไปมีอยู่แล้ว
+          <h2 id="promo" className={`${SECTION_TITLE} flex-1 scroll-mt-[90px]`}>
+            โปรโมชัน
+          </h2>
         }
       >
         {promos.map((promo) =>
@@ -82,14 +78,17 @@ function EvergreenPromo({ promo }: { promo: Extract<Promo, { kind: 'evergreen' }
   )
 }
 
-/** "คอร์สขายดี": ของแนะนำที่เจ้าของเลือกใน site.json ผสมคอร์สกับ SET · ว่างให้ผู้เรียกไม่ render */
-export function FeaturedSection({ items }: { items: FeaturedCardData[] }) {
+/** "คอร์สขายดี": ของแนะนำที่เจ้าของเลือกใน site.json ผสมคอร์สกับ SET · ว่างให้ผู้เรียกไม่ render · note = บรรทัดใต้หัวข้อ (ดู Landing.featuredNote) */
+export function FeaturedSection({ items, note }: { items: FeaturedCardData[]; note?: string }) {
   return (
     <section aria-labelledby="featured-title" className="px-gutter pt-[52px] pb-16">
       <Reveal className="mb-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-        <h2 id="featured-title" className={SECTION_TITLE}>
-          คอร์สขายดี
-        </h2>
+        <div>
+          <h2 id="featured-title" className={SECTION_TITLE}>
+            คอร์สขายดี
+          </h2>
+          {note && <p className="mt-1 text-[15px] text-ink-soft">{note}</p>}
+        </div>
         <Link href="/sets" className="text-[15px] font-semibold hover:text-link-hover">
           ดู SET ทั้งหมด →
         </Link>
@@ -108,7 +107,7 @@ export function FeaturedSection({ items }: { items: FeaturedCardData[] }) {
 /**
  * ใช้ข้อมูลการ์ดเดิมของคอร์ส / SET · ทั้งใบกดเข้าหน้ารายละเอียด (ลิงก์ที่ชื่อยืดคลุมทั้งใบ) ให้ดูของข้างในก่อนตัดสินใจทัก
  * ปุ่ม "ดูรายละเอียด" เป็นแค่ภาพของลิงก์นั้น · ไม่มีปุ่มทักแอดมินในการ์ด ให้ทักจากหน้ารายละเอียดหรือปุ่มลอยแทน
- * การ์ด SET ใช้โทนเข้ม (ขอบเข้ม ปกเข้ม ปุ่มเข้ม) ให้แยกออกจากคอร์สเดี่ยวได้ทันที
+ * การ์ด SET ใช้โทนเข้ม (ขอบเข้ม ปกเข้ม) ให้แยกออกจากคอร์สเดี่ยวได้ทันที
  */
 function FeaturedCard({ item }: { item: FeaturedCardData }) {
   const { card } = item
@@ -156,7 +155,8 @@ function FeaturedCard({ item }: { item: FeaturedCardData }) {
             </>
           )}
         </div>
-        <span aria-hidden className={buttonVariants({ variant: isSet ? 'dark' : 'brand', className: `mt-1 text-[15px] ${isSet ? 'group-hover/card:bg-ink/90' : 'group-hover/card:bg-brand/85'}` })}>
+        {/* สีฟ้าเสมอ ทั้งการ์ดคอร์สและ SET: สีเข้มสงวนไว้ให้ปุ่มติดต่อ (DESIGN.md) */}
+        <span aria-hidden className={buttonVariants({ variant: 'brand', className: 'mt-1 text-[15px] group-hover/card:bg-brand/85' })}>
           ดูรายละเอียด
         </span>
       </div>

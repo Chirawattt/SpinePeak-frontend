@@ -38,8 +38,10 @@ export type Landing = {
   }
   /** ทางเข้าตามกลุ่มใต้ hero · กลุ่มที่ไม่มีคอร์สเลยไม่โผล่ */
   groupEntries: GroupEntry[]
-  /** แถบโปรโมชัน · ว่างเมื่อไม่มีโปร ให้ซ่อนทั้งแถบ */
+  /** แถบโปรโมชัน · ว่างเมื่อไม่มีโปร หรือเหลือแค่การ์ด "ซื้อเป็น SET" ใบเดียว ให้ซ่อนทั้งแถบ */
   promos: Promo[]
+  /** บรรทัดใต้หัวข้อ "คอร์สขายดี" เช่น "ซื้อเป็น SET ประหยัดสูงสุด 51%" · มีเฉพาะตอนแถบโปรซ่อนเพราะเหลือการ์ดนั้นใบเดียว */
+  featuredNote?: string
   /** ไม่มีค่าเมื่อ site.json ไม่มีผู้สอน ให้ซ่อนส่วนแนะนำครู */
   teacher?: Teacher
   /** ว่างเมื่อ clips.json ว่าง ให้ซ่อนทั้งส่วน */
@@ -142,7 +144,7 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
         showClipsLink: clips.length > 0,
       },
       groupEntries: buildGroupEntries(),
-      promos: buildPromos(site, sets, courses, now()),
+      ...promoStrip(buildPromos(site, sets, courses, now())),
       ...(teacher && { teacher }),
       clips,
       reviews,
@@ -176,6 +178,16 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
         },
       ]
     })
+  }
+
+  /**
+   * การ์ด "ซื้อเป็น SET" ใบเดียวโดด ๆ ทำให้แถบโปรดูโหรงและซ้ำกับคอร์สขายดีที่อยู่ถัดไป
+   * กรณีนั้นซ่อนแถบ แล้วย้ายตัวเลขไปเป็นบรรทัดใต้หัวข้อคอร์สขายดีแทน · มีโปรอื่นด้วยก็แสดงแถบตามปกติ
+   */
+  function promoStrip(promos: Promo[]): Pick<Landing, 'promos' | 'featuredNote'> {
+    const [only] = promos
+    if (promos.length !== 1 || only?.kind !== 'evergreen' || only.href !== '/sets') return { promos }
+    return { promos: [], featuredNote: `ซื้อเป็น SET ประหยัดสูงสุด ${only.value.replace(/^-/, '')}` }
   }
 
   /** contactNote: บรรทัดเล็กใต้ปุ่มติดต่อหลัก · ไม่มีค่าเมื่อ site.json เว้นว่าง ให้ซ่อน */
