@@ -75,7 +75,9 @@ export function DetailTop({
             {' / '}
           </span>
         ))}
-        <span className={t.current}>{current}</span>
+        <span aria-current="page" className={t.current}>
+          {current}
+        </span>
       </nav>
 
       <div className={`relative grid gap-x-9 gap-y-7 px-gutter pt-1 pb-14 lg:grid-rows-[auto_1fr] lg:pb-16 ${columns}`}>
@@ -218,8 +220,8 @@ export function ReviewsCard({ title, reviews }: { title: string; reviews: Review
   )
 }
 
-/** วงกลมรูปครู · ยังไม่มีรูปก็ใช้วงกลมลายทางแทนที่ไว้ตาม design */
-export function TeacherAvatar({ name, photo, size = 64 }: { name: string; photo?: string; size?: 60 | 64 }) {
+/** วงกลมรูปครู · ยังไม่มีรูปก็ใช้วงกลมลายทางแทนที่ไว้ตาม design · รูปไม่มี alt เพราะชื่อครูเป็นข้อความอยู่ข้าง ๆ เสมอ (ไม่ให้อ่านชื่อซ้ำ) */
+export function TeacherAvatar({ photo, size = 64 }: { photo?: string; size?: 60 | 64 }) {
   const box = size === 60 ? 'h-[60px] w-[60px]' : 'h-16 w-16'
   if (!photo) {
     return (
@@ -233,7 +235,7 @@ export function TeacherAvatar({ name, photo, size = 64 }: { name: string; photo?
   }
   return (
     <div className={`flex flex-none items-end justify-center overflow-hidden rounded-full bg-brand ${box}`}>
-      <Image src={photo} alt={name} width={size + 14} height={size + 14} className="-mb-1.5 h-auto max-w-none" />
+      <Image src={photo} alt="" width={size + 14} height={size + 14} className="-mb-1.5 h-auto max-w-none" />
     </div>
   )
 }

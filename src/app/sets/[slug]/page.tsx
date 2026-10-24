@@ -224,7 +224,7 @@ function Teachers({ heading, teachers }: { heading: string; teachers: SetTeacher
         {teachers.map((teacher) => (
           <li key={teacher.name}>
             <div className="flex items-center gap-3.5">
-              <TeacherAvatar name={teacher.name} size={60} {...(teacher.photo && { photo: teacher.photo })} />
+              <TeacherAvatar size={60} {...(teacher.photo && { photo: teacher.photo })} />
               <div>
                 <div className="font-heading text-[19px] font-semibold">{teacher.name}</div>
                 <div className="text-sm text-muted">{teacher.role}</div>

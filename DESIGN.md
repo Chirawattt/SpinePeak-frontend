@@ -11,7 +11,7 @@ colors:
   muted: "#56767e"
   eyebrow: "#3e7784"
   link-hover: "#12707f"
-  strike: "#6a868e"
+  strike: "#5a7880"
   line: "#e3eef1"
   card-line: "#dceef3"
   outline: "#d6e8ed"
@@ -173,7 +173,7 @@ Spine Peak คือห้องแล็บชีววิทยาที่เ
 - **Soft Ink** (ink-soft): คำโปรยใต้หัวข้อ hero และคำโปรยของการ์ด SET
 - **Muted Teal Gray** (muted): ข้อความรอง เช่น ตัวเลขข้อมูลบนการ์ด หรือป้ายกำกับใต้ตัวเลขใน hero
 - **Eyebrow Teal** (eyebrow): ตัวอักษร mono เล็กๆ หัวการ์ด (หมวดหมู่ / รหัส) และข้อความ "ประหยัด ... เทียบกับซื้อแยก"
-- **Strike Gray** (strike): ราคาปกติที่ขีดฆ่าเท่านั้น จางกว่า muted ให้รู้ว่าเป็นราคาเดิม แต่ยังอ่านออก (3.9:1 บนพื้นขาว) · ราคาที่ไม่ได้ขีดฆ่าใช้ muted
+- **Strike Gray** (strike): ราคาปกติที่ขีดฆ่าเท่านั้น จางกว่า muted ให้รู้ว่าเป็นราคาเดิม แต่ผ่าน AA (4.7:1 บนพื้นขาว, 4.6:1 บน set-wash) · ราคาที่ไม่ได้ขีดฆ่าใช้ muted
 - **Hairline** (line), **Card Line** (card-line), **Outline** (outline): เส้นขอบการ์ด เส้นขอบปุ่ม outline และขอบช่องกรอก
 - **Divider** (divider), **Divider Soft** (divider-soft): เส้นใต้ header เส้นของ footer และเส้นคั่นในการ์ด
 - **Tint** (tint), **Set Wash** (set-wash), **Footer** (footer): พื้นขาวอมฟ้าจางๆ ใช้แยกส่วน (section ครู แผงในหน้าต่างช่วยเหลือ) พื้นการ์ด SET ในหน้าแรก และพื้นของ footer กับแถบตัวกรองที่ติดอยู่ด้านบน

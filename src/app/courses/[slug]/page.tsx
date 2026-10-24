@@ -122,9 +122,9 @@ function Instructor({ instructor }: { instructor: CourseInstructor }) {
   return (
     <aside className={cardVariants()}>
       <div className="mb-3.5 flex items-center gap-3.5">
-        <TeacherAvatar name={instructor.name} {...(instructor.photo && { photo: instructor.photo })} />
+        <TeacherAvatar {...(instructor.photo && { photo: instructor.photo })} />
         <div>
-          <div className="font-heading text-xl font-semibold">{instructor.name}</div>
+          <h2 className="font-heading text-xl font-semibold">{instructor.name}</h2>
           <div className="text-sm text-muted">{instructor.role}</div>
         </div>
       </div>

@@ -7,7 +7,11 @@ import { cardVariants } from '@/components/ui/card'
 /** การ์ด SET ที่มีคอร์สนี้ (ไม่เกิน 2 ใบ) ในคอลัมน์ขวาของหน้าคอร์ส ตาม docs/design-course-detail.dc.html · ที่เหลือลิงก์ไปหน้ารายการ SET */
 export function SetOffers({ sets }: { sets: CourseSets }) {
   return (
-    <Stagger as="section" aria-label="SET ที่มีคอร์สนี้" className="flex flex-col gap-5">
+    // หัวข้อซ่อนไว้ให้โปรแกรมอ่านหน้าจอกระโดดมาหา SET ได้ · ตาเห็นจากป้ายบนการ์ดอยู่แล้ว
+    <Stagger as="section" aria-labelledby="set-offers-title" className="flex flex-col gap-5">
+      <h2 id="set-offers-title" className="sr-only">
+        SET ที่มีคอร์สนี้
+      </h2>
       {sets.offers.map((set) => (
         <StaggerItem key={set.slug} lift>
           <Link href={set.href} className={cardVariants({ variant: 'featured', className: 'group block bg-set-wash p-6' })}>

@@ -16,6 +16,8 @@ type Props = {
   as?: Tag
   className?: string
   children?: React.ReactNode
+  /** ชื่อของ section / nav ให้โปรแกรมอ่านหน้าจอ · ส่งต่อให้ element จริง */
+  'aria-labelledby'?: string
 }
 
 const HIDDEN: TargetAndTransition = { opacity: 0, y: RISE }
@@ -60,19 +62,20 @@ export function Reveal({
   lift = false,
   className,
   children,
+  'aria-labelledby': labelledBy,
 }: Props & { trigger?: Trigger; delay?: number; from?: TargetAndTransition; lift?: boolean }) {
   const Component = TAGS[as]
   if (trigger === 'mount') {
     const Plain = as
     return (
-      <Plain className={`rise ${className ?? ''}`} style={riseStyle(from, delay)}>
+      <Plain className={`rise ${className ?? ''}`} style={riseStyle(from, delay)} aria-labelledby={labelledBy}>
         {children}
       </Plain>
     )
   }
   const variants: Variants = { hidden: from, shown: { ...SHOWN, transition: { ...SPRING, delay } } }
   return (
-    <Component variants={variants} {...playProps(trigger)} whileHover={lift ? LIFT : undefined} className={className}>
+    <Component variants={variants} {...playProps(trigger)} whileHover={lift ? LIFT : undefined} className={className} aria-labelledby={labelledBy}>
       {children}
     </Component>
   )
@@ -85,13 +88,15 @@ const MountStagger = createContext<{ delay: number } | null>(null)
  * กลุ่มที่ลูก (StaggerItem) ขึ้นไล่กันทีละชิ้น · รวมทั้งชุดไม่เกิน STAGGER_CAP ต่อให้รายการยาว
  * trigger="mount": ลูกแต่ละตัวต้องใส่ order (0, 1, 2, ...) เพราะ CSS ไม่รู้ลำดับของลูกที่ซ้อนอยู่ลึก (เช่นบรรทัดในหัวข้อ)
  */
-export function Stagger({ as = 'div', trigger = 'view', delay = 0, className, children }: Props & { trigger?: Trigger; delay?: number }) {
+export function Stagger({ as = 'div', trigger = 'view', delay = 0, className, children, 'aria-labelledby': labelledBy }: Props & { trigger?: Trigger; delay?: number }) {
   const Component = TAGS[as]
   if (trigger === 'mount') {
     const Plain = as
     return (
       <MountStagger.Provider value={{ delay }}>
-        <Plain className={className}>{children}</Plain>
+        <Plain className={className} aria-labelledby={labelledBy}>
+          {children}
+        </Plain>
       </MountStagger.Provider>
     )
   }
@@ -100,7 +105,7 @@ export function Stagger({ as = 'div', trigger = 'view', delay = 0, className, ch
     shown: { transition: { delayChildren: (i: number) => delay + Math.min(i * STAGGER, STAGGER_CAP) } },
   }
   return (
-    <Component variants={variants} {...playProps(trigger)} className={className}>
+    <Component variants={variants} {...playProps(trigger)} className={className} aria-labelledby={labelledBy}>
       {children}
     </Component>
   )
