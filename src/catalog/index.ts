@@ -15,4 +15,5 @@ export type { SetDetail, SetGet, SetTeacher } from './set-detail'
 export type { Promo } from './promos'
 export type { ContentProblem } from './validate-content'
 
-export const catalog = createCatalog(content)
+// mock โชว์เฉพาะตอน next dev ไว้ดูหน้าตา · production build (รวม preview บน Vercel) ตัดทิ้งเสมอ
+export const catalog = createCatalog(content, { showMocks: process.env.NODE_ENV === 'development' })

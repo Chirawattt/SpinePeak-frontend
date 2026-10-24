@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { cardVariants } from '@/components/ui/card'
 import { ContactButton } from '@/components/contact-button'
+import { ContactNote } from '@/components/contact-note'
 import { CoverBox } from '@/components/cover-box'
 import { Bullets, ClosingBand, DetailHeading, DetailTop, PreviewClip, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
@@ -36,7 +37,6 @@ export default async function SetDetailPage({ params }: PageProps<'/sets/[slug]'
       <ClosingBand
         title={`ได้ครบ ${detail.courseCount} ในราคาเดียว`}
         line={`${detail.price}${regular} · ${detail.lifetime}`}
-        button="สมัคร SET นี้"
         contactItem={detail.contactItem}
       />
     </>
@@ -93,9 +93,8 @@ function SetPriceCard({ detail }: { detail: SetDetail }) {
         )}
       </div>
       <div className="mb-[18px] text-[14.5px] text-eyebrow">{savings ? `ประหยัด ${savings.amount} เทียบกับซื้อแยก` : detail.lifetime}</div>
-      <ContactButton item={detail.contactItem} size="lg" className="mb-2.5">
-        สมัคร SET นี้
-      </ContactButton>
+      <ContactButton item={detail.contactItem} size="lg" className="mb-2.5" />
+      <ContactNote className="mb-3 text-center text-muted" />
       <a href="#courses" className={buttonVariants({ variant: 'outline' })}>
         ดูคอร์สใน SET
       </a>

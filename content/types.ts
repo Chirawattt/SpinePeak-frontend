@@ -136,11 +136,18 @@ export type Site = {
     heroTitle: string
     heroSubtitle: string
     footerBlurb: string
+    /** บรรทัดเล็กใต้ปุ่มติดต่อหลัก บอกว่ากดแล้วเกิดอะไร · ไม่มี = ไม่แสดง */
+    contactNote?: string
   }
   heroStats: { value: string; label: string }[]
   instructors: Instructor[]
   contact: {
-    line: { basicId: string; prefillTemplate: string }
+    line: {
+      basicId: string
+      prefillTemplate: string
+      /** ข้อความตั้งต้นของปุ่มที่ไม่ได้ผูกกับคอร์สหรือเซ็ต (hero, ปุ่มลอย ฯลฯ) · ไม่มี = เปิดแชทเปล่า */
+      generalPrefill?: string
+    }
     facebook: { pageId: string; url: string }
     instagram?: { handle: string; url: string }
     tiktok?: { handle: string; url: string }

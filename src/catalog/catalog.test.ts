@@ -65,7 +65,7 @@ describe('footer()', () => {
     expect(footer.hours).toBe('จันทร์–เสาร์ 10:00–19:00 น.')
   })
 
-  it('links socials from site.json and never shows TikTok', () => {
+  it('links LINE first, then socials from site.json, and never shows TikTok', () => {
     const footer = footerWith({
       instagram: { handle: 'krunam.spine', url: 'https://www.instagram.com/krunam.spine/' },
       facebook: { pageId: 'AlizBiotutor', url: 'https://www.facebook.com/AlizBiotutor' },
@@ -73,6 +73,7 @@ describe('footer()', () => {
     })
 
     expect(footer.socials).toEqual([
+      { kind: 'line', label: '@test', href: 'https://line.me/R/ti/p/%40test' },
       { kind: 'instagram', label: '@krunam.spine', href: 'https://www.instagram.com/krunam.spine/' },
       { kind: 'facebook', label: 'Spine Peak', href: 'https://www.facebook.com/AlizBiotutor' },
     ])
@@ -81,7 +82,7 @@ describe('footer()', () => {
   it('leaves Instagram out when site.json has no Instagram account', () => {
     const footer = footerWith({ instagram: undefined })
 
-    expect(footer.socials.map((s) => s.kind)).toEqual(['facebook'])
+    expect(footer.socials.map((s) => s.kind)).toEqual(['line', 'facebook'])
   })
 
   it('links each group to the course list filtered by that group', () => {

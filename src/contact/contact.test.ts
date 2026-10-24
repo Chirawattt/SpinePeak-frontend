@@ -36,8 +36,17 @@ describe('contactHref()', () => {
     expect(linePrefill(contactHref(set, 'line'))).toBe('สนใจ วิทยาศาสตร์ ป.4 เนื้อหา + ตะลุยโจทย์ ครับ/ค่ะ')
   })
 
-  it('opens LINE without a prefilled message when no course or set is chosen', () => {
+  it('opens LINE without a prefilled message when no course or set is chosen and site.json has no general message', () => {
     expect(contactHref(undefined, 'line')).toBe('https://line.me/R/oaMessage/%40592omrxd/')
+  })
+
+  it('prefills the general message from site.json when no course or set is chosen', () => {
+    const { contactHref } = createContact(
+      testSite({ contact: { ...site.contact, line: { ...site.contact.line, generalPrefill: 'สนใจสอบถามคอร์สเรียนครับ/ค่ะ' } } }),
+    )
+
+    expect(linePrefill(contactHref(undefined, 'line'))).toBe('สนใจสอบถามคอร์สเรียนครับ/ค่ะ')
+    expect(linePrefill(contactHref(course, 'line'))).toBe('สนใจ เนื้อหาประถม ป.4 ครับ/ค่ะ')
   })
 
   it('tells the Facebook page which course the chat came from', () => {

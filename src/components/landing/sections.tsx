@@ -3,6 +3,7 @@ import Link from 'next/link'
 import type { ClipCard, FeaturedCard as FeaturedCardData, Promo, ReviewQuote, Teacher } from '@/catalog'
 import { Carousel } from '@/components/carousel'
 import { ContactButton } from '@/components/contact-button'
+import { ContactNote } from '@/components/contact-note'
 import { CoverBox } from '@/components/cover-box'
 import { SeasonalPromo } from '@/components/landing/seasonal-promo'
 import { SetCoverStack } from '@/components/set-cover-stack'
@@ -147,9 +148,7 @@ function FeaturedCard({ item }: { item: FeaturedCardData }) {
             </span>
           )}
         </div>
-        <ContactButton item={item.contactItem} variant={isSet ? 'dark' : 'brand'} className="relative z-10 mt-1 text-base">
-          สมัครเรียนเลย
-        </ContactButton>
+        <ContactButton item={item.contactItem} variant={isSet ? 'dark' : 'brand'} className="relative z-10 mt-1 text-base" />
       </div>
     </article>
   )
@@ -268,7 +267,8 @@ export function ClosingBand() {
           <p className="text-[17px]">ไม่มีวันหมดอายุ ทบทวนก่อนสอบกี่รอบก็ได้</p>
         </StaggerItem>
         <StaggerItem>
-          <ContactButton size="xl" className="whitespace-nowrap">สมัครเรียนเลย</ContactButton>
+          <ContactButton size="xl" className="whitespace-nowrap" />
+          <ContactNote className="mt-2.5 text-center text-band-ink" />
         </StaggerItem>
       </Stagger>
     </section>

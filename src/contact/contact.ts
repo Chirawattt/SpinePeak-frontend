@@ -17,9 +17,9 @@ export function createContact(site: Site) {
   function contactHref(item: ContactItem | undefined, channel: ContactChannel): string {
     if (channel === 'line') {
       const chat = `https://line.me/R/oaMessage/${encodeURIComponent(line.basicId)}/`
-      if (!item) return chat
-      const text = line.prefillTemplate.replace('{itemTitle}', item.title)
-      return `${chat}?${encodeURIComponent(text)}`
+      // ปุ่มที่ไม่ได้ผูกกับคอร์สไหนก็ยังบอกแอดมินว่ามาจากเว็บ · ไม่ได้ตั้งไว้ใน site.json เปิดแชทเปล่า
+      const text = item ? line.prefillTemplate.replace('{itemTitle}', item.title) : line.generalPrefill?.trim()
+      return text ? `${chat}?${encodeURIComponent(text)}` : chat
     }
 
     // ref บอกเพจว่าแชทนี้มาจากคอร์ส เซ็ต หรือโปรไหน

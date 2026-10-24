@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { Cover, CoursePreview, NavLink, ReviewQuote, Stat } from '@/catalog'
 import type { ContactItem } from '@/contact'
 import { ContactButton } from '@/components/contact-button'
+import { ContactNote } from '@/components/contact-note'
 import { CoverBox } from '@/components/cover-box'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { cardVariants } from '@/components/ui/card'
@@ -179,9 +180,8 @@ export function PriceCard({
         <div className="mb-1 font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</div>
         <div className="text-sm text-eyebrow">{note ?? lifetime}</div>
       </div>
-      <ContactButton item={contactItem} size="lg" className="mb-2.5">
-        สมัครเรียนเลย
-      </ContactButton>
+      <ContactButton item={contactItem} size="lg" className="mb-2.5" />
+      <ContactNote className="mb-3 text-center text-muted" />
       {secondary}
       <Bullets items={COURSE_BULLETS} />
     </Reveal>
@@ -242,7 +242,7 @@ export function TeacherAvatar({ name, photo, size = 64 }: { name: string; photo?
 export function ClosingBand({
   title = 'พร้อมเริ่มเรียนแล้วใช่ไหม',
   line,
-  button = 'สมัครเรียนเลย',
+  button = 'ทักแอดมินเพื่อสมัคร',
   contactItem,
 }: {
   title?: string
@@ -261,6 +261,7 @@ export function ClosingBand({
           <ContactButton item={contactItem} size="xl" className="whitespace-nowrap">
             {button}
           </ContactButton>
+          <ContactNote className="mt-2.5 text-center text-band-ink" />
         </StaggerItem>
       </Stagger>
     </section>

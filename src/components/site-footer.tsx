@@ -5,7 +5,7 @@ import { Logo } from '@/components/logo'
 import { catalog } from '@/catalog'
 import type { SocialLink } from '@/catalog'
 
-const SOCIAL_BADGE: Record<SocialLink['kind'], string> = { instagram: 'IG', facebook: 'FB' }
+const SOCIAL_BADGE: Record<SocialLink['kind'], string> = { line: 'LINE', instagram: 'IG', facebook: 'FB' }
 
 function ColumnTitle({ children }: { children: React.ReactNode }) {
   return <div className="mb-3.5 font-heading text-base font-semibold">{children}</div>

@@ -8,6 +8,7 @@ import { buildCourseDetail, type CourseDetail } from './course-detail'
 import { listHref, type CourseFilters } from './course-filters'
 import { buildCourseListIndex, buildCoursesPage, buildReviewQuote, filterCourseList, type CourseList, type ReviewQuote } from './course-list'
 import { groupLink, nonEmpty, type Faq, type NavLink } from './format'
+import { withoutMocks } from './mocks'
 import { buildPromos, type Promo } from './promos'
 import { courseOgCard, pageOgCard, setOgCard, type OgCard, type OgPage } from './og'
 import { buildSetDetail, type SetDetail } from './set-detail'
@@ -72,7 +73,7 @@ export type Teacher = { name: string; bio: string; tags: string[] }
 
 export type ClipCard = { title: string; /** เช่น "ตัดจากคอร์ส ม.ปลาย · 8 นาที" */ meta: string; href: string; thumbnail?: string }
 
-export type SocialLink = { kind: 'instagram' | 'facebook'; label: string; href: string }
+export type SocialLink = { kind: 'line' | 'instagram' | 'facebook'; label: string; href: string }
 
 export type Footer = {
   blurb: string
@@ -108,7 +109,9 @@ function helpFaqs(faqs: Site['faqs']): Faq[] {
 }
 
 /** now: เวลาที่ใช้ตัดโปรที่หมดเขต (ค่าเริ่มต้น = ตอน build) */
-export function createCatalog(content: Content, { now = () => new Date() }: { now?: () => Date } = {}) {
+/** showMocks: แสดงรีวิว / โปรที่เป็น mock ด้วย (ดู mocks.ts) · ค่าเริ่มต้น false ของ mock จะได้ไม่หลุดขึ้นเว็บจริง */
+export function createCatalog(source: Content, { now = () => new Date(), showMocks = false }: { now?: () => Date; showMocks?: boolean } = {}) {
+  const content = showMocks ? source : withoutMocks(source)
   const { site, courses, sets } = content
 
   function landing(): Landing {
@@ -177,13 +180,16 @@ export function createCatalog(content: Content, { now = () => new Date() }: { no
     })
   }
 
+  /** contactNote: บรรทัดเล็กใต้ปุ่มติดต่อหลัก · ไม่มีค่าเมื่อ site.json เว้นว่าง ให้ซ่อน */
   function siteInfo() {
-    return { name: site.brand.name, description: site.brand.heroSubtitle }
+    const contactNote = nonEmpty(site.brand.contactNote)
+    return { name: site.brand.name, description: site.brand.heroSubtitle, ...(contactNote && { contactNote }) }
   }
 
   function footer(): Footer {
-    const { instagram, facebook } = site.contact
-    const socials: SocialLink[] = []
+    const { line, instagram, facebook } = site.contact
+    // LINE ก่อน: เป็นช่องทางหลักที่แอดมินปิดการขาย · ลิงก์เพิ่มเพื่อน ไม่ใช่เปิดแชทพร้อมข้อความ
+    const socials: SocialLink[] = [{ kind: 'line', label: line.basicId, href: `https://line.me/R/ti/p/${encodeURIComponent(line.basicId)}` }]
     if (instagram) socials.push({ kind: 'instagram', label: `@${instagram.handle}`, href: instagram.url })
     socials.push({ kind: 'facebook', label: site.brand.name, href: facebook.url })
 

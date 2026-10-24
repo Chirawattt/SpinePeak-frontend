@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { Landing } from '@/catalog'
 import { ContactButton } from '@/components/contact-button'
+import { ContactNote } from '@/components/contact-note'
 import { PressAnchor } from '@/components/motion/press'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { badgeVariants } from '@/components/ui/badge'
@@ -37,13 +38,16 @@ export function Hero({ hero, entry }: { hero: Landing['hero']; entry?: React.Rea
           {hero.subtitle}
         </StaggerItem>
 
-        <StaggerItem className="mt-8 flex flex-wrap gap-3.5">
-          <ContactButton size="lg" className="px-[34px]">สมัครเรียนเลย</ContactButton>
-          {hero.showClipsLink && (
-            <PressAnchor href="#clips" className={buttonVariants({ variant: 'outline', size: 'lg' })}>
-              ดูตัวอย่างคลิปสอน
-            </PressAnchor>
-          )}
+        <StaggerItem className="mt-8">
+          <div className="flex flex-wrap gap-3.5">
+            <ContactButton size="lg" className="px-[34px]" />
+            {hero.showClipsLink && (
+              <PressAnchor href="#clips" className={buttonVariants({ variant: 'outline', size: 'lg' })}>
+                ดูตัวอย่างคลิปสอน
+              </PressAnchor>
+            )}
+          </div>
+          <ContactNote className="mt-3 text-muted" />
         </StaggerItem>
 
         <StaggerItem as="dl" className="mt-[38px] flex flex-wrap gap-x-[34px] gap-y-[22px]">
