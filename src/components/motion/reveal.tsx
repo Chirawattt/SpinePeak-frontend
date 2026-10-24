@@ -18,10 +18,20 @@ type Props = {
 const HIDDEN: TargetAndTransition = { opacity: 0, y: RISE }
 const SHOWN: TargetAndTransition = { opacity: 1, x: 0, y: 0, scale: 1 }
 
-function tag(as: Tag) {
-  // motion.ul / motion.li / ... มี props ต่างกันเล็กน้อย แต่ที่ใช้ที่นี่ใช้ได้ทุกตัว
-  return motion[as] as typeof motion.div
-}
+// ตารางคงที่ หยิบตาม as ตอน render · ห้ามหยิบผ่านฟังก์ชัน: lint (react-hooks/static-components) จะมองว่าสร้าง component ใหม่ทุก render
+// motion.ul / motion.li / ... มี props ต่างกันเล็กน้อย แต่ที่ใช้ที่นี่ใช้ได้ทุกตัว
+const TAGS = {
+  div: motion.div,
+  section: motion.section,
+  aside: motion.aside,
+  ul: motion.ul,
+  ol: motion.ol,
+  li: motion.li,
+  span: motion.span,
+  dl: motion.dl,
+  p: motion.p,
+  nav: motion.nav,
+} as Record<Tag, typeof motion.div>
 
 function playProps(trigger: Trigger) {
   return trigger === 'mount' ? { initial: 'hidden', animate: 'shown' } : { initial: 'hidden', whileInView: 'shown', viewport: VIEWPORT }
@@ -37,7 +47,7 @@ export function Reveal({
   className,
   children,
 }: Props & { trigger?: Trigger; delay?: number; from?: TargetAndTransition; lift?: boolean }) {
-  const Component = tag(as)
+  const Component = TAGS[as]
   const variants: Variants = { hidden: from, shown: { ...SHOWN, transition: { ...SPRING, delay } } }
   return (
     <Component variants={variants} {...playProps(trigger)} whileHover={lift ? LIFT : undefined} className={className}>
@@ -48,7 +58,7 @@ export function Reveal({
 
 /** กลุ่มที่ลูก (StaggerItem) ขึ้นไล่กันทีละชิ้น · รวมทั้งชุดไม่เกิน STAGGER_CAP ต่อให้รายการยาว */
 export function Stagger({ as = 'div', trigger = 'view', delay = 0, className, children }: Props & { trigger?: Trigger; delay?: number }) {
-  const Component = tag(as)
+  const Component = TAGS[as]
   const variants: Variants = {
     hidden: {},
     shown: { transition: { delayChildren: (i: number) => delay + Math.min(i * STAGGER, STAGGER_CAP) } },
@@ -62,7 +72,7 @@ export function Stagger({ as = 'div', trigger = 'view', delay = 0, className, ch
 
 /** ลูกของ Stagger · จังหวะมาจากตัวแม่ · lift = hover แล้วยกขึ้น */
 export function StaggerItem({ as = 'div', from = HIDDEN, lift = false, className, children }: Props & { from?: TargetAndTransition; lift?: boolean }) {
-  const Component = tag(as)
+  const Component = TAGS[as]
   return (
     <Component variants={{ hidden: from, shown: SHOWN }} whileHover={lift ? LIFT : undefined} className={className}>
       {children}
