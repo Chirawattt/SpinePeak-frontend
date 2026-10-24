@@ -35,7 +35,7 @@ export function SetListCard({ card }: { card: SetListCardData }) {
                 <span aria-hidden className="h-[7px] w-[7px] flex-none -translate-y-px rounded-full border-[1.5px] border-ink bg-brand" />
                 {course.title}
               </span>
-              <span className="flex-none text-[13.5px] text-strike">{course.price}</span>
+              <span className="flex-none text-[13.5px] text-muted">{course.price}</span>
             </li>
           ))}
           {card.moreListed > 0 && <li className="pl-4 text-sm text-eyebrow">และอีก {card.moreListed} คอร์ส</li>}

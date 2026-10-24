@@ -2,7 +2,6 @@
 // ตัดสินเรื่องแสดง / ซ่อน / คำนวณไว้ครบที่นี่ หน้า React แค่ render ตามนั้น
 
 import { trackLabelsByGroup, type Clip, type Course, type CourseSet, type Group, type Review, type Site } from '@content/types'
-import type { ContactItem } from '@/contact'
 import { buildCourseCard, type CourseCard } from './course-card'
 import { buildCourseDetail, type CourseDetail } from './course-detail'
 import { listHref, type CourseFilters } from './course-filters'
@@ -53,10 +52,10 @@ export type Landing = {
   nav: NavLink[]
 }
 
-/** การ์ดของแนะนำ · ใช้การ์ดเดิมของคอร์ส / เซ็ต + ป้ายที่เจ้าของใส่ + ของที่ปุ่มติดต่อต้องบอกแอดมิน */
-export type FeaturedCard = { label?: string; contactItem: ContactItem } & (
+/** การ์ดของแนะนำ · ใช้การ์ดเดิมของคอร์ส / เซ็ต + ป้ายที่เจ้าของใส่ */
+export type FeaturedCard = { label?: string } & (
   | { kind: 'course'; card: CourseCard }
-  | { kind: 'set'; card: SetListCard; /** เช่น "แพ็กคู่ · ประหยัด 199.-" */ eyebrow: string }
+  | { kind: 'set'; card: SetListCard }
 )
 
 /** หนึ่งกลุ่มในทางเข้าใต้ hero: ลิงก์ไปรายการคอร์สของกลุ่ม + หมวดหมู่ในกลุ่มนั้น เรียงจากที่มีคอร์สมากที่สุด */
@@ -127,12 +126,11 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
         const set = sets.find((s) => s.slug === item.slug)
         if (!set) return []
         const card = buildSetListCard(set, courses, site)
-        const eyebrow = [set.courseSlugs.length === 2 ? 'แพ็กคู่' : `SET ${card.courseCount}`, card.savings && `ประหยัด ${card.savings.amount}`].filter(Boolean).join(' · ')
-        return [{ kind: 'set', card, eyebrow, contactItem: { kind: 'set', slug: set.slug, title: set.title }, ...(label && { label }) }]
+        return [{ kind: 'set', card, ...(label && { label }) }]
       }
       const course = courses.find((c) => c.slug === item.slug)
       if (!course) return []
-      return [{ kind: 'course', card: buildCourseCard(course, site), contactItem: { kind: 'course', slug: course.slug, title: course.title }, ...(label && { label }) }]
+      return [{ kind: 'course', card: buildCourseCard(course, site), ...(label && { label }) }]
     })
     return {
       hero: {

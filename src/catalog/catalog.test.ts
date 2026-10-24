@@ -260,22 +260,15 @@ describe('landing() featured', () => {
   it('reuses the course card and the set card, and points the contact button at the item', () => {
     const [set, course] = featuredOf([{ type: 'set', slug: 'pr-01-bundle' }, { type: 'course', slug: 'c1' }])
 
-    expect(set).toMatchObject({ kind: 'set', card: { href: '/sets/pr-01-bundle', codeLabel: 'SET PR-01', price: '800.-' }, contactItem: { kind: 'set', slug: 'pr-01-bundle', title: 'เซ็ต 1' } })
-    expect(course).toMatchObject({ kind: 'course', card: { href: '/courses/c1', price: '500.-' }, contactItem: { kind: 'course', slug: 'c1', title: 'คอร์ส 1' } })
+    expect(set).toMatchObject({ kind: 'set', card: { href: '/sets/pr-01-bundle', codeLabel: 'SET PR-01', price: '800.-' } })
+    expect(course).toMatchObject({ kind: 'course', card: { href: '/courses/c1', price: '500.-' } })
   })
 
-  it('names a 2-course set a pair pack and adds the saving above its title', () => {
+  it('carries the set saving and course count for the price row', () => {
     const [set] = featuredOf([{ type: 'set', slug: 'pr-01-bundle' }])
 
-    expect(set?.kind === 'set' && set.eyebrow).toBe('แพ็กคู่ · ประหยัด 200.-')
-  })
-
-  it('names a bigger set by its course count', () => {
-    const big = [...courses, testCourse({ slug: 'c3', title: 'คอร์ส 3', price: 500 })]
-    const sets3 = [testSet({ code: 'PR-01', slug: 'pr-01-bundle', title: 'เซ็ต 3', price: 1000, courseSlugs: ['c1', 'c2', 'c3'] })]
-    const [set] = createCatalog(testContent({ courses: big, sets: sets3, site: testSite({ featured: [{ type: 'set', slug: 'pr-01-bundle' }] }) })).landing().featured
-
-    expect(set?.kind === 'set' && set.eyebrow).toBe('SET 3 คอร์ส · ประหยัด 500.-')
+    expect(set?.kind === 'set' && set.card.savings).toMatchObject({ amount: '200.-' })
+    expect(set?.kind === 'set' && set.card.courseCount).toBe('2 คอร์ส')
   })
 
   it('is empty, so the page hides the section, when site.json has no featured items', () => {

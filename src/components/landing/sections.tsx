@@ -9,6 +9,7 @@ import { SeasonalPromo } from '@/components/landing/seasonal-promo'
 import { SetCoverStack } from '@/components/set-cover-stack'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { Badge, badgeVariants } from '@/components/ui/badge'
+import { buttonVariants } from '@/components/ui/button'
 import { contactHref } from '@/contact'
 
 // ส่วนต่าง ๆ ของหน้าแรก ตาม docs/design-landing.dc.html
@@ -105,15 +106,18 @@ export function FeaturedSection({ items }: { items: FeaturedCardData[] }) {
 }
 
 /**
- * ใช้ข้อมูลการ์ดเดิมของคอร์ส / SET · ชื่อกดเข้าหน้ารายละเอียด ส่วนปุ่มสมัครเป็นปุ่มติดต่อ (จึงไม่ห่อทั้งใบด้วยลิงก์)
+ * ใช้ข้อมูลการ์ดเดิมของคอร์ส / SET · ทั้งใบกดเข้าหน้ารายละเอียด (ลิงก์ที่ชื่อยืดคลุมทั้งใบ) ให้ดูของข้างในก่อนตัดสินใจทัก
+ * ปุ่ม "ดูรายละเอียด" เป็นแค่ภาพของลิงก์นั้น · ไม่มีปุ่มทักแอดมินในการ์ด ให้ทักจากหน้ารายละเอียดหรือปุ่มลอยแทน
  * การ์ด SET ใช้โทนเข้ม (ขอบเข้ม ปกเข้ม ปุ่มเข้ม) ให้แยกออกจากคอร์สเดี่ยวได้ทันที
  */
 function FeaturedCard({ item }: { item: FeaturedCardData }) {
   const { card } = item
   const isSet = item.kind === 'set'
+  const savings = isSet ? item.card.savings : undefined
+  const facts = isSet ? [item.card.courseCount, card.facts].filter(Boolean).join(' · ') : card.facts
   return (
     <article
-      className={`relative flex w-full flex-col overflow-hidden rounded-[18px] transition-shadow hover:shadow-card ${isSet ? 'border-[1.5px] border-ink bg-set-wash' : 'border border-line bg-white'}`}
+      className={`group/card relative flex w-full flex-col overflow-hidden rounded-[18px] transition-shadow hover:shadow-card ${isSet ? 'border-[1.5px] border-ink bg-set-wash' : 'border border-line bg-white'}`}
     >
       <div className="relative">
         {isSet && !card.cover.image ? (
@@ -131,24 +135,30 @@ function FeaturedCard({ item }: { item: FeaturedCardData }) {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-2.5 px-[22px] pt-5 pb-[22px]">
-        <div className="font-mono text-xs font-semibold text-eyebrow">{isSet ? item.eyebrow : item.card.label}</div>
-        <h3 className="font-heading text-[21px] leading-[1.3] font-semibold">
-          <Link href={card.href} className="after:absolute after:inset-0 hover:text-link-hover">
+        <h3 className="font-heading text-[21px] leading-[1.3] font-semibold text-pretty">
+          <Link href={card.href} className="after:absolute after:inset-0 group-hover/card:text-link-hover">
             {card.title}
           </Link>
         </h3>
         <p className="flex-1 text-[14.5px] leading-[1.6] text-muted">{card.tagline}</p>
-        {card.facts && <p className="text-[13.5px] text-muted">{card.facts}</p>}
-        <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+        {facts && <p className="text-[13.5px] text-muted">{facts}</p>}
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
           <span className="font-heading text-[26px] font-bold">{card.price}</span>
-          {isSet && item.card.savings && (
-            <span className="text-[15px] text-strike line-through">
-              <span className="sr-only">ราคาปกติ </span>
-              {item.card.savings.regularPrice}
-            </span>
+          {savings && (
+            <>
+              <span className="text-[15px] text-strike line-through">
+                <span className="sr-only">ราคาปกติ </span>
+                {savings.regularPrice}
+              </span>
+              <Badge variant="wash" size="sm">
+                ประหยัด {savings.amount}
+              </Badge>
+            </>
           )}
         </div>
-        <ContactButton item={item.contactItem} variant={isSet ? 'dark' : 'brand'} className="relative z-10 mt-1 text-base" />
+        <span aria-hidden className={buttonVariants({ variant: isSet ? 'dark' : 'brand', className: `mt-1 text-[15px] ${isSet ? 'group-hover/card:bg-ink/90' : 'group-hover/card:bg-brand/85'}` })}>
+          ดูรายละเอียด
+        </span>
       </div>
     </article>
   )
