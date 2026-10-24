@@ -5,7 +5,7 @@ import { createContact } from './contact'
 const site = testSite({
   contact: {
     ...testSite().contact,
-    line: { basicId: '@592omrxd', prefillTemplate: 'สนใจ {itemTitle} ครับ/ค่ะ' },
+    line: { basicId: '@592omrxb', prefillTemplate: 'สนใจ {itemTitle} ครับ/ค่ะ' },
     facebook: { pageId: 'AlizBiotutor', url: 'https://www.facebook.com/AlizBiotutor' },
   },
 })
@@ -25,7 +25,7 @@ describe('contactHref()', () => {
     const url = new URL(contactHref(course, 'line'))
 
     expect(url.origin).toBe('https://line.me')
-    expect(url.pathname).toBe('/R/oaMessage/%40592omrxd/')
+    expect(url.pathname).toBe('/R/oaMessage/%40592omrxb/')
   })
 
   it('prefills the LINE message with the course title', () => {
@@ -37,7 +37,7 @@ describe('contactHref()', () => {
   })
 
   it('opens LINE without a prefilled message when no course or set is chosen and site.json has no general message', () => {
-    expect(contactHref(undefined, 'line')).toBe('https://line.me/R/oaMessage/%40592omrxd/')
+    expect(contactHref(undefined, 'line')).toBe('https://line.me/R/oaMessage/%40592omrxb/')
   })
 
   it('prefills the general message from site.json when no course or set is chosen', () => {

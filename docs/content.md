@@ -67,7 +67,7 @@ content/cover-images-needed.txt   ชื่อไฟล์รูป 44 รูป
 
 | ช่องทาง | ค่า |
 |---|---|
-| LINE OA | `@592omrxd` |
+| LINE OA | `@592omrxb` |
 | Facebook | `AlizBiotutor` — https://www.facebook.com/AlizBiotutor |
 | Instagram | `krunam.spine` — https://www.instagram.com/krunam.spine/ |
 
@@ -76,7 +76,7 @@ content/cover-images-needed.txt   ชื่อไฟล์รูป 44 รูป
 และวัดยอดได้แม้ลูกค้าจะบล็อกสคริปต์ติดตาม รูปแบบลิงก์ปลายทาง
 
 ```
-LINE   https://line.me/R/oaMessage/@592omrxd/?<ข้อความตั้งต้น url-encoded>
+LINE   https://line.me/R/oaMessage/@592omrxb/?<ข้อความตั้งต้น url-encoded>
        ข้อความตั้งต้นมาจาก contact.line.prefillTemplate แทน {itemTitle} ด้วยชื่อคอร์สหรือชื่อ SET
 Messenger  https://m.me/AlizBiotutor?ref=course_<slug>   (หรือ set_<slug>)
 ```

@@ -46,7 +46,7 @@
 
   "contact": {
     "line": {
-      "basicId": "@592omrxd",
+      "basicId": "@592omrxb",
       "prefillTemplate": "สนใจ {itemTitle} ครับ/ค่ะ",
       "generalPrefill": "สนใจสอบถามคอร์สเรียนครับ/ค่ะ"
     },
