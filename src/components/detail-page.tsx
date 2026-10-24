@@ -180,7 +180,7 @@ export function PriceCard({
         <div className="mb-1 font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</div>
         <div className="text-sm text-eyebrow">{note ?? lifetime}</div>
       </div>
-      <ContactButton item={contactItem} size="lg" className="mb-2.5" />
+      <ContactButton item={contactItem} size="lg" watched className="mb-2.5" />
       <ContactNote className="mb-3 text-center text-muted" />
       {secondary}
       <Bullets items={COURSE_BULLETS} />
@@ -258,7 +258,7 @@ export function ClosingBand({
           <p className="text-base">{line}</p>
         </StaggerItem>
         <StaggerItem>
-          <ContactButton item={contactItem} size="xl" className="whitespace-nowrap">
+          <ContactButton item={contactItem} size="xl" watched className="whitespace-nowrap">
             {button}
           </ContactButton>
           <ContactNote className="mt-2.5 text-center text-band-ink" />

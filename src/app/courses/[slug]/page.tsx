@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { catalog, type CourseDetail, type CourseInstructor } from '@/catalog'
+import { ContactBar } from '@/components/contact-bar'
+import { ContactButton } from '@/components/contact-button'
 import { ClosingBand, DetailHeading, DetailTop, PreviewClip, PriceCard, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { SetOffers } from '@/components/set-offers'
@@ -29,6 +31,9 @@ export default async function CourseDetailPage({ params }: PageProps<'/courses/[
       <Top detail={detail} />
       <Body detail={detail} />
       <ClosingBand line={`${detail.price} ครั้งเดียว ${detail.lifetime}`} contactItem={detail.contactItem} />
+      <ContactBar title={detail.title} price={detail.price}>
+        <ContactButton item={detail.contactItem} className="flex-none px-5" />
+      </ContactBar>
     </>
   )
 }

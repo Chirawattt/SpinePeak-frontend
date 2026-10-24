@@ -5,6 +5,7 @@ import { catalog, type CourseCard, type SetDetail, type SetTeacher } from '@/cat
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { cardVariants } from '@/components/ui/card'
+import { ContactBar } from '@/components/contact-bar'
 import { ContactButton } from '@/components/contact-button'
 import { ContactNote } from '@/components/contact-note'
 import { CoverBox } from '@/components/cover-box'
@@ -39,6 +40,9 @@ export default async function SetDetailPage({ params }: PageProps<'/sets/[slug]'
         line={`${detail.price}${regular} · ${detail.lifetime}`}
         contactItem={detail.contactItem}
       />
+      <ContactBar title={detail.title} price={detail.price}>
+        <ContactButton item={detail.contactItem} className="flex-none px-5" />
+      </ContactBar>
     </>
   )
 }
@@ -93,7 +97,7 @@ function SetPriceCard({ detail }: { detail: SetDetail }) {
         )}
       </div>
       <div className="mb-[18px] text-[14.5px] text-eyebrow">{savings ? `ประหยัด ${savings.amount} เทียบกับซื้อแยก` : detail.lifetime}</div>
-      <ContactButton item={detail.contactItem} size="lg" className="mb-2.5" />
+      <ContactButton item={detail.contactItem} size="lg" watched className="mb-2.5" />
       <ContactNote className="mb-3 text-center text-muted" />
       <a href="#courses" className={buttonVariants({ variant: 'outline' })}>
         ดูคอร์สใน SET

@@ -13,6 +13,7 @@ export function ContactButton({
   channel = 'line',
   variant = 'dark',
   size,
+  watched = false,
   className,
   children,
 }: {
@@ -20,6 +21,8 @@ export function ContactButton({
   channel?: ContactChannel
   variant?: Exclude<ButtonVariant, 'wash'>
   size?: Exclude<ButtonSize, 'icon'>
+  /** แถบติดต่อบนมือถือ (ContactBar) ซ่อนตัวเมื่อปุ่มนี้อยู่ในจอ · ใช้กับปุ่มหลักของการ์ดราคาและแถบท้ายหน้า */
+  watched?: boolean
   className?: string
   children?: React.ReactNode
 }) {
@@ -28,6 +31,7 @@ export function ContactButton({
       href={contactHref(item, channel)}
       target="_blank"
       rel="noopener noreferrer"
+      {...(watched && { 'data-contact-cta': '' })}
       className={buttonVariants({ variant, size, className })}
     >
       {children ?? DEFAULT_LABEL[channel]}
