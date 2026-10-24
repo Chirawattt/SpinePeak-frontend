@@ -65,7 +65,7 @@ describe('footer()', () => {
     expect(footer.hours).toBe('จันทร์–เสาร์ 10:00–19:00 น.')
   })
 
-  it('links LINE first, then socials from site.json, and never shows TikTok', () => {
+  it('links LINE first, then Instagram, Facebook and TikTok from site.json', () => {
     const footer = footerWith({
       instagram: { handle: 'krunam.spine', url: 'https://www.instagram.com/krunam.spine/' },
       facebook: { pageId: 'AlizBiotutor', url: 'https://www.facebook.com/AlizBiotutor' },
@@ -76,11 +76,12 @@ describe('footer()', () => {
       { kind: 'line', label: '@test', href: 'https://line.me/R/ti/p/%40test' },
       { kind: 'instagram', label: '@krunam.spine', href: 'https://www.instagram.com/krunam.spine/' },
       { kind: 'facebook', label: 'Spine Peak', href: 'https://www.facebook.com/AlizBiotutor' },
+      { kind: 'tiktok', label: '@spinepeak', href: 'https://www.tiktok.com/@spinepeak' },
     ])
   })
 
-  it('leaves Instagram out when site.json has no Instagram account', () => {
-    const footer = footerWith({ instagram: undefined })
+  it('leaves Instagram and TikTok out when site.json has no account for them', () => {
+    const footer = footerWith({ instagram: undefined, tiktok: undefined })
 
     expect(footer.socials.map((s) => s.kind)).toEqual(['line', 'facebook'])
   })

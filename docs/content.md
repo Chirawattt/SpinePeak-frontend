@@ -70,6 +70,7 @@ content/cover-images-needed.txt   ชื่อไฟล์รูป 44 รูป
 | LINE OA | `@592omrxb` |
 | Facebook | `AlizBiotutor` — https://www.facebook.com/AlizBiotutor |
 | Instagram | `krunam.spine` — https://www.instagram.com/krunam.spine/ |
+| TikTok | `biospine` — https://www.tiktok.com/@biospine (แสดงใน footer เท่านั้น) |
 
 ปุ่มสมัครเรียนไม่ลิงก์ตรงไปช่องทางพวกนี้ แต่ยิงไป `/go/contact?channel=line&item=course:<slug>`
 ที่ฝั่ง Go บันทึก lead แล้วค่อย 302 ออกไป จะได้รู้ว่าแชทที่เข้ามาแต่ละครั้งมาจากคอร์สไหน

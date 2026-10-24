@@ -74,7 +74,7 @@ export type Teacher = { name: string; bio: string; tags: string[] }
 
 export type ClipCard = { title: string; /** เช่น "ตัดจากคอร์ส ม.ปลาย · 8 นาที" */ meta: string; href: string; thumbnail?: string }
 
-export type SocialLink = { kind: 'line' | 'instagram' | 'facebook'; label: string; href: string }
+export type SocialLink = { kind: 'line' | 'instagram' | 'facebook' | 'tiktok'; label: string; href: string }
 
 export type Footer = {
   blurb: string
@@ -83,7 +83,7 @@ export type Footer = {
   hours?: string
   /** ไม่มีค่าเมื่อ site.json เว้นว่าง ให้ซ่อนบรรทัดนั้น */
   email?: string
-  /** ไม่มี TikTok: ตัดออกในเฟส 1 แม้ site.json จะมีก็ตาม */
+  /** LINE ก่อนเสมอ แล้วตามด้วย Instagram, Facebook, TikTok · Instagram กับ TikTok แสดงเมื่อ site.json มี */
   socials: SocialLink[]
   /** เนื้อหา modal จากลิงก์ "ช่วยเหลือ" · ส่วนที่ว่างให้ซ่อนลิงก์และแท็บของส่วนนั้น */
   help: { steps: HelpStep[]; faqs: Faq[] }
@@ -197,11 +197,12 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
   }
 
   function footer(): Footer {
-    const { line, instagram, facebook } = site.contact
+    const { line, instagram, facebook, tiktok } = site.contact
     // LINE ก่อน: เป็นช่องทางหลักที่แอดมินปิดการขาย · ลิงก์เพิ่มเพื่อน ไม่ใช่เปิดแชทพร้อมข้อความ
     const socials: SocialLink[] = [{ kind: 'line', label: line.basicId, href: `https://line.me/R/ti/p/${encodeURIComponent(line.basicId)}` }]
     if (instagram) socials.push({ kind: 'instagram', label: `@${instagram.handle}`, href: instagram.url })
     socials.push({ kind: 'facebook', label: site.brand.name, href: facebook.url })
+    if (tiktok) socials.push({ kind: 'tiktok', label: `@${tiktok.handle}`, href: tiktok.url })
 
     return {
       blurb: site.brand.footerBlurb,

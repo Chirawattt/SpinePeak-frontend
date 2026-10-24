@@ -3,9 +3,7 @@ import { ContactButton } from '@/components/contact-button'
 import { FooterHelp } from '@/components/footer-help'
 import { Logo } from '@/components/logo'
 import { catalog } from '@/catalog'
-import type { SocialLink } from '@/catalog'
-
-const SOCIAL_BADGE: Record<SocialLink['kind'], string> = { line: 'LINE', instagram: 'IG', facebook: 'FB' }
+import { SOCIAL_NAME, SocialIcon } from '@/components/social-icon'
 
 function ColumnTitle({ children }: { children: React.ReactNode }) {
   return <div className="mb-3.5 font-heading text-base font-semibold">{children}</div>
@@ -68,7 +66,10 @@ export function SiteFooter() {
           <div className="flex flex-col gap-2.5 text-[14.5px]">
             {footer.socials.map((s) => (
               <a key={s.kind} href={s.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 break-all">
-                <Badge>{SOCIAL_BADGE[s.kind]}</Badge>
+                <Badge>
+                  <SocialIcon kind={s.kind} />
+                </Badge>
+                <span className="sr-only">{SOCIAL_NAME[s.kind]} </span>
                 {s.label}
               </a>
             ))}
