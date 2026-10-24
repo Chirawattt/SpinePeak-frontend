@@ -1,0 +1,567 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T03:20:45.282Z",
+  "title": "Design System: Spine Peak",
+  "extensions": {
+    "colorMeta": {
+      "brand": {
+        "role": "primary",
+        "displayName": "Microscope Light Blue",
+        "canonical": "oklch(87.2% 0.098 217.3)",
+        "tonalRamp": [
+          "#000f18",
+          "#002b38",
+          "#004b5b",
+          "#0b6d81",
+          "#2990a8",
+          "#63b2c8",
+          "#94d5e8",
+          "#c4f9ff"
+        ]
+      },
+      "brand-soft": {
+        "role": "primary",
+        "displayName": "Soft Lens Blue",
+        "canonical": "oklch(91.6% 0.061 218.4)",
+        "tonalRamp": [
+          "#000e13",
+          "#0c2931",
+          "#234852",
+          "#3c6976",
+          "#578b9b",
+          "#80aebb",
+          "#aad1dd",
+          "#d5f5ff"
+        ]
+      },
+      "brand-wash": {
+        "role": "primary",
+        "displayName": "Lens Wash",
+        "canonical": "oklch(97.0% 0.022 218.6)",
+        "tonalRamp": [
+          "#070c0e",
+          "#1e2729",
+          "#394448",
+          "#566468",
+          "#75868b",
+          "#99a8ad",
+          "#bfccd0",
+          "#e6f1f4"
+        ]
+      },
+      "ink": {
+        "role": "secondary",
+        "displayName": "Deep Specimen Teal",
+        "canonical": "oklch(27.0% 0.039 217.4)",
+        "tonalRamp": [
+          "#030d10",
+          "#17282d",
+          "#30464c",
+          "#4b666e",
+          "#688992",
+          "#8eabb3",
+          "#b5ced5",
+          "#def3f9"
+        ]
+      },
+      "band-ink": {
+        "role": "secondary",
+        "displayName": "Abyss Teal",
+        "canonical": "oklch(24.0% 0.036 220.8)",
+        "tonalRamp": [
+          "#040d10",
+          "#19282c",
+          "#32454c",
+          "#4e666e",
+          "#6b8891",
+          "#91aab3",
+          "#b8cdd5",
+          "#e0f2f9"
+        ]
+      },
+      "link-hover": {
+        "role": "secondary",
+        "displayName": "Lab Link Teal",
+        "canonical": "oklch(50.2% 0.083 211.7)",
+        "tonalRamp": [
+          "#000f15",
+          "#002b33",
+          "#0b4a55",
+          "#246c79",
+          "#3d8f9f",
+          "#6eb1bf",
+          "#9cd4e0",
+          "#caf8ff"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "oklch(50.9% 0.041 216.1)",
+        "tonalRamp": [
+          "#030d10",
+          "#16282d",
+          "#2f464c",
+          "#4a676e",
+          "#668992",
+          "#8dabb3",
+          "#b4cfd6",
+          "#ddf3f9"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Teal Gray",
+        "canonical": "oklch(55.8% 0.039 214.8)",
+        "tonalRamp": [
+          "#030d10",
+          "#17282c",
+          "#30464b",
+          "#4b666d",
+          "#688991",
+          "#8eabb2",
+          "#b6ced5",
+          "#def3f8"
+        ]
+      },
+      "eyebrow": {
+        "role": "neutral",
+        "displayName": "Eyebrow Teal",
+        "canonical": "oklch(53.6% 0.063 214.3)",
+        "tonalRamp": [
+          "#000e13",
+          "#0a2a30",
+          "#214851",
+          "#396975",
+          "#548c99",
+          "#7eaeba",
+          "#a8d1dc",
+          "#d3f6fe"
+        ]
+      },
+      "strike": {
+        "role": "neutral",
+        "displayName": "Strike Gray",
+        "canonical": "oklch(73.5% 0.028 217.2)",
+        "tonalRamp": [
+          "#050d0f",
+          "#1c272b",
+          "#364549",
+          "#52656b",
+          "#70878d",
+          "#95a9af",
+          "#bbcdd2",
+          "#e3f2f6"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(94.2% 0.012 215.8)",
+        "tonalRamp": [
+          "#080c0d",
+          "#212627",
+          "#3d4345",
+          "#5b6365",
+          "#7a8487",
+          "#9ea7a9",
+          "#c3cbcd",
+          "#e9f0f2"
+        ]
+      },
+      "card-line": {
+        "role": "neutral",
+        "displayName": "Card Line",
+        "canonical": "oklch(93.7% 0.020 216.2)",
+        "tonalRamp": [
+          "#070c0e",
+          "#1e2729",
+          "#394447",
+          "#566468",
+          "#75868a",
+          "#99a8ac",
+          "#bfcccf",
+          "#e6f1f4"
+        ]
+      },
+      "outline": {
+        "role": "neutral",
+        "displayName": "Outline",
+        "canonical": "oklch(91.9% 0.020 216.2)",
+        "tonalRamp": [
+          "#070c0e",
+          "#1e2729",
+          "#394447",
+          "#566468",
+          "#75868a",
+          "#99a8ac",
+          "#bfcccf",
+          "#e6f1f4"
+        ]
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Divider",
+        "canonical": "oklch(95.2% 0.010 219.6)",
+        "tonalRamp": [
+          "#090c0d",
+          "#222627",
+          "#3e4345",
+          "#5c6365",
+          "#7c8487",
+          "#9fa6a9",
+          "#c4cacc",
+          "#eaeff1"
+        ]
+      },
+      "divider-soft": {
+        "role": "neutral",
+        "displayName": "Divider Soft",
+        "canonical": "oklch(96.5% 0.009 214.3)",
+        "tonalRamp": [
+          "#090c0c",
+          "#222627",
+          "#3e4344",
+          "#5c6264",
+          "#7d8486",
+          "#a0a6a8",
+          "#c5cacc",
+          "#ebeff1"
+        ]
+      },
+      "tint": {
+        "role": "neutral",
+        "displayName": "Tint",
+        "canonical": "oklch(98.9% 0.008 216.6)",
+        "tonalRamp": [
+          "#090c0c",
+          "#232627",
+          "#3f4344",
+          "#5d6264",
+          "#7d8485",
+          "#a1a6a8",
+          "#c5cacb",
+          "#ebeff0"
+        ]
+      },
+      "set-wash": {
+        "role": "neutral",
+        "displayName": "Set Wash",
+        "canonical": "oklch(98.6% 0.009 222.1)",
+        "tonalRamp": [
+          "#090c0c",
+          "#222627",
+          "#3e4345",
+          "#5c6265",
+          "#7d8486",
+          "#a0a6a9",
+          "#c5cacc",
+          "#ebeff1"
+        ]
+      },
+      "footer": {
+        "role": "neutral",
+        "displayName": "Footer",
+        "canonical": "oklch(99.5% 0.003 219.5)",
+        "tonalRamp": [
+          "#0a0b0c",
+          "#242526",
+          "#404243",
+          "#5f6262",
+          "#808384",
+          "#a3a5a6",
+          "#c7c9ca",
+          "#edefef"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "on-dark-soft": {
+        "role": "neutral",
+        "displayName": "On-Dark Soft",
+        "canonical": "oklch(88.5% 0.027 214.4)",
+        "tonalRamp": [
+          "#060d0e",
+          "#1c272a",
+          "#364549",
+          "#52656a",
+          "#71878c",
+          "#95a9ae",
+          "#bccdd1",
+          "#e3f1f5"
+        ]
+      },
+      "destructive": {
+        "role": "error",
+        "displayName": "Destructive",
+        "canonical": "oklch(57.6% 0.209 29.5)",
+        "tonalRamp": [
+          "#280000",
+          "#530000",
+          "#810100",
+          "#b21f15",
+          "#e43b2d",
+          "#ff715f",
+          "#ffa18e",
+          "#ffcfbe"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "หัวข้อ hero ของหน้าแรกเท่านั้น"
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "หัวข้อ section"
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "ชื่อคอร์สบนการ์ด (การ์ด SET ใช้ 22px 700)"
+      },
+      "price": {
+        "displayName": "Price",
+        "purpose": "ราคาบนการ์ด (การ์ด SET ใช้ 28px)"
+      },
+      "body-lead": {
+        "displayName": "Body Lead",
+        "purpose": "คำโปรยใต้หัวข้อ hero กว้างไม่เกิน 460px"
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "คำโปรยและเนื้อความบนการ์ด"
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "ป้ายแคปซูลและปุ่ม"
+      },
+      "eyebrow": {
+        "displayName": "Eyebrow",
+        "purpose": "ป้ายหมวดหมู่หรือรหัสหัวการ์ด ตัวอักษรละตินเท่านั้น"
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 10px 30px rgb(11 43 51 / 0.06)",
+        "purpose": "การ์ดคอร์สตอน hover และการ์ดราคาในหน้ารายละเอียด"
+      },
+      {
+        "name": "set-rest",
+        "value": "0 12px 32px rgb(11 43 51 / 0.08)",
+        "purpose": "การ์ด SET ในหน้ารายการตอนปกติ"
+      },
+      {
+        "name": "set-hover",
+        "value": "0 18px 40px rgb(11 43 51 / 0.14)",
+        "purpose": "การ์ด SET ตอน hover"
+      }
+    ],
+    "motion": [
+      {
+        "name": "spring-default",
+        "value": "{ type: 'spring', bounce: 0.22, visualDuration: 0.5 }",
+        "purpose": "ค่าเริ่มต้นของทุก animation (SPRING)"
+      },
+      {
+        "name": "spring-quick",
+        "value": "{ type: 'spring', bounce: 0.1, visualDuration: 0.3 }",
+        "purpose": "ของที่ตามเมาส์ เช่น เส้นใต้เมนู (QUICK)"
+      },
+      {
+        "name": "rise",
+        "value": "16px",
+        "purpose": "ระยะที่ของเลื่อนขึ้นตอนปรากฏ"
+      },
+      {
+        "name": "stagger",
+        "value": "0.05s (cap 0.3s)",
+        "purpose": "เว้นระหว่างของที่ขึ้นไล่กัน"
+      },
+      {
+        "name": "lift",
+        "value": "translateY(-4px)",
+        "purpose": "การ์ดตอน hover"
+      },
+      {
+        "name": "press",
+        "value": "scale(0.97)",
+        "purpose": "ปุ่มและลิงก์ตอนกด"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "min-supported",
+        "value": "360px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "content-max",
+        "value": "1180px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Dark Button",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "ปุ่มติดต่อแอดมิน ใช้กับ action หลักของหน้า",
+      "html": "<a class=\"ds-btn-dark\" href=\"#\">ทักแอดมินเพื่อสมัคร</a>",
+      "css": ".ds-btn-dark { display:inline-block; border-radius:9999px; text-align:center; font-weight:600; font-family: Anuphan, system-ui, sans-serif; font-size:15px; padding:14px 24px; border:none; cursor:pointer; text-decoration:none; transition: background-color .2s, border-color .2s, transform .15s; background:#0b2b33; color:#fff; } .ds-btn-dark:hover { background:rgb(11 43 51 / .9); } .ds-btn-dark:focus-visible { outline: 2px solid #12707f; outline-offset: 3px; } .ds-btn-dark:active { transform: scale(.97); }"
+    },
+    {
+      "name": "Brand Button",
+      "kind": "button",
+      "refersTo": "button-brand",
+      "description": "ปุ่มเข้าดูรายละเอียดคอร์สหรือ SET ในการ์ด",
+      "html": "<a class=\"ds-btn-brand\" href=\"#\">ดูรายละเอียด</a>",
+      "css": ".ds-btn-brand { display:inline-block; border-radius:9999px; text-align:center; font-weight:600; font-family: Anuphan, system-ui, sans-serif; font-size:15px; padding:14px 24px; border:none; cursor:pointer; text-decoration:none; transition: background-color .2s, border-color .2s, transform .15s; background:#85e5ff; color:#0b2b33; } .ds-btn-brand:hover { background:rgb(133 229 255 / .85); } .ds-btn-brand:focus-visible { outline: 2px solid #12707f; outline-offset: 3px; } .ds-btn-brand:active { transform: scale(.97); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "action รอง เช่น \"ดูตัวอย่างคลิปสอน\"",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">ดูตัวอย่างคลิปสอน</a>",
+      "css": ".ds-btn-outline { display:inline-block; border-radius:9999px; text-align:center; font-weight:600; font-family: Anuphan, system-ui, sans-serif; font-size:15px; padding:14px 24px; border:none; cursor:pointer; text-decoration:none; transition: background-color .2s, border-color .2s, transform .15s; background:#fff; color:#0b2b33; border:1.5px solid #d6e8ed; } .ds-btn-outline:hover { border-color:#85e5ff; background:#e6f9ff; } .ds-btn-outline:focus-visible { outline: 2px solid #12707f; outline-offset: 3px; } .ds-btn-outline:active { transform: scale(.97); }"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "button-wash",
+      "description": "ปุ่มวงกลม 42px เช่น ลูกศร carousel",
+      "html": "<button class=\"ds-btn-icon\" aria-label=\"ถัดไป\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-icon { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:9999px; border:none; background:#e6f9ff; color:#0b2b33; cursor:pointer; transition: background-color .2s, transform .15s; } .ds-btn-icon:hover { background:#b6eeff; } .ds-btn-icon:focus-visible { outline: 2px solid #12707f; outline-offset: 3px; } .ds-btn-icon:active { transform: scale(.97); }"
+    },
+    {
+      "name": "Badges",
+      "kind": "chip",
+      "refersTo": "badge-brand",
+      "description": "ป้ายแคปซูล brand / wash / ink",
+      "html": "<span class=\"ds-badge ds-badge-brand\">SET · 4</span> <span class=\"ds-badge ds-badge-wash\">อยู่ใน 3 SET</span> <span class=\"ds-badge ds-badge-ink\">-46%</span>",
+      "css": ".ds-badge { display:inline-block; border-radius:9999px; font-weight:600; font-family: Anuphan, system-ui, sans-serif; font-size:13px; padding:7px 16px; } .ds-badge-brand { background:#85e5ff; color:#0b2b33; } .ds-badge-wash { background:#e6f9ff; color:#0b2b33; } .ds-badge-ink { background:#0b2b33; color:#85e5ff; }"
+    },
+    {
+      "name": "Filter Pills",
+      "kind": "chip",
+      "refersTo": "badge-brand",
+      "description": "ตัวกรองกลุ่ม/หมวดหมู่ ตอนเลือกพื้น ink",
+      "html": "<button class=\"ds-pill ds-pill-on\" aria-pressed=\"true\">ม.ปลาย</button> <button class=\"ds-pill\" aria-pressed=\"false\">ม.ต้น</button>",
+      "css": ".ds-pill { border-radius:9999px; border:1.5px solid #d6e8ed; background:#fff; color:#0b2b33; font-family: Anuphan, system-ui, sans-serif; font-size:15px; font-weight:600; padding:9px 18px; cursor:pointer; transition:border-color .2s; } .ds-pill:hover { border-color:#85e5ff; } .ds-pill-on, .ds-pill-on:hover { background:#0b2b33; border-color:#0b2b33; color:#fff; } .ds-pill:focus-visible { outline:2px solid #12707f; outline-offset:3px; }"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "ช่องค้นหาแคปซูล ใช้สไตล์เดียวกับ NativeSelect",
+      "html": "<input class=\"ds-input\" type=\"search\" placeholder=\"ค้นหาชื่อคอร์ส\" />",
+      "css": ".ds-input { min-width:0; border-radius:9999px; border:1px solid #d6e8ed; background:#fff; color:#0b2b33; font-family: Anuphan, system-ui, sans-serif; font-size:15px; padding:12px 20px; outline:none; transition:border-color .2s; } .ds-input::placeholder { color:#5a7a82; } .ds-input:focus { border-color:#85e5ff; }"
+    },
+    {
+      "name": "Site Nav",
+      "kind": "nav",
+      "refersTo": "button-dark",
+      "description": "เมนู header มีเส้นใต้ยืดจากซ้ายตอน hover",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">คอร์สเรียน</a><a href=\"#\">SET คอร์ส</a><a href=\"#\">ผู้สอน</a></nav>",
+      "css": ".ds-nav { display:flex; gap:20px; font-family: Anuphan, system-ui, sans-serif; font-size:15px; font-weight:500; } .ds-nav a { position:relative; color:#0b2b33; text-decoration:none; transition:color .2s; } .ds-nav a::after { content:''; position:absolute; left:0; right:0; bottom:-4px; height:2px; border-radius:9999px; background:rgb(18 112 127 / .4); clip-path:inset(0 100% 0 0); transition:clip-path .3s cubic-bezier(.3,1.2,.5,1); } .ds-nav a:hover, .ds-nav a:focus-visible, .ds-nav a[aria-current=page] { color:#12707f; outline:none; } .ds-nav a:hover::after, .ds-nav a:focus-visible::after { clip-path:inset(0 0 0 0); } .ds-nav a[aria-current=page]::after { background:#12707f; clip-path:inset(0 0 0 0); }"
+    },
+    {
+      "name": "Course Card",
+      "kind": "card",
+      "refersTo": "card-tile",
+      "description": "การ์ดคอร์สในกริด ทั้งใบกดได้ เงาขึ้นตอน hover",
+      "html": "<a class=\"ds-course\" href=\"#\"><div class=\"ds-course-cover\">ปกคอร์ส</div><div class=\"ds-course-body\"><div class=\"ds-course-eyebrow\">A-LEVEL</div><h3>A-Level ชีววิทยา 68</h3><p>ตะลุยข้อสอบจริง เฉลยละเอียดทีละข้อ</p><div class=\"ds-course-facts\">120 ข้อ · 180 หน้า · 12 ชม.</div><div class=\"ds-course-row\"><span class=\"ds-course-price\">฿1,290</span><span class=\"ds-course-set\">อยู่ใน 2 SET</span></div><span class=\"ds-course-cta\">ดูรายละเอียด</span></div></a>",
+      "css": ".ds-course { display:flex; flex-direction:column; width:280px; overflow:hidden; border-radius:18px; border:1px solid #e3eef1; background:#fff; color:#0b2b33; text-decoration:none; font-family: Anuphan, system-ui, sans-serif; transition:box-shadow .3s, transform .3s; } .ds-course:hover { box-shadow:0 10px 30px rgb(11 43 51 / .06); transform:translateY(-4px); } .ds-course:focus-visible { outline:2px solid #12707f; outline-offset:3px; } .ds-course-cover { aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; background:#0b2b33; color:#85e5ff; font-weight:600; } .ds-course-body { display:flex; flex-direction:column; gap:9px; padding:18px 20px 20px; } .ds-course-eyebrow { font-family: 'IBM Plex Mono', Anuphan, monospace; font-size:12px; font-weight:500; color:#3e7784; } .ds-course h3 { margin:0; font-size:20px; line-height:1.3; font-weight:600; } .ds-course p { margin:0; font-size:14.5px; line-height:1.6; color:#5a7a82; } .ds-course-facts { font-size:13.5px; color:#5a7a82; } .ds-course-row { display:flex; justify-content:space-between; align-items:center; margin-top:4px; } .ds-course-price { font-size:25px; font-weight:700; } .ds-course-set { border-radius:9999px; background:#e6f9ff; font-size:12.5px; font-weight:600; padding:5px 12px; } .ds-course-cta { margin-top:4px; border-radius:9999px; background:#85e5ff; text-align:center; font-weight:600; padding:14px 24px; transition:background-color .2s; } .ds-course:hover .ds-course-cta { background:rgb(133 229 255 / .85); }"
+    },
+    {
+      "name": "SET Card",
+      "kind": "custom",
+      "refersTo": "card-set",
+      "description": "การ์ด SET: หัวพื้น ink ลายจุด ขอบเข้ม 1.5px มีเงาตอนปกติ",
+      "html": "<a class=\"ds-set\" href=\"#\"><div class=\"ds-set-head\"><span class=\"ds-set-badge\">SET · 4</span><span class=\"ds-set-save\">ประหยัด 46%</span><div class=\"ds-set-stack\"><i></i><i></i><i></i></div></div><div class=\"ds-set-body\"><div class=\"ds-set-eyebrow\">JH-02</div><h3>SET ปรับพื้นฐาน ม.ต้น</h3><ul><li><span>วิทย์ ม.1 เทอม 1</span><s>฿990</s></li><li><span>วิทย์ ม.1 เทอม 2</span><s>฿990</s></li></ul><div class=\"ds-set-row\"><div><b>฿2,190</b> <s>฿3,960</s></div><span class=\"ds-set-cta\">ดู SET นี้</span></div></div></a>",
+      "css": ".ds-set { display:flex; flex-direction:column; width:320px; overflow:hidden; border-radius:22px; border:1.5px solid #0b2b33; background:#fff; color:#0b2b33; text-decoration:none; font-family: Anuphan, system-ui, sans-serif; box-shadow:0 12px 32px rgb(11 43 51 / .08); transition:box-shadow .3s; } .ds-set:hover { box-shadow:0 18px 40px rgb(11 43 51 / .14); } .ds-set:focus-visible { outline:2px solid #12707f; outline-offset:3px; } .ds-set-head { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:18px 10px; padding:20px 22px 22px; background:#0b2b33 radial-gradient(#1f5360 1.3px, transparent 1.4px) 0 0/22px 22px; } .ds-set-badge { border-radius:9999px; background:#85e5ff; font-size:13px; font-weight:700; padding:7px 16px; } .ds-set-save { font-family: 'IBM Plex Mono', Anuphan, monospace; font-size:12.5px; font-weight:500; color:#85e5ff; } .ds-set-stack { display:flex; width:100%; height:70px; } .ds-set-stack i { width:96px; border-radius:14px; background:#b6eeff; border:2px solid #0b2b33; margin-right:-40px; } .ds-set-stack i:nth-child(2) { background:#85e5ff; } .ds-set-stack i:nth-child(3) { background:#e6f9ff; } .ds-set-body { display:flex; flex-direction:column; gap:10px; padding:20px 22px 22px; } .ds-set-eyebrow { font-family: 'IBM Plex Mono', Anuphan, monospace; font-size:12px; color:#3e7784; } .ds-set h3 { margin:0; font-size:22px; line-height:1.3; font-weight:700; } .ds-set ul { list-style:none; margin:4px 0 0; padding:14px 0; border-block:1px solid #edf5f7; display:flex; flex-direction:column; gap:7px; font-size:14.5px; } .ds-set li { display:flex; justify-content:space-between; } .ds-set li s { text-decoration:none; color:#96aeb5; font-size:13.5px; } .ds-set-row { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; } .ds-set-row b { font-size:28px; } .ds-set-row s { color:#96aeb5; font-size:15px; } .ds-set-cta { border-radius:9999px; background:#85e5ff; font-weight:600; padding:14px 24px; transition:background-color .2s; } .ds-set:hover .ds-set-cta { background:rgb(133 229 255 / .85); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Bright Lab",
+    "overview": "Spine Peak คือห้องแล็บชีววิทยาที่เปิดไฟสว่างทั้งห้อง พื้นเป็นสีขาวเกือบทั้งหมด มีสีฟ้าสด (brand) ใช้เป็นจุดสนใจ และสีน้ำเงินเขียวเข้มเกือบดำ (ink) ใช้เป็นทั้งตัวอักษรและพื้นของส่วนที่ต้องการน้ำหนัก ลายตกแต่งมีอย่างเดียวคือรูปทรงของการส่องกล้องจุลทรรศน์ ได้แก่ วงกลม วงแหวนเส้นบาง วงแหวนเส้นประ และลายจุดถี่ๆ ที่ดูเหมือนเซลล์ใต้เลนส์ ทั้งหมดใช้สีฟ้าอ่อนจางๆ จึงไม่แย่งความสนใจจากเนื้อหา\n\nอารมณ์ของเว็บคือนุ่ม เป็นมิตร และกดง่าย เพราะผู้ใช้มีตั้งแต่เด็ก ป.4 ไปจนถึงผู้ปกครอง ทุกอย่างที่กดได้เป็นทรงแคปซูล การ์ดมีมุมโค้งมาก เวลากดจะยุบลงเล็กน้อย การ์ดจะลอยขึ้นตอน hover และทุกอย่างขยับด้วย spring ที่เด้งนิดหน่อย ความเป็นทางการมาจากตัวเลขกับข้อมูลที่ตรงไปตรงมา ไม่ได้มาจากความแข็งของรูปทรง\n\nความหนาแน่นอยู่ระดับกลาง: มีที่ว่างพอให้หายใจ แต่การ์ดคอร์สยังมีข้อมูลครบในใบเดียว (หมวดหมู่ ชื่อ คำโปรย จำนวนข้อสอบ/หน้า/ชั่วโมง ผู้สอน ราคา) เว็บมีแค่โหมดสว่าง ไม่มีโหมดมืด",
+    "keyCharacteristics": [
+      "พื้นขาว ใช้สีฟ้าเป็นจุดสนใจ ใช้สีเข้มเป็นตัวอักษรและพื้นของส่วนสำคัญ",
+      "ทุกอย่างที่กดได้เป็นแคปซูล การ์ดโค้ง 18–22px",
+      "ลายตกแต่งเป็นวงกลม วงแหวน และลายจุดสีฟ้าอ่อน (ธีมกล้องจุลทรรศน์)",
+      "แยก SET ด้วยหัวการ์ดพื้นเข้มกับเส้นขอบเข้ม ส่วนคอร์สเดี่ยวเป็นการ์ดขาวเส้นบาง",
+      "motion เป็น spring ที่เด้งนิดหน่อย และเคารพการตั้งค่า reduced motion",
+      "มีโหมดสว่างอย่างเดียว"
+    ],
+    "rules": [
+      {
+        "name": "The One Dark Rule",
+        "body": "พื้นเข้มมีสีเดียวคือ ink ใช้กับของที่ต้องการน้ำหนักจริงๆ ได้แก่ ปุ่มติดต่อหลัก หัวการ์ด SET โปรตามฤดู และ hero ของหน้า SET ห้ามใช้ ink เป็นพื้นของ section ทั่วไป",
+        "section": "colors"
+      },
+      {
+        "name": "The Blue-Means-Go Rule",
+        "body": "สีฟ้าสดใช้เป็นพื้นเท่านั้น และใช้กับสิ่งที่กดได้หรือบอกความคุ้ม ห้ามใช้เป็นสีตัวอักษรบนพื้นขาว",
+        "section": "colors"
+      },
+      {
+        "name": "The Cool Gray Rule",
+        "body": "สีเทาทุกตัวต้องเอียงไปทางฟ้าเขียว ห้ามใช้ `#888` หรือ gray ของ Tailwind",
+        "section": "colors"
+      },
+      {
+        "name": "The One Thai Face Rule",
+        "body": "ภาษาไทยใช้ Anuphan ตัวเดียว (commit `4fdda7c`) ห้ามเพิ่มฟอนต์ไทยตัวที่สอง",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono Is For Labels Rule",
+        "body": "ใช้ Plex Mono กับป้ายสั้นๆ เช่น หมวดหมู่ รหัส หรือ \"ประหยัด 46%\" ห้ามใช้กับประโยค",
+        "section": "typography"
+      },
+      {
+        "name": "The Lift-On-Intent Rule",
+        "body": "การ์ดคอร์สต้องแบนตอนปกติ เงาจะขึ้นเมื่อ hover เท่านั้น การ์ด SET เป็นข้อยกเว้นเดียวที่มีเงาตอนปกติ เพราะเป็นของที่เว็บอยากดันให้ขาย",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** ใช้ token ใน `src/app/globals.css` เท่านั้น ถ้าต้องการสีใหม่ ให้เพิ่มเป็น token ที่นั่นก่อน",
+      "**Do** ทำให้ทุกอย่างที่กดได้เป็นแคปซูล (9999px) และทำให้การ์ดโค้ง 18–22px ตามความสำคัญ",
+      "**Do** ใช้ปุ่ม dark (ink) กับการติดต่อแอดมิน และใช้ปุ่ม brand (ฟ้า) กับการเข้าดูรายละเอียด",
+      "**Do** แยก SET ออกจากคอร์สเดี่ยวด้วยหัวพื้น ink และขอบเข้ม 1.5px",
+      "**Do** ใช้ `clamp()` กับขนาดหัวข้อ ใช้กริดแบบ auto-fit และตรวจที่จอกว้าง 360px",
+      "**Do** ใช้ค่าใน `src/components/motion/tokens.ts` กับทุก animation"
+    ],
+    "donts": [
+      "**Don't** ใช้สีฟ้าสด (`#85e5ff`) เป็นสีตัวอักษรบนพื้นขาว เพราะ contrast ไม่พอ",
+      "**Don't** ใช้สีเทากลางหรือ gray ของ Tailwind เพราะสีเทาทุกตัวต้องเอียงไปทางฟ้าเขียว",
+      "**Don't** เพิ่มฟอนต์ไทยตัวที่สอง หรือใช้ Plex Mono กับประโยคยาว",
+      "**Don't** ใช้ `bg-muted` หรือ `ring-ring` ของ shadcn เพราะชื่อชนกับ token เดิม ให้ใช้ `bg-brand-wash` / `ring-brand` แทน",
+      "**Don't** ใส่เงาให้การ์ดคอร์สตอนปกติ",
+      "**Don't** ทำโหมดมืด หรือใช้ `dark:` ตาม prefers-color-scheme"
+    ]
+  }
+}

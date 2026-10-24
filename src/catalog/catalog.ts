@@ -1,11 +1,11 @@
 // Catalog: รับข้อมูลจาก content/ แล้วคืนข้อมูลที่พร้อมให้แต่ละหน้าแสดง
 // ตัดสินเรื่องแสดง / ซ่อน / คำนวณไว้ครบที่นี่ หน้า React แค่ render ตามนั้น
 
-import type { Clip, Course, CourseSet, Review, Site } from '@content/types'
+import { trackLabelsByGroup, type Clip, type Course, type CourseSet, type Group, type Review, type Site } from '@content/types'
 import type { ContactItem } from '@/contact'
 import { buildCourseCard, type CourseCard } from './course-card'
 import { buildCourseDetail, type CourseDetail } from './course-detail'
-import type { CourseFilters } from './course-filters'
+import { listHref, type CourseFilters } from './course-filters'
 import { buildCourseListIndex, buildCoursesPage, buildReviewQuote, filterCourseList, type CourseList, type ReviewQuote } from './course-list'
 import { groupLink, nonEmpty, type Faq, type NavLink } from './format'
 import { buildPromos, type Promo } from './promos'
@@ -36,6 +36,8 @@ export type Landing = {
     /** false เมื่อ clips.json ว่าง ให้ซ่อนปุ่ม "ดูตัวอย่างคลิปสอน" */
     showClipsLink: boolean
   }
+  /** ทางเข้าตามกลุ่มใต้ hero · กลุ่มที่ไม่มีคอร์สเลยไม่โผล่ */
+  groupEntries: GroupEntry[]
   /** แถบโปรโมชัน · ว่างเมื่อไม่มีโปร ให้ซ่อนทั้งแถบ */
   promos: Promo[]
   /** ไม่มีค่าเมื่อ site.json ไม่มีผู้สอน ให้ซ่อนส่วนแนะนำครู */
@@ -55,6 +57,16 @@ export type FeaturedCard = { label?: string; contactItem: ContactItem } & (
   | { kind: 'course'; card: CourseCard }
   | { kind: 'set'; card: SetListCard; /** เช่น "แพ็กคู่ · ประหยัด 199.-" */ eyebrow: string }
 )
+
+/** หนึ่งกลุ่มในทางเข้าใต้ hero: ลิงก์ไปรายการคอร์สของกลุ่ม + หมวดหมู่ในกลุ่มนั้น เรียงจากที่มีคอร์สมากที่สุด */
+export type GroupEntry = {
+  key: Group
+  label: string
+  href: string
+  courseCount: number
+  setCount: number
+  categories: NavLink[]
+}
 
 export type Teacher = { name: string; bio: string; tags: string[] }
 
@@ -128,6 +140,7 @@ export function createCatalog(content: Content, { now = () => new Date() }: { no
         photoAlt: main?.name ?? site.brand.name,
         showClipsLink: clips.length > 0,
       },
+      groupEntries: buildGroupEntries(),
       promos: buildPromos(site, sets, courses, now()),
       ...(teacher && { teacher }),
       clips,
@@ -140,6 +153,28 @@ export function createCatalog(content: Content, { now = () => new Date() }: { no
         ...(reviews.length > 0 ? [{ label: 'รีวิว', href: '/#reviews' }] : []),
       ],
     }
+  }
+
+  function buildGroupEntries(): GroupEntry[] {
+    const categoriesOf = trackLabelsByGroup(courses)
+    return site.groups.flatMap((g): GroupEntry[] => {
+      const courseCount = courses.filter((c) => c.group === g.key).length
+      if (courseCount === 0) return []
+      return [
+        {
+          key: g.key,
+          label: g.label,
+          href: listHref({ group: g.key }),
+          courseCount,
+          setCount: sets.filter((s) => s.group === g.key).length,
+          // หมวดหมู่ที่มีคอร์สมากขึ้นก่อน · เท่ากันคงลำดับใน courses.json (sort ของ JS เป็น stable)
+          categories: categoriesOf[g.key]
+            .map((category) => ({ category, count: courses.filter((c) => c.group === g.key && c.category === category).length }))
+            .sort((a, b) => b.count - a.count)
+            .map(({ category }) => ({ label: category, href: listHref({ group: g.key, category }) })),
+        },
+      ]
+    })
   }
 
   function siteInfo() {

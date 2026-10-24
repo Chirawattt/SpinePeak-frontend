@@ -160,6 +160,40 @@ describe('landing() sections', () => {
   ]
   const landingOf = (over: Parameters<typeof testContent>[0] = {}) => createCatalog(testContent({ courses, ...over })).landing()
 
+  it('builds one entry per group that has courses, with counts and its categories, most courses first', () => {
+    const entries = landingOf({
+      courses: [
+        testCourse({ slug: 'a', group: 'mplai', category: 'สอวน.' }),
+        testCourse({ slug: 'b', group: 'mplai', category: 'A-Level' }),
+        testCourse({ slug: 'c', group: 'mplai', category: 'A-Level' }),
+        testCourse({ slug: 'd', group: 'prathom', category: 'สอบเข้า ม.1' }),
+      ],
+      sets: [testSet({ slug: 's1', group: 'mplai' }), testSet({ slug: 's2', group: 'mton' })],
+    }).groupEntries
+
+    expect(entries).toEqual([
+      {
+        key: 'prathom',
+        label: 'ประถม',
+        href: '/courses?group=prathom',
+        courseCount: 1,
+        setCount: 0,
+        categories: [{ label: 'สอบเข้า ม.1', href: `/courses?group=prathom&category=${encodeURIComponent('สอบเข้า ม.1').replace(/%20/g, '+')}` }],
+      },
+      {
+        key: 'mplai',
+        label: 'ม.ปลาย',
+        href: '/courses?group=mplai',
+        courseCount: 3,
+        setCount: 1,
+        categories: [
+          { label: 'A-Level', href: '/courses?group=mplai&category=A-Level' },
+          { label: 'สอวน.', href: `/courses?group=mplai&category=${encodeURIComponent('สอวน.')}` },
+        ],
+      },
+    ])
+  })
+
   it('introduces the main instructor from site.json', () => {
     const instructor = { slug: 'kru-nam', name: 'ครูพี่หนาม', role: '', shortBio: 'สั้น', longBio: 'ยาว', tags: ['สอนจากข้อสอบจริง'] }
 

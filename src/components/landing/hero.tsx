@@ -12,13 +12,17 @@ const PHOTO_MASK = [
   'radial-gradient(ellipse 25.7% 41.7% at 50% 41.7%, #000 94%, transparent 100%)',
 ].join(', ')
 
-export function Hero({ hero }: { hero: Landing['hero'] }) {
+/**
+ * entry = ทางเข้าตามชั้น (GroupEntry) วางเป็นแถวเต็มความกว้างในกริดเดียวกับ hero
+ * มือถือ: ข้อความ → entry → รูปครู (ให้ทางเข้าขึ้นมาก่อนรูป) · จอใหญ่: ข้อความคู่รูป แล้ว entry ใต้ทั้งสองคอลัมน์
+ */
+export function Hero({ hero, entry }: { hero: Landing['hero']; entry?: React.ReactNode }) {
   return (
-    <section className="relative grid grid-cols-[repeat(auto-fit,minmax(min(100%,320px),1fr))] items-center gap-8 overflow-hidden bg-white bg-[radial-gradient(circle_at_6%_12%,var(--color-glow)_0,transparent_34%),radial-gradient(circle_at_96%_88%,var(--color-glow-soft)_0,transparent_40%),radial-gradient(circle_at_78%_6%,var(--color-glow-faint)_0,transparent_30%)] px-gutter pt-16 pb-[104px]">
+    <section className="relative grid items-center gap-8 overflow-hidden bg-white bg-[radial-gradient(circle_at_6%_12%,var(--color-glow)_0,transparent_34%),radial-gradient(circle_at_96%_88%,var(--color-glow-soft)_0,transparent_40%),radial-gradient(circle_at_78%_6%,var(--color-glow-faint)_0,transparent_30%)] px-gutter pt-16 pb-14 md:grid-cols-2">
       <Decorations />
 
       {/* ขึ้นไล่กัน: badge → หัวข้อทีละบรรทัด → subtitle → ปุ่ม → ตัวเลข */}
-      <Stagger trigger="mount" className="relative min-w-0">
+      <Stagger trigger="mount" className="relative order-1 min-w-0">
         <StaggerItem className={badgeVariants({ variant: 'wash', className: 'mb-[22px] inline-flex items-center gap-2 tracking-[.02em]' })}>
           {hero.badge}
         </StaggerItem>
@@ -52,8 +56,8 @@ export function Hero({ hero }: { hero: Landing['hero'] }) {
         </StaggerItem>
       </Stagger>
 
-      <div className="relative flex min-w-0 items-center justify-center">
-        <div className="relative aspect-[420/445] w-[min(420px,100%)]">
+      <div className="relative order-3 flex min-w-0 items-center justify-center md:order-2">
+        <div className="relative aspect-[420/445] w-[min(420px,100%,72vw)]">
           {/* วงเหลือง scale เข้ามาก่อน แล้วรูปเลื่อนขึ้นตาม · รูปไม่ fade จากโปร่งใส เพราะเป็น LCP ของหน้า */}
           <Reveal trigger="mount" delay={0.1} from={{ opacity: 0, scale: 0.85 }} className="absolute top-[14.2%] left-[9%] aspect-square w-[82%] rounded-full bg-brand" />
           <Reveal trigger="mount" delay={0.3} from={{ opacity: 0, scale: 0.92 }} className="absolute top-[10.1%] left-[4.8%] aspect-square w-[90.5%] rounded-full border-[1.5px] border-brand-soft" />
@@ -64,13 +68,16 @@ export function Hero({ hero }: { hero: Landing['hero'] }) {
               width={1080}
               height={1080}
               priority
-              sizes="(max-width: 460px) 100vw, 420px"
+              sizes="(max-width: 584px) 72vw, 420px"
               className="absolute top-0 left-0 block h-auto w-full"
               style={{ maskImage: PHOTO_MASK, WebkitMaskImage: PHOTO_MASK }}
             />
           </Reveal>
         </div>
       </div>
+
+      {/* อยู่ท้าย DOM ให้ลำดับ Tab ตามหลังปุ่มใน hero · ตำแหน่งที่เห็นจัดด้วย order */}
+      {entry && <div className="relative order-2 min-w-0 md:order-3 md:col-span-2">{entry}</div>}
     </section>
   )
 }
