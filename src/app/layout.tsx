@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="th" className={`${anuphan.variable} ${plexMono.variable}`}>
+    <html lang="th" data-scroll-behavior="smooth" className={`${anuphan.variable} ${plexMono.variable}`}>
       <body className="font-sans antialiased">
         <MotionProvider>
           <SiteHeader />
