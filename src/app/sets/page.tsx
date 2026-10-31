@@ -37,14 +37,14 @@ export default function SetsPage() {
           {' / '}
           <span className="text-white">{TITLE}</span>
         </nav>
-        <Stagger trigger="mount" className="relative px-gutter pt-[22px] pb-11">
+        <Stagger trigger="mount" className="relative px-gutter pt-5.5 pb-11">
           <StaggerItem order={0} as="p" className={badgeVariants({ className: 'mb-4 inline-block' })}>
             ซื้อเป็น SET ถูกกว่าซื้อแยก
           </StaggerItem>
           <StaggerItem order={1}>
             <h1 className="mb-3 font-heading text-[clamp(29px,5.6vw,46px)] leading-[1.15] font-bold tracking-[-0.01em]">{TITLE}</h1>
           </StaggerItem>
-          <StaggerItem order={2} as="p" className="mb-[26px] max-w-[580px] text-[17px] leading-[1.7] text-on-dark-soft">
+          <StaggerItem order={2} as="p" className="mb-6.5 max-w-156 text-[17px] leading-[1.7] text-on-dark-soft">
             {INTRO}
           </StaggerItem>
           <StaggerItem order={3}>

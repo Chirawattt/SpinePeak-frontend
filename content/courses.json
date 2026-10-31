@@ -318,7 +318,8 @@
       "PR-07",
       "PR-09"
     ],
-    "coverImage": "/courses/m1-entrance-science-regular.png"
+    "coverImage": "/courses/m1-entrance-science-regular.png",
+    "previewVideoUrl": "https://youtu.be/7xZnNEM2fZc?si=DpESRhJjtlOFmqwO"
   },
   {
     "slug": "triam-udom-m4-biology",
@@ -347,7 +348,8 @@
       "JH-03",
       "JH-06"
     ],
-    "coverImage": "/courses/triam-udom-m4-biology.png"
+    "coverImage": "/courses/triam-udom-m4-biology.png",
+    "previewVideoUrl": "https://youtu.be/pgzUOWBlpeg?si=3o9Hd2Aa1EVsv87Y"
   },
   {
     "slug": "nat-junior-science",
@@ -380,7 +382,8 @@
       "JH-05",
       "JH-06"
     ],
-    "coverImage": "/courses/nat-junior-science.png"
+    "coverImage": "/courses/nat-junior-science.png",
+    "previewVideoUrl": "https://youtu.be/huZZR7HjnBg?si=16x6O-NgDKncG1z4"
   },
   {
     "slug": "ijso-biology",
@@ -407,7 +410,8 @@
     ],
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
     "setCodes": [],
-    "coverImage": "/courses/ijso-biology.png"
+    "coverImage": "/courses/ijso-biology.png",
+    "previewVideoUrl": "https://youtu.be/txFlWWvG_jk?si=BjRfaYhSYK45NVZs"
   },
   {
     "slug": "onet-m3-science",
@@ -438,7 +442,8 @@
       "JH-05",
       "JH-06"
     ],
-    "coverImage": "/courses/onet-m3-science.png"
+    "coverImage": "/courses/onet-m3-science.png",
+    "previewVideoUrl": "https://youtu.be/y1-K05vcSO8?si=D3USnG2ochyhspAT"
   },
   {
     "slug": "m4-entrance-math",
@@ -494,7 +499,8 @@
       "JH-05",
       "JH-06"
     ],
-    "coverImage": "/courses/m4-entrance-smte-science.png"
+    "coverImage": "/courses/m4-entrance-smte-science.png",
+    "previewVideoUrl": "https://youtu.be/4VMxgAZS3N0?si=zrChh6CnUS9W2rXE"
   },
   {
     "slug": "foundation-science-m1-term-1",
@@ -537,7 +543,8 @@
       "JH-03",
       "JH-04"
     ],
-    "coverImage": "/courses/foundation-science-m1-term-1.png"
+    "coverImage": "/courses/foundation-science-m1-term-1.png",
+    "previewVideoUrl": "https://youtu.be/ygND3lVv_Ww?si=9yMxVIy0tzQ8TqVS"
   },
   {
     "slug": "foundation-science-m1-term-2",
@@ -577,7 +584,8 @@
       "JH-03",
       "JH-04"
     ],
-    "coverImage": "/courses/foundation-science-m1-term-2.png"
+    "coverImage": "/courses/foundation-science-m1-term-2.png",
+    "previewVideoUrl": "https://youtu.be/FA2WxfINpy0?si=lsTlvZ5tBr5ftomo"
   },
   {
     "slug": "foundation-science-m2-term-1",
@@ -620,7 +628,8 @@
       "JH-03",
       "JH-04"
     ],
-    "coverImage": "/courses/foundation-science-m2-term-1.png"
+    "coverImage": "/courses/foundation-science-m2-term-1.png",
+    "previewVideoUrl": "https://youtu.be/JImusGBQFmk?si=sw-6ONR6BdvsISPN"
   },
   {
     "slug": "foundation-science-m2-term-2",
@@ -666,7 +675,8 @@
       "JH-03",
       "JH-04"
     ],
-    "coverImage": "/courses/foundation-science-m2-term-2.png"
+    "coverImage": "/courses/foundation-science-m2-term-2.png",
+    "previewVideoUrl": "https://youtu.be/GaaVmlZtY2g?si=zxkNABR2XeR8V9tA"
   },
   {
     "slug": "foundation-science-m3-term-1",
@@ -709,7 +719,8 @@
       "JH-03",
       "JH-04"
     ],
-    "coverImage": "/courses/foundation-science-m3-term-1.png"
+    "coverImage": "/courses/foundation-science-m3-term-1.png",
+    "previewVideoUrl": "https://youtu.be/0dCe7P1ZhVw?si=WAhgBhVxQjtgApK7"
   },
   {
     "slug": "foundation-science-m3-term-2",
@@ -752,7 +763,8 @@
       "JH-03",
       "JH-04"
     ],
-    "coverImage": "/courses/foundation-science-m3-term-2.png"
+    "coverImage": "/courses/foundation-science-m3-term-2.png",
+    "previewVideoUrl": "https://youtu.be/OWwcNW9SVAM?si=5XUYlDe8_27cLR9q"
   },
   {
     "slug": "assistant-teacher-biology",
@@ -781,7 +793,8 @@
     "setCodes": [
       "HS-02"
     ],
-    "coverImage": "/courses/assistant-teacher-biology.png"
+    "coverImage": "/courses/assistant-teacher-biology.png",
+    "previewVideoUrl": "https://youtu.be/vUSyBrSMCsw?si=VkUiQojDRzL9jm2B"
   },
   {
     "slug": "nat-senior-biology",
@@ -809,7 +822,8 @@
     "setCodes": [
       "NAT-01"
     ],
-    "coverImage": "/courses/nat-senior-biology.png"
+    "coverImage": "/courses/nat-senior-biology.png",
+    "previewVideoUrl": "https://youtu.be/8IEEZ5-MtPQ?si=YIuncjTj2s2v8mun"
   },
   {
     "slug": "nat-senior-chemistry",
@@ -837,7 +851,8 @@
     "setCodes": [
       "NAT-01"
     ],
-    "coverImage": "/courses/nat-senior-chemistry.png"
+    "coverImage": "/courses/nat-senior-chemistry.png",
+    "previewVideoUrl": "https://youtu.be/aQriZmpR9Dw?si=0iJUP0la6iPsfj2_"
   },
   {
     "slug": "nat-senior-physics",
@@ -908,7 +923,8 @@
       "NS-02",
       "BC-02"
     ],
-    "coverImage": "/courses/foundation-biology-m4-term-1.png"
+    "coverImage": "/courses/foundation-biology-m4-term-1.png",
+    "previewVideoUrl": "https://youtu.be/0Uxh2w6znJg?si=rhlyzLmOzZ3pZWrQ"
   },
   {
     "slug": "foundation-biology-m4-term-2",
@@ -954,7 +970,8 @@
       "NS-02",
       "BC-02"
     ],
-    "coverImage": "/courses/foundation-biology-m4-term-2.png"
+    "coverImage": "/courses/foundation-biology-m4-term-2.png",
+    "previewVideoUrl": "https://youtu.be/_KXzw1DTX_4?si=49RCmlCAgXBVL5gG"
   },
   {
     "slug": "foundation-biology-m5-term-1",
@@ -1000,7 +1017,8 @@
       "NS-02",
       "BC-02"
     ],
-    "coverImage": "/courses/foundation-biology-m5-term-1.png"
+    "coverImage": "/courses/foundation-biology-m5-term-1.png",
+    "previewVideoUrl": "https://youtu.be/MLe1ajqHaIU?si=bnkaqFVCSOW0Fahb"
   },
   {
     "slug": "foundation-biology-m5-term-2",
@@ -1049,7 +1067,8 @@
       "NS-02",
       "BC-02"
     ],
-    "coverImage": "/courses/foundation-biology-m5-term-2.png"
+    "coverImage": "/courses/foundation-biology-m5-term-2.png",
+    "previewVideoUrl": "https://youtu.be/7TDsGs1KQd4?si=6R3rP6ZOht-Sl1kh"
   },
   {
     "slug": "foundation-biology-m6-term-1",
@@ -1098,7 +1117,8 @@
       "NS-02",
       "BC-02"
     ],
-    "coverImage": "/courses/foundation-biology-m6-term-1.png"
+    "coverImage": "/courses/foundation-biology-m6-term-1.png",
+    "previewVideoUrl": "https://youtu.be/e2hI8bQRE1c?si=9rhGatN57h_cwosD"
   },
   {
     "slug": "foundation-biology-m6-term-2",
@@ -1141,7 +1161,8 @@
       "NS-02",
       "BC-02"
     ],
-    "coverImage": "/courses/foundation-biology-m6-term-2.png"
+    "coverImage": "/courses/foundation-biology-m6-term-2.png",
+    "previewVideoUrl": "https://youtu.be/NtOztf-zlHU?si=xCXQI1K4PBTuv0dV"
   },
   {
     "slug": "posn-biology-61-64",
@@ -1171,7 +1192,8 @@
       "POSN-01",
       "POSN-02"
     ],
-    "coverImage": "/courses/posn-biology-61-64.png"
+    "coverImage": "/courses/posn-biology-61-64.png",
+    "previewVideoUrl": "https://youtu.be/HdQYt_VUCBM?si=kCZKaexzuIlB8p6o"
   },
   {
     "slug": "posn-biology-66",
@@ -1201,7 +1223,8 @@
       "POSN-01",
       "POSN-02"
     ],
-    "coverImage": "/courses/posn-biology-66.png"
+    "coverImage": "/courses/posn-biology-66.png",
+    "previewVideoUrl": "https://youtu.be/GgaGhw-jA1I?si=aAb_4_bKA5_033ew"
   },
   {
     "slug": "posn-biology-67",
@@ -1231,7 +1254,8 @@
       "POSN-01",
       "POSN-02"
     ],
-    "coverImage": "/courses/posn-biology-67.png"
+    "coverImage": "/courses/posn-biology-67.png",
+    "previewVideoUrl": "https://youtu.be/oa654p51dRw?si=4N2ha7uU84LQ8otE"
   },
   {
     "slug": "posn-biology-68",
@@ -1291,7 +1315,8 @@
       "AL-01",
       "AL-02"
     ],
-    "coverImage": "/courses/a-level-biology-64-66.png"
+    "coverImage": "/courses/a-level-biology-64-66.png",
+    "previewVideoUrl": "https://youtu.be/4BQnVYnDZi8?si=vbU6yakJu_wgX1It"
   },
   {
     "slug": "a-level-biology-67",
@@ -1376,7 +1401,8 @@
     ],
     "deliverables": "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)",
     "setCodes": [],
-    "coverImage": "/courses/a-level-applied-science.png"
+    "coverImage": "/courses/a-level-applied-science.png",
+    "previewVideoUrl": "https://youtu.be/suz23bPELvg?si=RD7LX8dESnzONrsv"
   },
   {
     "slug": "netsat-biology-65",
@@ -1406,7 +1432,8 @@
       "NS-01",
       "NS-02"
     ],
-    "coverImage": "/courses/netsat-biology-65.png"
+    "coverImage": "/courses/netsat-biology-65.png",
+    "previewVideoUrl": "https://youtu.be/7r26cD-pxDM?si=kBN2is7czNyA3h36"
   },
   {
     "slug": "netsat-biology-66",
@@ -1435,7 +1462,8 @@
       "NS-01",
       "NS-02"
     ],
-    "coverImage": "/courses/netsat-biology-66.png"
+    "coverImage": "/courses/netsat-biology-66.png",
+    "previewVideoUrl": "https://youtu.be/p-z-uLpTz-I?si=hapOfw2JRBjO-fxb"
   },
   {
     "slug": "netsat-biology-67",
@@ -1464,7 +1492,8 @@
       "NS-01",
       "NS-02"
     ],
-    "coverImage": "/courses/netsat-biology-67.png"
+    "coverImage": "/courses/netsat-biology-67.png",
+    "previewVideoUrl": "https://youtu.be/xAgsCPUxJ14?si=Aj2fa5dEp3X_BY_N"
   },
   {
     "slug": "netsat-biology-68",
@@ -1494,7 +1523,8 @@
       "NS-01",
       "NS-02"
     ],
-    "coverImage": "/courses/netsat-biology-68.png"
+    "coverImage": "/courses/netsat-biology-68.png",
+    "previewVideoUrl": "https://youtu.be/yd4Q2thoDKc?si=BYCjKwjKSu65YHBW"
   },
   {
     "slug": "biocontest",
@@ -1525,7 +1555,7 @@
       "BC-02"
     ],
     "coverImage": "/courses/biocontest.png",
-    "previewVideoUrl": "https://youtu.be/SoHnv4YaUsc?si=-ieQXjqUdeILNdAj"
+    "previewVideoUrl": "https://youtu.be/2VDdRuZvWLU?si=12ZJ7qZDzTUjLaUo"
   },
   {
     "slug": "biocontest-otter",
