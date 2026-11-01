@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Cover, CoursePreview, NavLink, ReviewQuote, Stat } from '@/catalog'
-import type { ContactItem } from '@/contact'
+import { contactHref, type ContactItem } from '@/contact'
 import { ContactButton } from '@/components/contact-button'
 import { ContactNote } from '@/components/contact-note'
 import { CoverBox } from '@/components/cover-box'
@@ -119,7 +119,10 @@ export function PreviewClip({ preview, title, tone = 'light' }: { preview: Cours
   return (
     <div id="preview" className="max-w-[600px] scroll-mt-[calc(var(--header-h)+16px)]">
       <div className="mb-3 flex items-baseline justify-between gap-4">
-        <h2 className="font-heading text-[19px] font-semibold">{title}</h2>
+        <div className='flex flex-1 items-center justify-between'>
+          <h2 className="font-heading text-[19px] font-semibold">{title}</h2>
+          {tone === 'light' && <p className="mt-0.5 text-sm text-muted">ดูคลิปตัวอย่างฟรี</p>}
+        </div>
         {preview.channelUrl && (
           <a
             href={preview.channelUrl}
@@ -141,14 +144,17 @@ export function PreviewClip({ preview, title, tone = 'light' }: { preview: Cours
           className="absolute inset-0 h-full w-full"
         />
       </div>
-      {tone === 'light' && <p className="mt-2.5 text-sm text-muted">ดูฟรีไม่ต้องสมัคร</p>}
     </div>
   )
 }
 
-const COURSE_BULLETS = ['ดูย้อนหลังได้ไม่จำกัดอายุ', 'ไฟล์ PDF ดาวน์โหลดได้', 'เรียนได้ทั้งคอมและมือถือ']
+/** ข้อเดียวที่บรรทัดใต้ราคาและแถวตัวเลขยังไม่ได้บอก (PDF กับอายุคอร์สอยู่ใน note แล้ว) */
+const COURSE_DEVICES = 'เรียนได้ทั้งคอมและมือถือ'
 
-/** การ์ดราคาของหน้าคอร์ส · ปกแสดงทุกขนาดจอ */
+/**
+ * การ์ดราคาของหน้าคอร์ส · ปกแสดงทุกขนาดจอ
+ * ทางติดต่อหลักมีทางเดียว (LINE) · Messenger เป็นลิงก์ตัวหนังสือเล็กท้ายการ์ด ไม่แย่งปุ่มหลัก
+ */
 export function PriceCard({
   cover,
   coverLabel,
@@ -157,7 +163,7 @@ export function PriceCard({
   lifetime,
   note,
   contactItem,
-  secondary = <ContactButton item={contactItem} channel="facebook" variant="outline" />,
+  secondary,
 }: {
   cover: Cover
   coverLabel: string
@@ -167,7 +173,7 @@ export function PriceCard({
   /** บรรทัดเล็กใต้ราคา เช่น "ไฟล์ PDF + คลิปวิดีโอ (ไม่จำกัดอายุ)" · ไม่มีค่าใช้ป้ายอายุคอร์สแทน */
   note?: string
   contactItem: ContactItem
-  /** ปุ่มรองใต้ปุ่มสมัคร · ค่าเริ่มต้นทักทาง Messenger */
+  /** ปุ่มรองใต้ปุ่มสมัคร พาไปส่วนอื่นในหน้านี้ (คลิปตัวอย่าง / เนื้อหาในคอร์ส) · ไม่ส่ง = ไม่มีปุ่มรอง */
   secondary?: React.ReactNode
 }) {
   return (
@@ -180,12 +186,24 @@ export function PriceCard({
       <CoverBox cover={cover} label={coverLabel} title={title} eager className="mb-[18px]" />
       <div className="mb-[18px]">
         <div className="mb-1 font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</div>
-        <div className="text-sm text-eyebrow">{note ?? lifetime}</div>
+        <div className="text-sm text-eyebrow">
+          {note ?? lifetime} · <span className="whitespace-nowrap">{COURSE_DEVICES}</span>
+        </div>
       </div>
       <ContactButton item={contactItem} size="lg" watched className="mb-2.5" />
       <ContactNote className="mb-3 text-center text-muted" />
       {secondary}
-      <Bullets items={COURSE_BULLETS} />
+      <p className="mt-3.5 text-center text-sm text-muted">
+        หรือ{' '}
+        <a
+          href={contactHref(contactItem, 'facebook')}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-ink underline decoration-outline underline-offset-4 hover:text-link-hover hover:decoration-current"
+        >
+          ทักทาง Messenger
+        </a>
+      </p>
     </Reveal>
   )
 }
@@ -200,8 +218,12 @@ export function Bullets({ items }: { items: string[] }) {
   )
 }
 
-export function SectionTitle({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <h2 className={`mb-4 font-heading text-[clamp(23px,3.4vw,28px)] font-bold ${className}`}>{children}</h2>
+export function SectionTitle({ children, className = '', id }: { children: React.ReactNode; className?: string; id?: string }) {
+  return (
+    <h2 id={id} className={`mb-4 font-heading text-[clamp(23px,3.4vw,28px)] font-bold ${className}`}>
+      {children}
+    </h2>
+  )
 }
 
 /** การ์ดรีวิวในคอลัมน์ขวา */

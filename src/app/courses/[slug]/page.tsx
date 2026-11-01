@@ -54,14 +54,7 @@ function Top({ detail }: { detail: CourseDetail }) {
           lifetime={detail.lifetime}
           note={detail.deliverables}
           contactItem={detail.contactItem}
-          // มีคลิปตัวอย่างก็ชวนดูคลิปก่อน ไม่มีก็ให้ทักทาง Messenger เป็นทางเลือก
-          {...(detail.preview && {
-            secondary: (
-              <a href="#preview" className={buttonVariants({ variant: 'outline' })}>
-                ดูคลิปตัวอย่างฟรี
-              </a>
-            ),
-          })}
+          secondary={<Secondary detail={detail} />}
         />
       }
     >
@@ -73,6 +66,29 @@ function Top({ detail }: { detail: CourseDetail }) {
   )
 }
 
+/**
+ * ปุ่มรองของการ์ดราคา พาไปส่วนอื่นในหน้านี้ (แบบเดียวกับ "ดูคอร์สใน SET")
+ * มีคลิป: ชวนดูคลิป · ซ่อนบนจอใหญ่ เพราะคลิปอยู่ข้างการ์ดในจอแรกแล้ว บนมือถือคลิปอยู่ใต้การ์ด ปุ่มนี้เป็นทางเดียวที่บอกว่ามีคลิปฟรี
+ * ไม่มีคลิป: พาไปดูเนื้อหาในคอร์ส
+ */
+function Secondary({ detail }: { detail: CourseDetail }) {
+  if (detail.preview) {
+    return (
+      <a href="#preview" className={buttonVariants({ variant: 'outline', className: 'lg:hidden' })}>
+        ดูคลิปตัวอย่างฟรี
+      </a>
+    )
+  }
+  if (detail.content) {
+    return (
+      <a href="#content" className={buttonVariants({ variant: 'outline' })}>
+        ดูเนื้อหาในคอร์ส
+      </a>
+    )
+  }
+  return null
+}
+
 function Body({ detail }: { detail: CourseDetail }) {
   return (
     // คอลัมน์ขวายืดตามจอแบบ design (flex 520px / 290px แบ่งที่เหลือเท่ากัน): ขวา = ครึ่งหนึ่ง − 133px · 1180px → 457px
@@ -80,7 +96,10 @@ function Body({ detail }: { detail: CourseDetail }) {
       <div className="flex min-w-0 flex-col gap-10">
         {detail.content && (
           <Reveal as="section">
-            <SectionTitle className="mb-1.5">เนื้อหาในคอร์ส</SectionTitle>
+            {/* id="content" เป็นปลายทางของปุ่ม "ดูเนื้อหาในคอร์ส" ในการ์ดราคา */}
+            <div id="content" className="scroll-mt-[calc(var(--header-h)+16px)]">
+              <SectionTitle className="mb-1.5">เนื้อหาในคอร์ส</SectionTitle>
+            </div>
             {detail.content.meta && <p className="mb-5 text-[15px] text-muted">{detail.content.meta}</p>}
             <Stagger as="ol" className="overflow-hidden rounded-2xl border border-line">
               {detail.content.items.map((item, i) => (
@@ -105,12 +124,18 @@ function Body({ detail }: { detail: CourseDetail }) {
             </Stagger>
           </Reveal>
         )}
+
+        {detail.instructor && (
+          <Reveal as="section">
+            <SectionTitle>ผู้สอน</SectionTitle>
+            <Instructor instructor={detail.instructor} />
+          </Reveal>
+        )}
       </div>
 
-      {(detail.sets || detail.instructor || detail.reviews.length > 0) && (
+      {(detail.sets || detail.reviews.length > 0) && (
         <Reveal className="flex min-w-0 flex-col gap-5 self-start">
           {detail.sets && <SetOffers sets={detail.sets} />}
-          {detail.instructor && <Instructor instructor={detail.instructor} />}
           {detail.reviews.length > 0 && <ReviewsCard title="รีวิวจากผู้เรียนคอร์สนี้" reviews={detail.reviews} />}
         </Reveal>
       )}
@@ -120,15 +145,16 @@ function Body({ detail }: { detail: CourseDetail }) {
 
 function Instructor({ instructor }: { instructor: CourseInstructor }) {
   return (
-    <aside className={cardVariants()}>
+    // ชื่อครูเป็น h3 ใต้หัวข้อ "ผู้สอน"
+    <div className={cardVariants()}>
       <div className="mb-3.5 flex items-center gap-3.5">
         <TeacherAvatar {...(instructor.photo && { photo: instructor.photo })} />
         <div>
-          <h2 className="font-heading text-xl font-semibold">{instructor.name}</h2>
+          <h3 className="font-heading text-xl font-semibold">{instructor.name}</h3>
           <div className="text-sm text-muted">{instructor.role}</div>
         </div>
       </div>
       <p className="text-[15px] leading-[1.75] text-ink-soft">{instructor.bio}</p>
-    </aside>
+    </div>
   )
 }

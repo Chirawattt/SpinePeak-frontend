@@ -8,6 +8,7 @@ import { courseEyebrow } from './course-card'
 import { buildReviewQuote, type ReviewQuote } from './course-list'
 import { cover, formatBaht, groupLabel, groupLink, lifetimeLabel, nonEmpty, statsLine, statsRow, SUBJECT_LABEL, type Cover, type NavLink, type Stat } from './format'
 import { buildSetCard, type SetCard } from './set-card'
+import type { CoverTile } from './set-list'
 import { youtubeEmbedUrl } from './youtube'
 
 export type CourseInstructor = { name: string; /** เช่น "ผู้สอนวิชาชีววิทยา" */ role: string; bio: string; photo?: string }
@@ -23,8 +24,22 @@ export type CourseContent = {
 /** คลิปตัวอย่างในส่วนหัว */
 export type CoursePreview = { embedUrl: string; /** ลิงก์ "ดูช่อง YouTube" · ไม่มีค่าเมื่อ site.json ยังไม่มีลิงก์ช่อง */ channelUrl?: string }
 
-/** การ์ด SET หนึ่งใบในคอลัมน์ขวา */
-export type SetOffer = SetCard & { /** หัวการ์ด เช่น "ซื้อเป็น SET คุ้มกว่า" */ label: string }
+/** การ์ด SET หนึ่งใบในคอลัมน์ขวา · เทียบกับคอร์สที่ดูอยู่: จ่ายเพิ่มเท่าไร ได้คอร์สอะไรเพิ่ม */
+export type SetOffer = SetCard & {
+  /** หัวการ์ด เช่น "ซื้อเป็น SET คุ้มกว่า" */
+  label: string
+  /** เช่น "3 คอร์ส" */
+  courseCount: string
+  /** "จ่ายเพิ่ม 289.- ได้อีก 1 คอร์ส" · ไม่มีค่าเมื่อ SET ไม่ได้แพงกว่าคอร์สนี้ */
+  extra?: { price: string; courses: number }
+  /** คอร์สอื่นใน SET (ไม่รวมคอร์สนี้) ไม่เกิน 3 ชื่อ */
+  added: string[]
+  /** "และอีก N คอร์ส" · 0 = ไม่ต้องแสดง */
+  moreAdded: number
+  /** ปกบนหัวการ์ด: คอร์สที่ได้เพิ่มอยู่หน้า (ปกคอร์สนี้อยู่ในการ์ดราคาข้างบนแล้ว) · ใบแรกคือปกหน้า */
+  stack: CoverTile[]
+  moreInStack: number
+}
 
 /** SET ที่มีคอร์สนี้ · ไม่มีค่าเมื่อคอร์สไม่อยู่ใน SET ไหน หรือขายเดี่ยวเท่านั้น */
 export type CourseSets = {
@@ -62,6 +77,11 @@ export type CourseDetail = {
 
 const SET_OFFERS = 2
 const OFFER_LABELS = ['ซื้อเป็น SET คุ้มกว่า', 'หรือเลือก SET ที่ครบกว่า']
+/** SET ใบแรกลดน้อยกว่านี้ (%) ไม่เรียกว่า "คุ้มกว่า" · ตัวเลขประหยัดยังแสดงครบเหมือนหน้า SET */
+const WORTH_IT_PERCENT = 5
+const MODEST_LABEL = 'เรียนต่อเป็น SET'
+const ADDED = 3
+const STACK = 3
 
 /** รายการที่ว่างหรือมีแต่ช่องว่าง คืน undefined ให้หน้าซ่อน section นั้น */
 function nonEmptyList(items: string[]): string[] | undefined {
@@ -100,7 +120,26 @@ function courseSets(course: Course, sets: CourseSet[], courses: Course[], site: 
   // setsContaining เรียงจากประหยัดมากไปน้อยแล้ว · sort คงลำดับนั้นไว้เมื่อจำนวนคอร์สเท่ากัน
   const found = [...setsContaining(course, sets, courses, site.config)].sort((a, b) => a.derived.courseCount - b.derived.courseCount)
   if (found.length === 0) return undefined
-  const offers = found.slice(0, SET_OFFERS).map(({ set, derived }, i) => ({ ...buildSetCard(set, derived), label: OFFER_LABELS[i] ?? '' }))
+  const bySlug = new Map(courses.map((c) => [c.slug, c]))
+  const offers = found.slice(0, SET_OFFERS).map(({ set, derived }, i): SetOffer => {
+    const others = set.courseSlugs.filter((s) => s !== course.slug).map((s) => bySlug.get(s)).filter((c): c is Course => Boolean(c))
+    const extraPrice = set.price - course.price
+    const fan = [...others.slice(0, STACK), ...(others.length < STACK ? [course] : [])]
+    const label = i === 0 && derived.savingsPercent < WORTH_IT_PERCENT ? MODEST_LABEL : (OFFER_LABELS[i] ?? '')
+    return {
+      ...buildSetCard(set, derived),
+      label,
+      courseCount: `${derived.courseCount} คอร์ส`,
+      ...(extraPrice > 0 && others.length > 0 && { extra: { price: formatBaht(extraPrice), courses: others.length } }),
+      added: others.slice(0, ADDED).map((c) => c.title),
+      moreAdded: Math.max(0, others.length - ADDED),
+      stack: fan.map((c) => {
+        const image = nonEmpty(c.coverImage)
+        return { title: c.title, ...(image && { image }) }
+      }),
+      moreInStack: Math.max(0, derived.courseCount - fan.length),
+    }
+  })
   const rest = found.length - offers.length
   return {
     offers,

@@ -216,7 +216,7 @@ describe('courseDetail()', () => {
 
   describe('sets that include the course', () => {
     const course = testCourse({ slug: 'primary-exercise-p4', price: 299 })
-    const other = testCourse({ slug: 'other-course', price: 500 })
+    const other = testCourse({ slug: 'other-course', title: 'คอร์สอื่น', price: 500 })
 
     /** SET ที่มีคอร์สนี้ ขายรวม setPrice บาท · คอร์สอื่นใน SET ราคา 500 */
     function setWith(slug: string, setPrice: number, overrides: Partial<CourseSet> = {}): CourseSet {
@@ -258,6 +258,40 @@ describe('courseDetail()', () => {
 
     it('uses the same savings rule as the set page: even a small saving shows', () => {
       expect(setsOf([setWith('tiny-bundle', 789)])?.offers[0]?.savings).toMatchObject({ amount: '10.-' })
+    })
+
+    it('does not call a set saving under 5% the better deal', () => {
+      // 789 จาก 799 ประหยัด 1.3%
+      expect(setsOf([setWith('tiny-bundle', 789)])?.offers[0]?.label).toBe('เรียนต่อเป็น SET')
+      // 759 จาก 799 ประหยัด 5% พอดี
+      expect(setsOf([setWith('fair-bundle', 759)])?.offers[0]?.label).toBe('ซื้อเป็น SET คุ้มกว่า')
+    })
+
+    it('compares the set with this course: how much more to pay and which courses that adds', () => {
+      const [offer] = setsOf([setWith('pair-bundle', 699)])?.offers ?? []
+
+      expect(offer).toMatchObject({ courseCount: '2 คอร์ส', extra: { price: '400.-', courses: 1 }, added: ['คอร์สอื่น'], moreAdded: 0 })
+    })
+
+    it('names at most 3 added courses and counts the rest', () => {
+      const extra = ['c3', 'c4', 'c5'].map((slug) => testCourse({ slug, title: slug, price: 500 }))
+      const big = setWith('big-bundle', 1999, { courseSlugs: ['primary-exercise-p4', 'other-course', 'c3', 'c4', 'c5'] })
+      const [offer] = setsOf([big], course, extra)?.offers ?? []
+
+      expect(offer?.added).toEqual(['คอร์สอื่น', 'c3', 'c4'])
+      expect(offer?.moreAdded).toBe(1)
+    })
+
+    it('fans the added courses in front and puts this course behind them when there is room', () => {
+      const [pair] = setsOf([setWith('pair-bundle', 699)])?.offers ?? []
+      expect(pair?.stack.map((t) => t.title)).toEqual([other.title, course.title])
+      expect(pair?.moreInStack).toBe(0)
+
+      const extra = ['c3', 'c4', 'c5'].map((slug) => testCourse({ slug, title: slug, price: 500 }))
+      const big = setWith('big-bundle', 1999, { courseSlugs: ['primary-exercise-p4', 'other-course', 'c3', 'c4', 'c5'] })
+      const [offer] = setsOf([big], course, extra)?.offers ?? []
+      expect(offer?.stack.map((t) => t.title)).toEqual([other.title, 'c3', 'c4'])
+      expect(offer?.moreInStack).toBe(2)
     })
 
     it('sums up each set in one line: how many courses and the totals it has', () => {
