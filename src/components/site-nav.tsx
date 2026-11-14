@@ -18,7 +18,7 @@ const INSTANT = { duration: 0 }
 const BAR = 'pointer-events-none absolute inset-x-0 -bottom-1 h-0.5 rounded-full'
 
 // ลิงก์ไปส่วนในหน้าแรก (/#teacher) ไม่นับเป็น active
-// หน้าย่อยนับด้วย: /courses/c1 ทำให้ "คอร์สเรียน" active
+// หน้าย่อยนับด้วย: /courses/c1 ทำให้ "คอร์สเรียน" active · path อื่นที่นับด้วยใส่ไว้ใน NavLink.matches (เช่น /sets/…)
 export function isNavActive(href: string, pathname: string): boolean {
   if (href.includes('#')) return false
   return pathname === href || pathname.startsWith(`${href}/`)
@@ -41,7 +41,7 @@ function nextBar(prev: Bar, active: string | null): Bar {
 
 export function SiteNav({ items }: { items: NavLink[] }) {
   const pathname = usePathname()
-  const active = items.find((item) => isNavActive(item.href, pathname))?.href ?? null
+  const active = items.find((item) => [item.href, ...(item.matches ?? [])].some((href) => isNavActive(href, pathname)))?.href ?? null
 
   const [bar, setBar] = useState<Bar>({ active, entering: null, leaving: null })
   if (bar.active !== active) setBar(nextBar(bar, active))
@@ -80,8 +80,11 @@ function NavItem({
   const [hovered, setHovered] = useState(false)
   const [focused, setFocused] = useState(false)
 
+  // ลิงก์ไปส่วนในหน้าเดียวกัน (#contact) ใช้ <a> ธรรมดา: <Link> ของ Next ตัด smooth scroll กลางทาง ไปไม่ถึงปลายหน้า
+  const Anchor = item.href.startsWith('#') ? motion.a : MotionLink
+
   return (
-    <MotionLink
+    <Anchor
       href={item.href}
       aria-current={active ? 'page' : undefined}
       // before: ขยายพื้นที่กดเป็น 44px โดยตัวอักษรและเส้นใต้อยู่ที่เดิม
@@ -122,6 +125,6 @@ function NavItem({
           }}
         />
       )}
-    </MotionLink>
+    </Anchor>
   )
 }

@@ -3,7 +3,8 @@
 import { formatPages, type CourseStats, type Group, type Site, type Subject } from '@content/types'
 import { listHref } from './course-filters'
 
-export type NavLink = { label: string; href: string }
+/** matches: path อื่นที่นับว่าอยู่ใต้เมนูนี้ด้วย (ใช้กับเมนูหัวเว็บ) */
+export type NavLink = { label: string; href: string; matches?: string[] }
 
 export type Faq = { q: string; a: string }
 

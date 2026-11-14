@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ContactButton } from '@/components/contact-button'
 import { FooterHelp } from '@/components/footer-help'
 import { Logo } from '@/components/logo'
-import { catalog } from '@/catalog'
+import { catalog, SETS_HREF } from '@/catalog'
 import { SOCIAL_NAME, SocialIcon } from '@/components/social-icon'
 
 function ColumnTitle({ children }: { children: React.ReactNode }) {
@@ -40,7 +40,7 @@ export function SiteFooter() {
                 {g.label}
               </Link>
             ))}
-            <Link href="/sets" className={linkClass}>
+            <Link href={SETS_HREF} className={linkClass}>
               SET คอร์ส
             </Link>
           </div>
@@ -61,7 +61,8 @@ export function SiteFooter() {
           </div>
         )}
 
-        <div>
+        {/* เมนู "ติดต่อเรา" บนหัวเว็บเลื่อนมาที่นี่ · scroll-mt: ไม่ให้หัวคอลัมน์จมใต้ header ที่ติดอยู่ */}
+        <div id="contact" className="scroll-mt-[calc(var(--header-h)+24px)]">
           <ColumnTitle>ติดต่อเรา</ColumnTitle>
           <div className="flex flex-col gap-2.5 text-[14.5px]">
             {footer.socials.map((s) => (

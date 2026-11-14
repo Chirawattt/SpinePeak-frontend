@@ -5,10 +5,11 @@ import { trackLabelsByGroup, type Clip, type Course, type CourseSet, type Group,
 import { buildCourseCard, type CourseCard } from './course-card'
 import { buildCourseDetail, type CourseDetail } from './course-detail'
 import { listHref, type CourseFilters } from './course-filters'
+import type { CatalogListIndex } from './catalog-list'
 import { buildCourseListIndex, buildCoursesPage, buildReviewQuote, filterCourseList, type CourseList, type ReviewQuote } from './course-list'
 import { groupLink, nonEmpty, type Faq, type NavLink } from './format'
 import { withoutMocks } from './mocks'
-import { buildPromos, type Promo } from './promos'
+import { buildPromos, SETS_HREF, type Promo } from './promos'
 import { courseOgCard, pageOgCard, setOgCard, type OgCard, type OgPage } from './og'
 import { buildSetDetail, type SetDetail } from './set-detail'
 import { buildSetListCard, buildSetListIndex, filterSetList, type SetFilters, type SetList, type SetListCard } from './set-list'
@@ -132,7 +133,7 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
       }
       const course = courses.find((c) => c.slug === item.slug)
       if (!course) return []
-      return [{ kind: 'course', card: buildCourseCard(course, site), ...(label && { label }) }]
+      return [{ kind: 'course', card: buildCourseCard(course, site, { sets, courses }), ...(label && { label }) }]
     })
     return {
       hero: {
@@ -149,11 +150,12 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
       clips,
       reviews,
       featured,
+      // SET อยู่ในหน้าคอร์สเรียนแล้ว เมนูจึงนับหน้ารายละเอียด SET เป็นของคอร์สเรียนด้วย
+      // ติดต่อเรา = เลื่อนไปคอลัมน์ติดต่อใน footer ซึ่งมีทุกหน้า
       nav: [
-        { label: 'คอร์สเรียน', href: '/courses' },
-        { label: 'SET คอร์ส', href: '/sets' },
+        { label: 'คอร์สเรียน', href: '/courses', matches: ['/sets'] },
         ...(teacher ? [{ label: 'แนะนำครู', href: '/#teacher' }] : []),
-        ...(reviews.length > 0 ? [{ label: 'รีวิว', href: '/#reviews' }] : []),
+        { label: 'ติดต่อเรา', href: '#contact' },
       ],
     }
   }
@@ -186,7 +188,7 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
    */
   function promoStrip(promos: Promo[]): Pick<Landing, 'promos' | 'featuredNote'> {
     const [only] = promos
-    if (promos.length !== 1 || only?.kind !== 'evergreen' || only.href !== '/sets') return { promos }
+    if (promos.length !== 1 || only?.kind !== 'evergreen' || only.href !== SETS_HREF) return { promos }
     return { promos: [], featuredNote: `ซื้อเป็น SET ประหยัดสูงสุด ${only.value.replace(/^-/, '')}` }
   }
 
@@ -220,7 +222,7 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
     return course && buildCourseDetail(course, content)
   }
 
-  const courseListIndex = buildCourseListIndex(courses, site)
+  const courseListIndex = buildCourseListIndex(courses, site, sets)
 
   /** การ์ดคอร์สที่ผ่านตัวกรอง พร้อมจำนวน · หน้ากรองฝั่ง client ด้วย filterCourseList() กับ courseListIndex */
   function courseList(filters: CourseFilters): CourseList {
@@ -263,18 +265,11 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
     courseDetail,
     setDetail,
     setList,
-    /** ข้อมูลที่หน้ารายการเซ็ตส่งให้ client ไปกรองเอง */
-    setListIndex: () => setListIndex,
     courseList,
-    /** ส่วนท้ายหน้ารายการ SET: FAQ และช่องทางรองของกล่องติดต่อ */
-    setsPage: () => {
-      const instagramHref = nonEmpty(site.contact.instagram?.url)
-      return { faqs: site.setsFaqs, ...(instagramHref && { instagramHref }) }
-    },
-    /** ส่วนท้ายหน้ารายการคอร์ส: goal cards, รีวิว, FAQ, เวลาทำการ */
+    /** ส่วนท้ายหน้ารายการ: goal cards, รีวิว, FAQ (ของ SET ก่อน), เวลาทำการ */
     coursesPage: () => buildCoursesPage(site, content.reviews),
-    /** ข้อมูลที่หน้ารายการคอร์สส่งให้ client ไปกรองเอง */
-    courseListIndex: () => courseListIndex,
+    /** ข้อมูลที่หน้ารายการ (SET + คอร์สเดี่ยว) ส่งให้ client ไปกรองเอง */
+    catalogListIndex: (): CatalogListIndex => ({ courses: courseListIndex, sets: setListIndex }),
     /** slug ของทุกคอร์ส ใช้ build หน้ารายละเอียดล่วงหน้า */
     courseSlugs: () => courses.map((c) => c.slug),
     /** slug ของทุกเซ็ต ใช้ build หน้ารายละเอียดล่วงหน้า */

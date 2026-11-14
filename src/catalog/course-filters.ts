@@ -30,10 +30,10 @@ export function filtersToQuery(filters: CourseFilters): string {
   return params.toString()
 }
 
-/** ลิงก์ไปหน้ารายการที่กรองไว้ตามนี้ · หน้ารายการเซ็ต (/sets) ใช้ตัวกรองชุดเดียวกัน */
-export function listHref(filters: CourseFilters, base: '/courses' | '/sets' = '/courses'): string {
+/** ลิงก์ไปหน้ารายการที่กรองไว้ตามนี้ · หน้าเดียวมีทั้ง SET และคอร์สเดี่ยว ตัวกรองชุดเดียวใช้กับทั้งสองส่วน */
+export function listHref(filters: CourseFilters): string {
   const query = filtersToQuery(filters)
-  return query ? `${base}?${query}` : base
+  return query ? `/courses?${query}` : '/courses'
 }
 
 /** คำค้นแบบที่เก็บใน URL: ตัดช่องว่างหัวท้าย · ว่าง = ไม่ได้ค้น · ใช้เทียบว่าคำค้นใน URL ตรงกับที่ช่องค้นหาส่งไปหรือเปล่า */

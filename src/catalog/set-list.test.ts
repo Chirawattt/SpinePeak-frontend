@@ -30,15 +30,6 @@ describe('setList()', () => {
     expect(catalog.setList({ group: 'prathom' }).resultText).toBe('พบ 2 SET')
   })
 
-  it('gives one tab per group with how many sets it has, keeping the search but dropping the category', () => {
-    expect(catalog.setList({ group: 'mplai', category: 'A-Level', q: 'วิทย์' }).tabs).toEqual([
-      { label: 'ทุกระดับชั้น', count: '3 SET', href: '/sets?q=%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B9%8C', active: false },
-      { label: 'ประถม', count: '2 SET', href: '/sets?group=prathom&q=%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B9%8C', active: false },
-      { label: 'ม.ต้น', count: '0 SET', href: '/sets?group=mton&q=%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B9%8C', active: false },
-      { label: 'ม.ปลาย', count: '1 SET', href: '/sets?group=mplai&q=%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B9%8C', active: true },
-    ])
-  })
-
   it('searches title, tagline, set code and the names of the courses inside; every word must match', () => {
     expect(slugs({ q: 'ป.5' })).toEqual(['pr-02-bundle'])
     expect(slugs({ q: 'ตะลุย' })).toEqual(['nat-01-bundle'])
@@ -123,12 +114,8 @@ describe('parseSetFilters()', () => {
 // ตัวเลขของ content/ จริงวันนี้ · ถ้าชีตเพิ่มหรือลบ SET ให้แก้ตัวเลขในเทสต์นี้ตาม
 describe('setList() on the real content', () => {
   it('counts 27 sets in all, 10 in ประถม, 6 in มัธยมต้น and 11 in มัธยมปลาย', () => {
-    expect(realCatalog.setList({}).tabs.map((t) => [t.label, t.count])).toEqual([
-      ['ทุกระดับชั้น', '27 SET'],
-      ['ประถม', '10 SET'],
-      ['มัธยมต้น', '6 SET'],
-      ['มัธยมปลาย', '11 SET'],
-    ])
+    const count = (group?: 'prathom' | 'mton' | 'mplai') => realCatalog.setList(group ? { group } : {}).cards.length
+    expect([count(), count('prathom'), count('mton'), count('mplai')]).toEqual([27, 10, 6, 11])
   })
 
   it('shows a saving on every real set', () => {

@@ -61,7 +61,6 @@ describe('pageOg()', () => {
 
     expect(c.pageOg('landing')).toEqual({ title: 'Spine Peak', tagline: 'คำโปรย', badges: [] })
     expect(c.pageOg('courses')).toMatchObject({ eyebrow: 'คอร์สเรียน', title: 'Spine Peak' })
-    expect(c.pageOg('sets')).toMatchObject({ eyebrow: 'SET คอร์ส', title: 'Spine Peak' })
   })
 })
 

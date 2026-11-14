@@ -16,7 +16,7 @@ export type OgCard = {
   badges: string[]
 }
 
-export type OgPage = 'landing' | 'courses' | 'sets'
+export type OgPage = 'landing' | 'courses'
 
 export function courseOgCard(course: Course, site: Site): OgCard {
   const card = buildCourseCard(course, site)
@@ -45,7 +45,7 @@ export function setOgCard(set: CourseSet, courses: Course[], site: Site): OgCard
   }
 }
 
-const PAGE_NAME: Record<OgPage, string | undefined> = { landing: undefined, courses: 'คอร์สเรียน', sets: 'SET คอร์ส' }
+const PAGE_NAME: Record<OgPage, string | undefined> = { landing: undefined, courses: 'คอร์สเรียน' }
 
 /** หน้าแรกกับหน้ารายการ: ชื่อเว็บ + คำโปรย */
 export function pageOgCard(page: OgPage, site: Site): OgCard {

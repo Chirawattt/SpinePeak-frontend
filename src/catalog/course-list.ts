@@ -1,7 +1,7 @@
 // หน้ารายการคอร์ส: การ์ดทุกใบคำนวณตอน build แล้วกรองตามตัวกรองใน URL
 // ไฟล์นี้ต้องไม่ import ข้อมูลใน content/ ตรง ๆ เพราะหน้าเรียกใช้ฝั่ง client ด้วย (กรองตาม query string)
 
-import type { Course, Group, Review, Site } from '@content/types'
+import type { Course, CourseSet, Group, Review, Site } from '@content/types'
 import { buildCourseCard, type CourseCard } from './course-card'
 import { listHref, type CourseFilters } from './course-filters'
 import { nonEmpty, SUBJECT_LABEL, type Faq } from './format'
@@ -35,14 +35,15 @@ export type CourseList = {
   paging: Paging
 }
 
-export function buildCourseListIndex(courses: Course[], site: Site): CourseListIndex {
+/** sets: ใช้ทำป้าย "มีใน SET · ประหยัดสูงสุด X%" บนการ์ด */
+export function buildCourseListIndex(courses: Course[], site: Site, sets: CourseSet[] = []): CourseListIndex {
   return {
     items: courses.map((c) => ({
       group: c.group,
       category: c.category,
       // ค้นได้ทั้งชื่อ คำโปรย หมวดหมู่ วิชา และชื่อบท (เช่น พิมพ์ "พันธุศาสตร์" แล้วเจอคอร์สที่มีบทนั้น)
       text: [c.title, c.tagline, c.category, SUBJECT_LABEL[c.subject], ...c.chapters.map((ch) => ch.title)].join(' ').toLowerCase(),
-      card: buildCourseCard(c, site),
+      card: buildCourseCard(c, site, { sets, courses }),
     })),
     groups: site.groups.map((g) => ({ key: g.key, label: g.label })),
     paging: { first: site.config.listPageSize, step: site.config.listPageIncrement },
@@ -98,6 +99,12 @@ export type CoursesPage = {
   email?: string
 }
 
+/** FAQ ของ SET ขึ้นก่อน (หน้านี้เน้นขาย SET) · ข้อของ SET ที่คำถามหรือคำตอบซ้ำกับของคอร์สตัดทิ้ง เหลือข้อที่กว้างกว่า */
+export function mergeFaqs(setFaqs: Faq[], courseFaqs: Faq[]): Faq[] {
+  const seen = (f: Faq) => courseFaqs.some((c) => c.q.trim() === f.q.trim() || c.a.trim() === f.a.trim())
+  return [...setFaqs.filter((f) => !seen(f)), ...courseFaqs]
+}
+
 export function buildCoursesPage(site: Site, reviews: Review[]): CoursesPage {
   const hours = nonEmpty(site.contact.hours)
   const instagramHref = nonEmpty(site.contact.instagram?.url)
@@ -106,7 +113,7 @@ export function buildCoursesPage(site: Site, reviews: Review[]): CoursesPage {
     goals: site.goalCards.map((g) => ({ title: g.title, desc: g.desc, href: listHref(g.filter) })),
     // หน้านี้โชว์แค่ 3 ใบแรก ตาม design (หน้าแรกมีแถบรีวิวเต็ม)
     reviews: reviews.slice(0, 3).map(buildReviewQuote),
-    faqs: site.coursesFaqs,
+    faqs: mergeFaqs(site.setsFaqs, site.coursesFaqs),
     ...(hours && { hours }),
     ...(instagramHref && { instagramHref }),
     ...(email && { email }),

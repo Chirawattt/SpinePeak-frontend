@@ -212,7 +212,6 @@ describe('landing() sections', () => {
     expect(landing.clips).toEqual([])
     expect(landing.reviews).toEqual([])
     expect(landing.hero.showClipsLink).toBe(false)
-    expect(landing.nav.map((l) => l.href)).not.toContain('/#reviews')
   })
 
   it('shows them once there are some', () => {
@@ -221,7 +220,6 @@ describe('landing() sections', () => {
     expect(landing.clips).toEqual([{ title: 'ไมโอซิส', meta: 'ตัดจากคอร์ส ม.ปลาย · 8 นาที', href: 'https://youtu.be/x' }])
     expect(landing.reviews).toEqual([{ quote: 'คุ้มมากครับ', by: 'น้องเจได · ม.4', name: 'น้องเจได' }])
     expect(landing.hero.showClipsLink).toBe(true)
-    expect(landing.nav.map((l) => l.href)).toContain('/#reviews')
   })
 
   it('passes a review cover through when reviews.json has one', () => {
@@ -230,11 +228,11 @@ describe('landing() sections', () => {
     expect(landing.reviews[0]?.cover).toBe('/reviews/jedi.jpg')
   })
 
-  it('always links the teacher section in the menu', () => {
+  it('has courses (which include SET pages), the teacher section and contact in the menu', () => {
     expect(landingOf().nav).toEqual([
-      { label: 'คอร์สเรียน', href: '/courses' },
-      { label: 'SET คอร์ส', href: '/sets' },
+      { label: 'คอร์สเรียน', href: '/courses', matches: ['/sets'] },
       { label: 'แนะนำครู', href: '/#teacher' },
+      { label: 'ติดต่อเรา', href: '#contact' },
     ])
   })
 })
@@ -312,10 +310,10 @@ describe('landing() promos', () => {
     expect(promosOf({ seasonal: [seasonal], evergreen: [] }, '2026-11-01T00:00:00+07:00')).toEqual([])
   })
 
-  it('advertises the best real set saving, rounded down, linking to the sets page', () => {
+  it('advertises the best real set saving, rounded down, linking to the SET section of the list', () => {
     const [, card] = promosOf({ seasonal: [seasonal], evergreen: [{ kind: 'set-savings', name: 'ซื้อเป็น SET', desc: 'ประหยัดสูงสุด' }] })
 
-    expect(card).toEqual({ kind: 'evergreen', name: 'ซื้อเป็น SET', value: '-20%', desc: 'ประหยัดสูงสุด', href: '/sets' })
+    expect(card).toEqual({ kind: 'evergreen', name: 'ซื้อเป็น SET', value: '-20%', desc: 'ประหยัดสูงสุด', href: '/courses#sets' })
   })
 
   it('hides the strip when the set saving card would be alone, and moves the number under the best-sellers heading', () => {

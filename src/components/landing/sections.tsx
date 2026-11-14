@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import type { ClipCard, FeaturedCard as FeaturedCardData, Promo, ReviewQuote, Teacher } from '@/catalog'
+import { SETS_HREF, type ClipCard, type FeaturedCard as FeaturedCardData, type Promo, type ReviewQuote, type Teacher } from '@/catalog'
 import { Carousel } from '@/components/carousel'
 import { ContactButton } from '@/components/contact-button'
 import { ContactNote } from '@/components/contact-note'
@@ -89,7 +89,7 @@ export function FeaturedSection({ items, note }: { items: FeaturedCardData[]; no
           </h2>
           {note && <p className="mt-1 text-[15px] text-ink-soft">{note}</p>}
         </div>
-        <Link href="/sets" className="text-[15px] font-semibold hover:text-link-hover">
+        <Link href={SETS_HREF} className="text-[15px] font-semibold hover:text-link-hover">
           ดู SET ทั้งหมด →
         </Link>
       </Reveal>

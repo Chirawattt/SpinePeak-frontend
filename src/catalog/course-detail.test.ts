@@ -302,11 +302,11 @@ describe('courseDetail()', () => {
       expect(sets?.offers[0]?.summary).toBe('รวม 2 คอร์ส · VDO 4 ชม. · PDF 80 หน้า · 150 ข้อ')
     })
 
-    it('links the rest to the set list searched by the course name', () => {
+    it('links the rest to the SET section of the list, searched by the course name', () => {
       const sets = setsOf([599, 499, 699, 549].map((price, i) => setWith(`set-${i}-bundle`, price)))
 
       expect(sets?.offers).toHaveLength(2)
-      expect(sets?.more).toEqual({ label: 'ดูอีก 2 SET ที่มีคอร์สนี้', href: `/sets?q=${encodeURIComponent('เนื้อหาประถม ป.4')}` })
+      expect(sets?.more).toEqual({ label: 'ดูอีก 2 SET ที่มีคอร์สนี้', href: `/courses?${new URLSearchParams({ q: 'เนื้อหาประถม ป.4' })}#sets` })
     })
 
     it.each([1, 2])('has no "see more" link for a course in %i set(s)', (count) => {

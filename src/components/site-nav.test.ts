@@ -17,7 +17,7 @@ describe('isNavActive', () => {
 
   it('ลิงก์ไปส่วนในหน้าแรกไม่เคย active', () => {
     expect(isNavActive('/#teacher', '/')).toBe(false)
-    expect(isNavActive('/#reviews', '/')).toBe(false)
+    expect(isNavActive('#contact', '/courses')).toBe(false)
   })
 
   it('หน้าแรกไม่ทำให้เมนูไหน active', () => {

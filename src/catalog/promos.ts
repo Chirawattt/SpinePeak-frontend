@@ -3,6 +3,9 @@
 import { deriveSet, type Course, type CourseSet, type Site } from '@content/types'
 import type { ContactItem } from '@/contact'
 
+/** ส่วน SET ในหน้ารายการ · ทุกลิงก์ที่ชวนซื้อเป็น SET ชี้มาที่นี่ */
+export const SETS_HREF = '/courses#sets'
+
 export type Promo =
   | {
       kind: 'seasonal'
@@ -43,7 +46,7 @@ export function buildPromos(site: Site, sets: CourseSet[], courses: Course[], no
     }
     const best = maxSavingsPercent(sets, courses, site)
     // ไม่มีเซ็ตที่ถูกกว่าซื้อแยก ก็ไม่มีอะไรให้โฆษณา
-    return best > 0 ? [{ kind: 'evergreen', name: p.name, value: `-${best}%`, desc: p.desc, href: '/sets' }] : []
+    return best > 0 ? [{ kind: 'evergreen', name: p.name, value: `-${best}%`, desc: p.desc, href: SETS_HREF }] : []
   })
 
   return [...seasonal, ...evergreen]

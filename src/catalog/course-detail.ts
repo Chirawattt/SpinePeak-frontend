@@ -5,6 +5,7 @@ import { setsContaining, type Course, type CourseSet, type Site } from '@content
 import type { ContactItem } from '@/contact'
 import type { Content } from './catalog'
 import { courseEyebrow } from './course-card'
+import { listHref } from './course-filters'
 import { buildReviewQuote, type ReviewQuote } from './course-list'
 import { cover, formatBaht, groupLabel, groupLink, lifetimeLabel, nonEmpty, statsLine, statsRow, SUBJECT_LABEL, type Cover, type NavLink, type Stat } from './format'
 import { buildSetCard, type SetCard } from './set-card'
@@ -78,7 +79,7 @@ export type CourseDetail = {
 const SET_OFFERS = 2
 const OFFER_LABELS = ['ซื้อเป็น SET คุ้มกว่า', 'หรือเลือก SET ที่ครบกว่า']
 /** SET ใบแรกลดน้อยกว่านี้ (%) ไม่เรียกว่า "คุ้มกว่า" · ตัวเลขประหยัดยังแสดงครบเหมือนหน้า SET */
-const WORTH_IT_PERCENT = 5
+export const WORTH_IT_PERCENT = 5
 const MODEST_LABEL = 'เรียนต่อเป็น SET'
 const ADDED = 3
 const STACK = 3
@@ -143,7 +144,7 @@ function courseSets(course: Course, sets: CourseSet[], courses: Course[], site: 
   const rest = found.length - offers.length
   return {
     offers,
-    ...(rest > 0 && { more: { label: `ดูอีก ${rest} SET ที่มีคอร์สนี้`, href: `/sets?q=${encodeURIComponent(course.title)}` } }),
+    ...(rest > 0 && { more: { label: `ดูอีก ${rest} SET ที่มีคอร์สนี้`, href: `${listHref({ q: course.title })}#sets` } }),
   }
 }
 

@@ -55,7 +55,7 @@ function Top({ detail }: { detail: SetDetail }) {
       columns="lg:grid-cols-[minmax(0,1fr)_calc(50%-94px)]"
       crumbs={[
         { label: 'หน้าแรก', href: '/' },
-        { label: 'SET คอร์ส', href: '/sets' },
+        { label: 'คอร์สเรียน', href: '/courses' },
       ]}
       current={detail.title}
       stats={detail.stats}

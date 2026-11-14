@@ -3,9 +3,8 @@
 
 import { deriveSet, formatPages, type Course, type CourseSet, type Group, type Site } from '@content/types'
 import type { Paging } from './course-list'
-import { listHref, parseFilters, type CourseFilters } from './course-filters'
+import { parseFilters, type CourseFilters } from './course-filters'
 import { cover, formatBaht, groupLabel, nonEmpty, statsLine, type Cover } from './format'
-import { buildGroupTabs, type GroupTab } from './group-tabs'
 import { setSavings, type SetSavings } from './set-card'
 
 /** หน้ารายการ SET กรองได้ทั้งกลุ่ม หมวดหมู่ และคำค้นหา เหมือนหน้ารายการคอร์ส */
@@ -113,7 +112,6 @@ export type SetList = {
   categoryOptions: string[]
   /** เช่น "พบ 10 SET" */
   resultText: string
-  tabs: GroupTab[]
   empty: boolean
   paging: Paging
 }
@@ -141,14 +139,10 @@ export function filterSetList(index: SetListIndex, filters: SetFilters): SetList
   const cards = index.items
     .filter((item) => inGroup(item) && (!filters.category || item.categories.includes(filters.category)) && words.every((w) => item.text.includes(w)))
     .map((item) => item.card)
-  const countIn = (group?: Group) => index.items.filter((item) => !group || item.group === group).length
-  // เปลี่ยนกลุ่มแล้วหมวดหมู่ที่เลือกไว้หายไป (หมวดหมู่ผูกกับกลุ่ม) แต่คำค้นหาอยู่
-  const hrefFor = (group?: Group) => listHref({ ...(group && { group }), ...(filters.q && { q: filters.q }) }, '/sets')
   return {
     cards,
     categoryOptions: [...new Set(index.items.filter(inGroup).flatMap((item) => item.categories))],
     resultText: `พบ ${cards.length} SET`,
-    tabs: buildGroupTabs({ groups: index.groups, active: filters.group, unit: 'SET', countIn, hrefFor }),
     empty: cards.length === 0,
     paging: index.paging,
   }

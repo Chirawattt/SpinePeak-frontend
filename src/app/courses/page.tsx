@@ -4,22 +4,32 @@ import { Suspense } from 'react'
 import { catalog, type GoalLink, type ReviewQuote } from '@/catalog'
 import { ContactBox } from '@/components/contact-box'
 import { ContactButton } from '@/components/contact-button'
-import { CourseGrid, CourseFilterBar, CourseGridFromUrl, FilterBarFromUrl, GroupTabs, GroupTabsFromUrl } from '@/components/course-browser'
+import {
+  CatalogFilterBar,
+  CourseSection,
+  CourseSectionFromUrl,
+  FilterBarFromUrl,
+  GroupTabs,
+  GroupTabsFromUrl,
+  SetSection,
+  SetSectionFromUrl,
+} from '@/components/course-browser'
 import { StickyFilterBand } from '@/components/list-browser'
 import { FaqList } from '@/components/faq-list'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { cardVariants } from '@/components/ui/card'
 
+// หน้ารายการเดียวของเว็บ: ส่วน SET ขึ้นก่อน (เน้นขาย SET) แล้วค่อยคอร์สเดี่ยว · /sets redirect มาที่ /courses#sets (next.config.ts)
 // build แบบ static ทั้งหน้า แล้วกรองฝั่ง client ตาม query string (?group=mplai)
 // fallback ของ Suspense คือรายการที่ยังไม่กรอง HTML ที่ build ไว้จึงมีการ์ดจริงตั้งแต่แรก
 
 const TITLE = 'คอร์สเรียนทั้งหมด'
-const INTRO = 'เลือกระดับชั้นของน้องก่อน แล้วค่อยกรองตามหมวดหมู่ที่สนใจ ทุกคอร์สได้ไฟล์ PDF + คลิปวิดีโอ ดูได้ไม่จำกัดอายุ'
+const INTRO = 'เลือกระดับชั้นของน้องก่อน เริ่มจาก SET ที่จัดเส้นทางไว้ให้ จ่ายครั้งเดียวถูกกว่าซื้อแยก หรือเลือกคอร์สเดี่ยวตามหมวดหมู่ ทุกคอร์สได้ไฟล์ PDF + คลิปวิดีโอ ดูได้ไม่จำกัดอายุ'
 
 export const metadata: Metadata = { title: TITLE, description: INTRO }
 
 export default function CoursesPage() {
-  const index = catalog.courseListIndex()
+  const index = catalog.catalogListIndex()
   const page = catalog.coursesPage()
 
   return (
@@ -51,13 +61,17 @@ export default function CoursesPage() {
       </section>
 
       <StickyFilterBand>
-        <Suspense fallback={<CourseFilterBar index={index} filters={{}} />}>
+        <Suspense fallback={<CatalogFilterBar index={index} filters={{}} />}>
           <FilterBarFromUrl index={index} />
         </Suspense>
       </StickyFilterBand>
 
-      <Suspense fallback={<CourseGrid index={index} filters={{}} />}>
-        <CourseGridFromUrl index={index} />
+      <Suspense fallback={<SetSection index={index} filters={{}} />}>
+        <SetSectionFromUrl index={index} />
+      </Suspense>
+
+      <Suspense fallback={<CourseSection index={index} filters={{}} />}>
+        <CourseSectionFromUrl index={index} />
       </Suspense>
 
       <Goals goals={page.goals} />
