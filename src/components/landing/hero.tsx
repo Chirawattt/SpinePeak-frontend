@@ -15,11 +15,11 @@ const PHOTO_MASK = [
 
 /**
  * entry = ทางเข้าตามชั้น (GroupEntry) วางเป็นแถวเต็มความกว้างในกริดเดียวกับ hero
- * มือถือ: ข้อความ → entry → รูปครู (ให้ทางเข้าขึ้นมาก่อนรูป) · จอใหญ่: ข้อความคู่รูป แล้ว entry ใต้ทั้งสองคอลัมน์
+ * มือถือ: รูปครู → ข้อความ → entry (เห็นหน้าครูพี่หนามตั้งแต่จอแรก รูปเล็กลงให้หัวข้อกับปุ่มทักแอดมินยังอยู่ในจอแรก) · จอใหญ่: ข้อความคู่รูป แล้ว entry ใต้ทั้งสองคอลัมน์
  */
 export function Hero({ hero, entry }: { hero: Landing['hero']; entry?: React.ReactNode }) {
   return (
-    <section className="relative grid items-center gap-8 overflow-hidden bg-white bg-[radial-gradient(circle_at_6%_12%,var(--color-glow)_0,transparent_34%),radial-gradient(circle_at_96%_88%,var(--color-glow-soft)_0,transparent_40%),radial-gradient(circle_at_78%_6%,var(--color-glow-faint)_0,transparent_30%)] px-gutter pt-16 pb-14 md:grid-cols-2">
+    <section className="relative grid items-center gap-6 overflow-hidden bg-white bg-[radial-gradient(circle_at_6%_12%,var(--color-glow)_0,transparent_34%),radial-gradient(circle_at_96%_88%,var(--color-glow-soft)_0,transparent_40%),radial-gradient(circle_at_78%_6%,var(--color-glow-faint)_0,transparent_30%)] px-gutter pt-6 pb-14 md:grid-cols-2 md:gap-8 md:pt-16">
       <Decorations />
 
       {/* ขึ้นไล่กัน: badge → หัวข้อทีละบรรทัด → subtitle → ปุ่ม → ตัวเลข */}
@@ -60,8 +60,9 @@ export function Hero({ hero, entry }: { hero: Landing['hero']; entry?: React.Rea
         </StaggerItem>
       </Stagger>
 
-      <div className="relative order-3 flex min-w-0 items-center justify-center md:order-2">
-        <div className="relative aspect-[420/445] w-[min(420px,100%,72vw)]">
+      {/* z-10: อยู่เหนือลายตกแต่ง (จุด วงประ วงเส้นบาง) ที่ไม่งั้นจะทับหน้าครู โดยเฉพาะบนมือถือที่รูปขึ้นไปอยู่บนสุด */}
+      <div className="relative z-10 order-first flex min-w-0 items-center justify-center md:order-2">
+        <div className="relative aspect-[420/445] w-[min(240px,62vw)] md:w-[min(420px,100%)]">
           {/* วงเหลือง scale เข้ามาก่อน แล้วรูปเลื่อนขึ้นตาม · รูปไม่ fade จากโปร่งใส เพราะเป็น LCP ของหน้า */}
           <Reveal trigger="mount" delay={0.1} from={{ opacity: 0, scale: 0.85 }} className="absolute top-[14.2%] left-[9%] aspect-square w-[82%] rounded-full bg-brand" />
           <Reveal trigger="mount" delay={0.3} from={{ opacity: 0, scale: 0.92 }} className="absolute top-[10.1%] left-[4.8%] aspect-square w-[90.5%] rounded-full border-[1.5px] border-brand-soft" />
@@ -72,7 +73,7 @@ export function Hero({ hero, entry }: { hero: Landing['hero']; entry?: React.Rea
               width={1080}
               height={1080}
               preload
-              sizes="(max-width: 584px) 72vw, 420px"
+              sizes="(max-width: 767px) 240px, 420px"
               className="absolute top-0 left-0 block h-auto w-full"
               style={{ maskImage: PHOTO_MASK, WebkitMaskImage: PHOTO_MASK }}
             />
