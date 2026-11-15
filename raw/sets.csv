@@ -1,50 +1,50 @@
-รหัส,ชื่อ SET,กลุ่ม,คอร์สที่รวม,slug คอร์สที่รวม,จำนวนคอร์ส,ราคาปกติ (บาท),ราคา SET (บาท),ประหยัด (บาท),ประหยัด (%),ตรวจชื่อคอร์ส,หมายเหตุ,slug,tagline,สถานะ
+รหัส,ชื่อ SET,กลุ่ม,คอร์สที่รวม,slug คอร์สที่รวม,จำนวนคอร์ส,ราคาปกติ (บาท),ราคา SET (บาท),ประหยัด (บาท),ประหยัด (%),ตรวจชื่อคอร์ส,หมายเหตุ,slug,tagline,สถานะ,ประเภท SET
 PR-01,วิทยาศาสตร์ ป.4 เนื้อหา + ตะลุยโจทย์,ประถม,"เนื้อหาประถม ป.4
-ข้อสอบประถม ป.4","primary-science-p4, primary-exercise-p4",2,898,888.0,10,0.01113585746,✓,,primary-p4-bundle,เนื้อหา + ตะลุยโจทย์ ป.4 ครบในเซ็ตเดียว,เปิดขาย
+ข้อสอบประถม ป.4","primary-science-p4, primary-exercise-p4",2,898,888,10,1%,✓,,primary-p4-bundle,เนื้อหา + ตะลุยโจทย์ ป.4 ครบในเซ็ตเดียว,เปิดขาย,ปูพื้นฐาน
 PR-02,วิทยาศาสตร์ ป.5 เนื้อหา + ตะลุยโจทย์,ประถม,"เนื้อหาประถม ป.5
-ข้อสอบประถม ป.5","primary-science-p5, primary-exercise-p5",2,898,888.0,10,0.01113585746,✓,,primary-p5-bundle,เนื้อหา + ตะลุยโจทย์ ป.5 ครบในเซ็ตเดียว,เปิดขาย
+ข้อสอบประถม ป.5","primary-science-p5, primary-exercise-p5",2,898,888,10,1%,✓,,primary-p5-bundle,เนื้อหา + ตะลุยโจทย์ ป.5 ครบในเซ็ตเดียว,เปิดขาย,ปูพื้นฐาน
 PR-03,วิทยาศาสตร์ ป.6 เนื้อหา + ตะลุยโจทย์,ประถม,"เนื้อหาประถม ป.6
-ข้อสอบประถม ป.6","primary-science-p6, primary-exercise-p6",2,898,888.0,10,0.01113585746,✓,,primary-p6-bundle,เนื้อหา + ตะลุยโจทย์ ป.6 ครบในเซ็ตเดียว,เปิดขาย
+ข้อสอบประถม ป.6","primary-science-p6, primary-exercise-p6",2,898,888,10,1%,✓,,primary-p6-bundle,เนื้อหา + ตะลุยโจทย์ ป.6 ครบในเซ็ตเดียว,เปิดขาย,ปูพื้นฐาน
 PR-04,ตะลุยโจทย์วิทยาศาสตร์ ป.4-6 (ข้อสอบ),ประถม,"ข้อสอบประถม ป.4
 ข้อสอบประถม ป.5
-ข้อสอบประถม ป.6","primary-exercise-p4, primary-exercise-p5, primary-exercise-p6",3,897,777.0,120,0.1337792642,✓,,primary-exercise-p4-p6-bundle,ตะลุยโจทย์วิทย์ ป.4-6 รวม 385 ข้อ เฉลยละเอียด,เปิดขาย
+ข้อสอบประถม ป.6","primary-exercise-p4, primary-exercise-p5, primary-exercise-p6",3,897,777,120,13%,✓,,primary-exercise-p4-p6-bundle,ตะลุยโจทย์วิทย์ ป.4-6 รวม 385 ข้อ เฉลยละเอียด,เปิดขาย,ตะลุยโจทย์
 PR-05,เนื้อหาประถม ป.4-6,ประถม,"เนื้อหาประถม ป.4
 เนื้อหาประถม ป.5
-เนื้อหาประถม ป.6","primary-science-p4, primary-science-p5, primary-science-p6",3,1797,1777.0,20,0.01112966055,✓,,primary-science-p4-p6-bundle,เนื้อหาวิทย์ ป.4-6 ครบ 3 ชั้นปี,เปิดขาย
+เนื้อหาประถม ป.6","primary-science-p4, primary-science-p5, primary-science-p6",3,"1,797","1,777",20,1%,✓,,primary-science-p4-p6-bundle,เนื้อหาวิทย์ ป.4-6 ครบ 3 ชั้นปี,เปิดขาย,ปูพื้นฐาน
 PR-06,เนื้อหา + ข้อสอบ ป.4-6,ประถม,"เนื้อหาประถม ป.4
 เนื้อหาประถม ป.5
 เนื้อหาประถม ป.6
 ข้อสอบประถม ป.4
 ข้อสอบประถม ป.5
-ข้อสอบประถม ป.6","primary-science-p4, primary-science-p5, primary-science-p6, primary-exercise-p4, primary-exercise-p5, primary-exercise-p6",6,2694,2490.0,204,0.07572383073,✓,,primary-complete-p4-p6-bundle,เนื้อหา + ข้อสอบ ป.4-6 ครบจบในเซ็ตเดียว,เปิดขาย
+ข้อสอบประถม ป.6","primary-science-p4, primary-science-p5, primary-science-p6, primary-exercise-p4, primary-exercise-p5, primary-exercise-p6",6,"2,694","2,490",204,8%,✓,,primary-complete-p4-p6-bundle,เนื้อหา + ข้อสอบ ป.4-6 ครบจบในเซ็ตเดียว,เปิดขาย,ปูพื้นฐาน
 PR-07,สอบเข้า ม.1 ห้องทั่วไป: เนื้อหา + ตะลุยโจทย์ ป.4-6 + สอบเข้า ม.1 (ปกม่วง),ประถม,"เนื้อหาประถม ป.4
 เนื้อหาประถม ป.5
 เนื้อหาประถม ป.6
 ข้อสอบประถม ป.4
 ข้อสอบประถม ป.5
 ข้อสอบประถม ป.6
-ตะลุยโจทย์สอบเข้า ม.1 (ห้องธรรมดา)","primary-science-p4, primary-science-p5, primary-science-p6, primary-exercise-p4, primary-exercise-p5, primary-exercise-p6, m1-entrance-science-regular",7,3093,2777.0,316,0.1021661817,✓,,m1-entrance-regular-complete-bundle,ครบสูตรเตรียมสอบเข้า ม.1 ห้องทั่วไป เนื้อหา + โจทย์ ป.4-6,เปิดขาย
+ตะลุยโจทย์สอบเข้า ม.1 (ห้องธรรมดา)","primary-science-p4, primary-science-p5, primary-science-p6, primary-exercise-p4, primary-exercise-p5, primary-exercise-p6, m1-entrance-science-regular",7,"3,093","2,777",316,10%,✓,,m1-entrance-regular-complete-bundle,ครบสูตรเตรียมสอบเข้า ม.1 ห้องทั่วไป เนื้อหา + โจทย์ ป.4-6,เปิดขาย,ปูพื้นฐาน
 PR-08,สอบเข้า ม.1 ห้องพิเศษ: เนื้อหา + ตะลุยโจทย์ ป.4-6 + สอบเข้า ม.1 จภ. (ปกชมพู),ประถม,"เนื้อหาประถม ป.4
 เนื้อหาประถม ป.5
 เนื้อหาประถม ป.6
 ข้อสอบประถม ป.4
 ข้อสอบประถม ป.5
 ข้อสอบประถม ป.6
-ตะลุยโจทย์สอบเข้า ม.1 (ห้องพิเศษ)","primary-science-p4, primary-science-p5, primary-science-p6, primary-exercise-p4, primary-exercise-p5, primary-exercise-p6, m1-entrance-science-special",7,3293,2777.0,516,0.1566960219,✓,,m1-entrance-special-complete-bundle,ครบสูตรเตรียมสอบเข้า ม.1 ห้องพิเศษ แนว จภ.,เปิดขาย
+ตะลุยโจทย์สอบเข้า ม.1 (ห้องพิเศษ)","primary-science-p4, primary-science-p5, primary-science-p6, primary-exercise-p4, primary-exercise-p5, primary-exercise-p6, m1-entrance-science-special",7,"3,293","2,777",516,16%,✓,,m1-entrance-special-complete-bundle,ครบสูตรเตรียมสอบเข้า ม.1 ห้องพิเศษ แนว จภ.,เปิดขาย,ปูพื้นฐาน
 PR-09,ตะลุยโจทย์เข้า ม.1 ห้องทั่วไป: ตะลุยโจทย์ ป.4-6 + สอบเข้า ม.1 (ปกม่วง),ประถม,"ข้อสอบประถม ป.4
 ข้อสอบประถม ป.5
 ข้อสอบประถม ป.6
-ตะลุยโจทย์สอบเข้า ม.1 (ห้องธรรมดา)","primary-exercise-p4, primary-exercise-p5, primary-exercise-p6, m1-entrance-science-regular",4,1296,999.0,297,0.2291666667,✓,,m1-entrance-regular-practice-bundle,เน้นโจทย์ ป.4-6 + ข้อสอบเข้า ม.1 ห้องทั่วไป,เปิดขาย
+ตะลุยโจทย์สอบเข้า ม.1 (ห้องธรรมดา)","primary-exercise-p4, primary-exercise-p5, primary-exercise-p6, m1-entrance-science-regular",4,"1,296",999,297,23%,✓,,m1-entrance-regular-practice-bundle,เน้นโจทย์ ป.4-6 + ข้อสอบเข้า ม.1 ห้องทั่วไป,เปิดขาย,ตะลุยโจทย์
 PR-10,ตะลุยโจทย์เข้า ม.1 ห้องพิเศษ: ตะลุยโจทย์ ป.4-6 + สอบเข้า ม.1 จภ. (ปกชมพู),ประถม,"ข้อสอบประถม ป.4
 ข้อสอบประถม ป.5
 ข้อสอบประถม ป.6
-ตะลุยโจทย์สอบเข้า ม.1 (ห้องพิเศษ)","primary-exercise-p4, primary-exercise-p5, primary-exercise-p6, m1-entrance-science-special",4,1496,999.0,497,0.3322192513,✓,,m1-entrance-special-practice-bundle,เน้นโจทย์ ป.4-6 + ข้อสอบเข้า ม.1 ห้องพิเศษ แนว จภ.,เปิดขาย
+ตะลุยโจทย์สอบเข้า ม.1 (ห้องพิเศษ)","primary-exercise-p4, primary-exercise-p5, primary-exercise-p6, m1-entrance-science-special",4,"1,496",999,497,33%,✓,,m1-entrance-special-practice-bundle,เน้นโจทย์ ป.4-6 + ข้อสอบเข้า ม.1 ห้องพิเศษ แนว จภ.,เปิดขาย,ตะลุยโจทย์
 JH-01,ปรับพื้นฐาน ม.ต้น เหมาทุกเทอม,ม.ต้น,"ปรับพื้นฐาน ม.1 เทอม 1
 ปรับพื้นฐาน ม.1 เทอม 2
 ปรับพื้นฐาน ม.2 เทอม 1
 ปรับพื้นฐาน ม.2 เทอม 2
 ปรับพื้นฐาน ม.3 เทอม 1
-ปรับพื้นฐาน ม.3 เทอม 2","foundation-science-m1-term-1, foundation-science-m1-term-2, foundation-science-m2-term-1, foundation-science-m2-term-2, foundation-science-m3-term-1, foundation-science-m3-term-2",6,3594,1990.0,1604,0.4462993879,✓,,foundation-science-m1-m3-bundle,ปรับพื้นฐานวิทย์ ม.1-3 ครบ 6 เทอม,เปิดขาย
+ปรับพื้นฐาน ม.3 เทอม 2","foundation-science-m1-term-1, foundation-science-m1-term-2, foundation-science-m2-term-1, foundation-science-m2-term-2, foundation-science-m3-term-1, foundation-science-m3-term-2",6,"3,594","1,990","1,604",45%,✓,,foundation-science-m1-m3-bundle,ปรับพื้นฐานวิทย์ ม.1-3 ครบ 6 เทอม,เปิดขาย,ปูพื้นฐาน
 JH-02,ปรับพื้นฐาน ม.ต้น เหมาทุกเทอม + สอบเข้า ม.4 (SMTE) + สวช. ม.ต้น,ม.ต้น,"ปรับพื้นฐาน ม.1 เทอม 1
 ปรับพื้นฐาน ม.1 เทอม 2
 ปรับพื้นฐาน ม.2 เทอม 1
@@ -52,7 +52,7 @@ JH-02,ปรับพื้นฐาน ม.ต้น เหมาทุกเ�
 ปรับพื้นฐาน ม.3 เทอม 1
 ปรับพื้นฐาน ม.3 เทอม 2
 สอบเข้า ม.4 (SMTE)
-สวช. ม.ต้น","foundation-science-m1-term-1, foundation-science-m1-term-2, foundation-science-m2-term-1, foundation-science-m2-term-2, foundation-science-m3-term-1, foundation-science-m3-term-2, m4-entrance-smte-science, nat-junior-science",8,4592,2490.0,2102,0.4577526132,✓,,foundation-science-smte-nat-bundle,ปูพื้น ม.ต้น 6 เทอม + SMTE + สวช. ม.ต้น,เปิดขาย
+สวช. ม.ต้น","foundation-science-m1-term-1, foundation-science-m1-term-2, foundation-science-m2-term-1, foundation-science-m2-term-2, foundation-science-m3-term-1, foundation-science-m3-term-2, m4-entrance-smte-science, nat-junior-science",8,"4,592","2,490","2,102",46%,✓,,foundation-science-smte-nat-bundle,ปูพื้น ม.ต้น 6 เทอม + SMTE + สวช. ม.ต้น,เปิดขาย,ปูพื้นฐาน
 JH-03,สอบเข้า ม.4 ห้องพิเศษ: ปรับพื้นฐาน ม.ต้น + สวช. ม.ต้น + ติวติดเตรียม,ม.ต้น,"ปรับพื้นฐาน ม.1 เทอม 1
 ปรับพื้นฐาน ม.1 เทอม 2
 ปรับพื้นฐาน ม.2 เทอม 1
@@ -60,7 +60,7 @@ JH-03,สอบเข้า ม.4 ห้องพิเศษ: ปรับพ�
 ปรับพื้นฐาน ม.3 เทอม 1
 ปรับพื้นฐาน ม.3 เทอม 2
 สวช. ม.ต้น
-ติวติดเตรียม","foundation-science-m1-term-1, foundation-science-m1-term-2, foundation-science-m2-term-1, foundation-science-m2-term-2, foundation-science-m3-term-1, foundation-science-m3-term-2, nat-junior-science, triam-udom-m4-biology",8,4592,2490.0,2102,0.4577526132,✓,,m4-entrance-special-bundle,เตรียมสอบเข้า ม.4 ห้องพิเศษ ปูพื้น + สวช. + ติวติดเตรียม,เปิดขาย
+ติวติดเตรียม","foundation-science-m1-term-1, foundation-science-m1-term-2, foundation-science-m2-term-1, foundation-science-m2-term-2, foundation-science-m3-term-1, foundation-science-m3-term-2, nat-junior-science, triam-udom-m4-biology",8,"4,592","2,490","2,102",46%,✓,,m4-entrance-special-bundle,เตรียมสอบเข้า ม.4 ห้องพิเศษ ปูพื้น + สวช. + ติวติดเตรียม,เปิดขาย,ปูพื้นฐาน
 JH-04,สอบเข้า ม.4 ห้องธรรมดา: ปรับพื้นฐาน ม.ต้น + สวช. ม.ต้น + O-NET ม.3,ม.ต้น,"ปรับพื้นฐาน ม.1 เทอม 1
 ปรับพื้นฐาน ม.1 เทอม 2
 ปรับพื้นฐาน ม.2 เทอม 1
@@ -68,34 +68,34 @@ JH-04,สอบเข้า ม.4 ห้องธรรมดา: ปรับ�
 ปรับพื้นฐาน ม.3 เทอม 1
 ปรับพื้นฐาน ม.3 เทอม 2
 สวช. ม.ต้น
-O-NET ม.3","foundation-science-m1-term-1, foundation-science-m1-term-2, foundation-science-m2-term-1, foundation-science-m2-term-2, foundation-science-m3-term-1, foundation-science-m3-term-2, nat-junior-science, onet-m3-science",8,4392,2490.0,1902,0.4330601093,✓,,m4-entrance-regular-bundle,เตรียมสอบเข้า ม.4 ห้องธรรมดา ปูพื้น + สวช. + O-NET,เปิดขาย
+O-NET ม.3","foundation-science-m1-term-1, foundation-science-m1-term-2, foundation-science-m2-term-1, foundation-science-m2-term-2, foundation-science-m3-term-1, foundation-science-m3-term-2, nat-junior-science, onet-m3-science",8,"4,392","2,490","1,902",43%,✓,,m4-entrance-regular-bundle,เตรียมสอบเข้า ม.4 ห้องธรรมดา ปูพื้น + สวช. + O-NET,เปิดขาย,ปูพื้นฐาน
 JH-05,ตะลุยโจทย์ สอบเข้า ม.4 (SMTE) + สวช. ม.ต้น + O-NET ม.3,ม.ต้น,"สอบเข้า ม.4 (SMTE)
 สวช. ม.ต้น
-O-NET ม.3","m4-entrance-smte-science, nat-junior-science, onet-m3-science",3,1397,999.0,398,0.2848962062,✓,,smte-nat-onet-bundle,ตะลุยโจทย์ SMTE + สวช. ม.ต้น + O-NET ม.3,เปิดขาย
+O-NET ม.3","m4-entrance-smte-science, nat-junior-science, onet-m3-science",3,"1,397",999,398,28%,✓,,smte-nat-onet-bundle,ตะลุยโจทย์ SMTE + สวช. ม.ต้น + O-NET ม.3,เปิดขาย,ตะลุยโจทย์
 JH-06,ตะลุยโจทย์ สอบเข้า ม.4 (SMTE) + สวช. ม.ต้น + O-NET ม.3 + ติวติดเตรียม,ม.ต้น,"สอบเข้า ม.4 (SMTE)
 สวช. ม.ต้น
 O-NET ม.3
-ติวติดเตรียม","m4-entrance-smte-science, nat-junior-science, onet-m3-science, triam-udom-m4-biology",4,1996,1490.0,506,0.253507014,✓,,smte-nat-onet-triam-udom-bundle,ตะลุยโจทย์ SMTE + สวช. + O-NET + ติวติดเตรียม,เปิดขาย
+ติวติดเตรียม","m4-entrance-smte-science, nat-junior-science, onet-m3-science, triam-udom-m4-biology",4,"1,996","1,490",506,25%,✓,,smte-nat-onet-triam-udom-bundle,ตะลุยโจทย์ SMTE + สวช. + O-NET + ติวติดเตรียม,เปิดขาย,ตะลุยโจทย์
 HS-01,ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม,ม.ปลาย,"ปรับพื้นฐาน ม.4 เทอม 1
 ปรับพื้นฐาน ม.4 เทอม 2
 ปรับพื้นฐาน ม.5 เทอม 1
 ปรับพื้นฐาน ม.5 เทอม 2
 ปรับพื้นฐาน ม.6 เทอม 1
-ปรับพื้นฐาน ม.6 เทอม 2","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2",6,3594,1990.0,1604,0.4462993879,✓,,foundation-biology-m4-m6-bundle,ปรับพื้นฐานชีวะ ม.4-6 ครบ 6 เทอม,เปิดขาย
+ปรับพื้นฐาน ม.6 เทอม 2","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2",6,"3,594","1,990","1,604",45%,✓,,foundation-biology-m4-m6-bundle,ปรับพื้นฐานชีวะ ม.4-6 ครบ 6 เทอม,เปิดขาย,ปูพื้นฐาน
 HS-02,ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ครูผู้ช่วย เอกชีวะ,ม.ปลาย,"ปรับพื้นฐาน ม.4 เทอม 1
 ปรับพื้นฐาน ม.4 เทอม 2
 ปรับพื้นฐาน ม.5 เทอม 1
 ปรับพื้นฐาน ม.5 เทอม 2
 ปรับพื้นฐาน ม.6 เทอม 1
 ปรับพื้นฐาน ม.6 เทอม 2
-ครูผู้ช่วย เอกชีวะ","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, assistant-teacher-biology",7,4193,2490.0,1703,0.4061531123,✓,,foundation-biology-assistant-teacher-bundle,ปูพื้นชีวะ ม.ปลาย 6 เทอม + ติวสอบครูผู้ช่วย,เปิดขาย
+ครูผู้ช่วย เอกชีวะ","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, assistant-teacher-biology",7,"4,193","2,490","1,703",41%,✓,,foundation-biology-assistant-teacher-bundle,ปูพื้นชีวะ ม.ปลาย 6 เทอม + ติวสอบครูผู้ช่วย,เปิดขาย,ปูพื้นฐาน
 NAT-01,รวม สวช. ม.ปลาย (ชีวะ เคมี ฟิสิกส์),ม.ปลาย,"สวช. ม.ปลาย ชีววิทยา
 สวช. ม.ปลาย เคมี
-สวช. ม.ปลาย ฟิสิกส์","nat-senior-biology, nat-senior-chemistry, nat-senior-physics",3,1197,999.0,198,0.1654135338,✓,,nat-senior-bundle,สวช. ม.ปลาย ครบ 3 วิชา ชีวะ เคมี ฟิสิกส์,เปิดขาย
+สวช. ม.ปลาย ฟิสิกส์","nat-senior-biology, nat-senior-chemistry, nat-senior-physics",3,"1,197",999,198,17%,✓,,nat-senior-bundle,สวช. ม.ปลาย ครบ 3 วิชา ชีวะ เคมี ฟิสิกส์,เปิดขาย,ตะลุยโจทย์
 POSN-01,ตะลุยโจทย์ สอวน. 61-68,ม.ปลาย,"สอวน. ปี 61/64
 สอวน. ปี 66
 สอวน. ปี 67
-สอวน. ปี 68","posn-biology-61-64, posn-biology-66, posn-biology-67, posn-biology-68",4,2596,1999.0,597,0.2299691834,✓,,posn-biology-61-68-bundle,ตะลุยโจทย์ สอวน. ชีวะ 4 ปี รวม 500 ข้อ,เปิดขาย
+สอวน. ปี 68","posn-biology-61-64, posn-biology-66, posn-biology-67, posn-biology-68",4,"2,596","1,999",597,23%,✓,,posn-biology-61-68-bundle,ตะลุยโจทย์ สอวน. ชีวะ 4 ปี รวม 500 ข้อ,เปิดขาย,ตะลุยโจทย์
 POSN-02,ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ตะลุยโจทย์ สอวน. 61-68,ม.ปลาย,"ปรับพื้นฐาน ม.4 เทอม 1
 ปรับพื้นฐาน ม.4 เทอม 2
 ปรับพื้นฐาน ม.5 เทอม 1
@@ -105,10 +105,10 @@ POSN-02,ปรับพื้นฐาน ม.ปลาย เหมาทุก
 สอวน. ปี 61/64
 สอวน. ปี 66
 สอวน. ปี 67
-สอวน. ปี 68","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, posn-biology-61-64, posn-biology-66, posn-biology-67, posn-biology-68",10,6190,2990.0,3200,0.5169628433,✓,,foundation-biology-posn-bundle,ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ สอวน. 4 ปี,เปิดขาย
+สอวน. ปี 68","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, posn-biology-61-64, posn-biology-66, posn-biology-67, posn-biology-68",10,"6,190","2,990","3,200",52%,✓,,foundation-biology-posn-bundle,ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ สอวน. 4 ปี,เปิดขาย,ปูพื้นฐาน
 AL-01,ตะลุยโจทย์ A-Level ชีวะ 64-68,ม.ปลาย,"A-Level ชีวะ ปี 64-66
 A-Level ชีวะ ปี 67
-A-Level ชีวะ ปี 68","a-level-biology-64-66, a-level-biology-67, a-level-biology-68",3,1397,1259.0,138,0.09878310666,✓,,a-level-biology-64-68-bundle,ตะลุยโจทย์ A-Level ชีวะ ปี 64-68 รวม 230 ข้อ,เปิดขาย
+A-Level ชีวะ ปี 68","a-level-biology-64-66, a-level-biology-67, a-level-biology-68",3,"1,397","1,259",138,10%,✓,,a-level-biology-64-68-bundle,ตะลุยโจทย์ A-Level ชีวะ ปี 64-68 รวม 230 ข้อ,เปิดขาย,ตะลุยโจทย์
 AL-02,ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ตะลุยโจทย์ A-Level ชีวะ,ม.ปลาย,"ปรับพื้นฐาน ม.4 เทอม 1
 ปรับพื้นฐาน ม.4 เทอม 2
 ปรับพื้นฐาน ม.5 เทอม 1
@@ -117,11 +117,11 @@ AL-02,ปรับพื้นฐาน ม.ปลาย เหมาทุก�
 ปรับพื้นฐาน ม.6 เทอม 2
 A-Level ชีวะ ปี 64-66
 A-Level ชีวะ ปี 67
-A-Level ชีวะ ปี 68","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, a-level-biology-64-66, a-level-biology-67, a-level-biology-68",9,4991,2490.0,2501,0.5011019836,✓,,foundation-biology-a-level-bundle,ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ A-Level,เปิดขาย
+A-Level ชีวะ ปี 68","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, a-level-biology-64-66, a-level-biology-67, a-level-biology-68",9,"4,991","2,490","2,501",50%,✓,,foundation-biology-a-level-bundle,ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ A-Level,เปิดขาย,ปูพื้นฐาน
 NS-01,ตะลุยโจทย์ NETSAT 65-68,ม.ปลาย,"NETSAT ปี 65
 NETSAT ปี 66
 NETSAT ปี 67
-NETSAT ปี 68","netsat-biology-65, netsat-biology-66, netsat-biology-67, netsat-biology-68",4,1596,999.0,597,0.3740601504,✓,,netsat-biology-65-68-bundle,ข้อสอบจริง NETSAT ชีวะ 4 ปี รวม 200 ข้อ,เปิดขาย
+NETSAT ปี 68","netsat-biology-65, netsat-biology-66, netsat-biology-67, netsat-biology-68",4,"1,596",999,597,37%,✓,,netsat-biology-65-68-bundle,ข้อสอบจริง NETSAT ชีวะ 4 ปี รวม 200 ข้อ,เปิดขาย,ตะลุยโจทย์
 NS-02,ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ตะลุยโจทย์ NETSAT,ม.ปลาย,"ปรับพื้นฐาน ม.4 เทอม 1
 ปรับพื้นฐาน ม.4 เทอม 2
 ปรับพื้นฐาน ม.5 เทอม 1
@@ -131,9 +131,9 @@ NS-02,ปรับพื้นฐาน ม.ปลาย เหมาทุก�
 NETSAT ปี 65
 NETSAT ปี 66
 NETSAT ปี 67
-NETSAT ปี 68","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, netsat-biology-65, netsat-biology-66, netsat-biology-67, netsat-biology-68",10,5190,2790.0,2400,0.4624277457,✓,,foundation-biology-netsat-bundle,ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ NETSAT,เปิดขาย
+NETSAT ปี 68","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, netsat-biology-65, netsat-biology-66, netsat-biology-67, netsat-biology-68",10,"5,190","2,790","2,400",46%,✓,,foundation-biology-netsat-bundle,ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ NETSAT,เปิดขาย,ปูพื้นฐาน
 BC-01,ตะลุยโจทย์ Biocontest + Biocontest Otter,ม.ปลาย,"BIOCONTEST
-BIOCONTEST Otter","biocontest, biocontest-otter",2,1198,999.0,199,0.1661101836,✓,,biocontest-bundle,Biocontest + Biocontest Otter รวม 220 ข้อ,เปิดขาย
+BIOCONTEST Otter","biocontest, biocontest-otter",2,"1,198",999,199,17%,✓,,biocontest-bundle,Biocontest + Biocontest Otter รวม 220 ข้อ,เปิดขาย,ตะลุยโจทย์
 BC-02,ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ตะลุยโจทย์ Biocontest,ม.ปลาย,"ปรับพื้นฐาน ม.4 เทอม 1
 ปรับพื้นฐาน ม.4 เทอม 2
 ปรับพื้นฐาน ม.5 เทอม 1
@@ -141,4 +141,4 @@ BC-02,ปรับพื้นฐาน ม.ปลาย เหมาทุก�
 ปรับพื้นฐาน ม.6 เทอม 1
 ปรับพื้นฐาน ม.6 เทอม 2
 BIOCONTEST
-BIOCONTEST Otter","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, biocontest, biocontest-otter",8,4792,2490.0,2302,0.4803839733,✓,,foundation-biology-biocontest-bundle,ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ Biocontest,เปิดขาย
+BIOCONTEST Otter","foundation-biology-m4-term-1, foundation-biology-m4-term-2, foundation-biology-m5-term-1, foundation-biology-m5-term-2, foundation-biology-m6-term-1, foundation-biology-m6-term-2, biocontest, biocontest-otter",8,"4,792","2,490","2,302",48%,✓,,foundation-biology-biocontest-bundle,ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ Biocontest,เปิดขาย,ปูพื้นฐาน

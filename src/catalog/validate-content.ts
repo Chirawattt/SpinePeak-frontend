@@ -1,7 +1,7 @@
 // ตรวจว่าข้อมูลใน content/ สอดคล้องกัน ถ้าพัง build ต้องพัง ข้อมูลผิดจะได้ไม่ขึ้นเว็บ
 // ยึด sheet_sync.py --check เป็นแนว แต่รันด้วย Node ได้ จึงใช้บน Vercel ที่ไม่มี Python ได้
 
-import type { Course, CourseSet, Group, SaleMode, Subject } from '@content/types'
+import type { Course, CourseSet, Group, SaleMode, SetKind, Subject } from '@content/types'
 import type { Content } from './catalog'
 
 export type ContentProblem = {
@@ -21,6 +21,7 @@ const SUBJECTS = {
   applied_science: true,
 } satisfies Record<Subject, true>
 const SALE_MODES = { standalone_and_set: true, standalone_only: true } satisfies Record<SaleMode, true>
+const SET_KINDS = { foundation: true, practice: true } satisfies Record<SetKind, true>
 
 const isOneOf = (allowed: Record<string, true>, value: string) => Object.hasOwn(allowed, value)
 
@@ -49,6 +50,7 @@ export function validateContent(content: Content): ContentProblem[] {
   }
   for (const s of sets) {
     if (!isOneOf(GROUPS, s.group)) report(setLabel(s), `กลุ่ม "${s.group}" ไม่รู้จัก`)
+    if (!isOneOf(SET_KINDS, s.kind)) report(setLabel(s), `ประเภท SET "${s.kind}" ไม่รู้จัก`)
   }
 
   // slug ต้องถูกรูปแบบ และไม่ซ้ำ ทั้งในตารางเดียวกันและข้ามคอร์สกับเซ็ต

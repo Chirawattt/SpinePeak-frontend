@@ -1,7 +1,7 @@
 // หน้ารายการ SET: การ์ดทุกใบคำนวณตอน build แล้วกรองตามตัวกรองใน URL
 // ไฟล์นี้ต้องไม่ import ข้อมูลใน content/ ตรง ๆ เพราะหน้าเรียกใช้ฝั่ง client ด้วย (กรองตาม query string)
 
-import { deriveSet, formatPages, type Course, type CourseSet, type Group, type Site } from '@content/types'
+import { deriveSet, formatPages, type Course, type CourseSet, type Group, type SetKind, type Site } from '@content/types'
 import type { Paging } from './course-list'
 import { parseFilters, type CourseFilters } from './course-filters'
 import { cover, formatBaht, groupLabel, nonEmpty, statsLine, type Cover } from './format'
@@ -108,7 +108,7 @@ export function buildSetListCard(set: CourseSet, courses: Course[], site: Site):
 
 export type SetListIndex = {
   /** text = ข้อความที่ค้นหาได้ ตัวพิมพ์เล็กแล้ว */
-  items: { group: Group; categories: string[]; text: string; card: SetListCard }[]
+  items: { group: Group; kind: SetKind; categories: string[]; text: string; card: SetListCard }[]
   groups: { key: Group; label: string }[]
   paging: Paging
 }
@@ -129,6 +129,7 @@ export function buildSetListIndex(sets: CourseSet[], courses: Course[], site: Si
       const members = membersOf(set, courses)
       return {
         group: set.group,
+        kind: set.kind,
         categories: setCategories(members),
         // ค้นได้จากชื่อคอร์สที่อยู่ข้างในด้วย เช่น พิมพ์ "A-Level" เจอทุก SET ที่มีคอร์ส A-Level
         text: [set.title, set.tagline, set.code, ...members.map((c) => c.title)].join(' ').toLowerCase(),
@@ -140,11 +141,12 @@ export function buildSetListIndex(sets: CourseSet[], courses: Course[], site: Si
   }
 }
 
-export function filterSetList(index: SetListIndex, filters: SetFilters): SetList {
+/** kind: เอาเฉพาะ SET ประเภทนั้น (ส่วน SET ปูพื้นฐาน / SET ตะลุยโจทย์) · ตัวเลือกหมวดหมู่ยังมาจาก SET ทุกประเภท ตัวกรองจะได้เหมือนกันทั้งหน้า */
+export function filterSetList(index: SetListIndex, filters: SetFilters, kind?: SetKind): SetList {
   const words = (filters.q ?? '').toLowerCase().split(/\s+/).filter(Boolean)
   const inGroup = (item: SetListIndex['items'][number]) => !filters.group || item.group === filters.group
   const cards = index.items
-    .filter((item) => inGroup(item) && (!filters.category || item.categories.includes(filters.category)) && words.every((w) => item.text.includes(w)))
+    .filter((item) => (!kind || item.kind === kind) && inGroup(item) && (!filters.category || item.categories.includes(filters.category)) && words.every((w) => item.text.includes(w)))
     .map((item) => item.card)
   return {
     cards,

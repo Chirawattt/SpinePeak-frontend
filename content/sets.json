@@ -5,6 +5,7 @@
     "title": "วิทยาศาสตร์ ป.4 เนื้อหา + ตะลุยโจทย์",
     "tagline": "เนื้อหา + ตะลุยโจทย์ ป.4 ครบในเซ็ตเดียว",
     "group": "prathom",
+    "kind": "foundation",
     "price": 888,
     "courseSlugs": [
       "primary-science-p4",
@@ -17,6 +18,7 @@
     "title": "วิทยาศาสตร์ ป.5 เนื้อหา + ตะลุยโจทย์",
     "tagline": "เนื้อหา + ตะลุยโจทย์ ป.5 ครบในเซ็ตเดียว",
     "group": "prathom",
+    "kind": "foundation",
     "price": 888,
     "courseSlugs": [
       "primary-science-p5",
@@ -29,6 +31,7 @@
     "title": "วิทยาศาสตร์ ป.6 เนื้อหา + ตะลุยโจทย์",
     "tagline": "เนื้อหา + ตะลุยโจทย์ ป.6 ครบในเซ็ตเดียว",
     "group": "prathom",
+    "kind": "foundation",
     "price": 888,
     "courseSlugs": [
       "primary-science-p6",
@@ -41,6 +44,7 @@
     "title": "ตะลุยโจทย์วิทยาศาสตร์ ป.4-6 (ข้อสอบ)",
     "tagline": "ตะลุยโจทย์วิทย์ ป.4-6 รวม 385 ข้อ เฉลยละเอียด",
     "group": "prathom",
+    "kind": "practice",
     "price": 777,
     "courseSlugs": [
       "primary-exercise-p4",
@@ -54,6 +58,7 @@
     "title": "เนื้อหาประถม ป.4-6",
     "tagline": "เนื้อหาวิทย์ ป.4-6 ครบ 3 ชั้นปี",
     "group": "prathom",
+    "kind": "foundation",
     "price": 1777,
     "courseSlugs": [
       "primary-science-p4",
@@ -67,6 +72,7 @@
     "title": "เนื้อหา + ข้อสอบ ป.4-6",
     "tagline": "เนื้อหา + ข้อสอบ ป.4-6 ครบจบในเซ็ตเดียว",
     "group": "prathom",
+    "kind": "foundation",
     "price": 2490,
     "courseSlugs": [
       "primary-science-p4",
@@ -83,6 +89,7 @@
     "title": "สอบเข้า ม.1 ห้องทั่วไป: เนื้อหา + ตะลุยโจทย์ ป.4-6 + สอบเข้า ม.1 (ปกม่วง)",
     "tagline": "ครบสูตรเตรียมสอบเข้า ม.1 ห้องทั่วไป เนื้อหา + โจทย์ ป.4-6",
     "group": "prathom",
+    "kind": "foundation",
     "price": 2777,
     "courseSlugs": [
       "primary-science-p4",
@@ -100,6 +107,7 @@
     "title": "สอบเข้า ม.1 ห้องพิเศษ: เนื้อหา + ตะลุยโจทย์ ป.4-6 + สอบเข้า ม.1 จภ. (ปกชมพู)",
     "tagline": "ครบสูตรเตรียมสอบเข้า ม.1 ห้องพิเศษ แนว จภ.",
     "group": "prathom",
+    "kind": "foundation",
     "price": 2777,
     "courseSlugs": [
       "primary-science-p4",
@@ -117,6 +125,7 @@
     "title": "ตะลุยโจทย์เข้า ม.1 ห้องทั่วไป: ตะลุยโจทย์ ป.4-6 + สอบเข้า ม.1 (ปกม่วง)",
     "tagline": "เน้นโจทย์ ป.4-6 + ข้อสอบเข้า ม.1 ห้องทั่วไป",
     "group": "prathom",
+    "kind": "practice",
     "price": 999,
     "courseSlugs": [
       "primary-exercise-p4",
@@ -131,6 +140,7 @@
     "title": "ตะลุยโจทย์เข้า ม.1 ห้องพิเศษ: ตะลุยโจทย์ ป.4-6 + สอบเข้า ม.1 จภ. (ปกชมพู)",
     "tagline": "เน้นโจทย์ ป.4-6 + ข้อสอบเข้า ม.1 ห้องพิเศษ แนว จภ.",
     "group": "prathom",
+    "kind": "practice",
     "price": 999,
     "courseSlugs": [
       "primary-exercise-p4",
@@ -145,6 +155,7 @@
     "title": "ปรับพื้นฐาน ม.ต้น เหมาทุกเทอม",
     "tagline": "ปรับพื้นฐานวิทย์ ม.1-3 ครบ 6 เทอม",
     "group": "mton",
+    "kind": "foundation",
     "price": 1990,
     "courseSlugs": [
       "foundation-science-m1-term-1",
@@ -161,6 +172,7 @@
     "title": "ปรับพื้นฐาน ม.ต้น เหมาทุกเทอม + สอบเข้า ม.4 (SMTE) + สวช. ม.ต้น",
     "tagline": "ปูพื้น ม.ต้น 6 เทอม + SMTE + สวช. ม.ต้น",
     "group": "mton",
+    "kind": "foundation",
     "price": 2490,
     "courseSlugs": [
       "foundation-science-m1-term-1",
@@ -179,6 +191,7 @@
     "title": "สอบเข้า ม.4 ห้องพิเศษ: ปรับพื้นฐาน ม.ต้น + สวช. ม.ต้น + ติวติดเตรียม",
     "tagline": "เตรียมสอบเข้า ม.4 ห้องพิเศษ ปูพื้น + สวช. + ติวติดเตรียม",
     "group": "mton",
+    "kind": "foundation",
     "price": 2490,
     "courseSlugs": [
       "foundation-science-m1-term-1",
@@ -197,6 +210,7 @@
     "title": "สอบเข้า ม.4 ห้องธรรมดา: ปรับพื้นฐาน ม.ต้น + สวช. ม.ต้น + O-NET ม.3",
     "tagline": "เตรียมสอบเข้า ม.4 ห้องธรรมดา ปูพื้น + สวช. + O-NET",
     "group": "mton",
+    "kind": "foundation",
     "price": 2490,
     "courseSlugs": [
       "foundation-science-m1-term-1",
@@ -215,6 +229,7 @@
     "title": "ตะลุยโจทย์ สอบเข้า ม.4 (SMTE) + สวช. ม.ต้น + O-NET ม.3",
     "tagline": "ตะลุยโจทย์ SMTE + สวช. ม.ต้น + O-NET ม.3",
     "group": "mton",
+    "kind": "practice",
     "price": 999,
     "courseSlugs": [
       "m4-entrance-smte-science",
@@ -228,6 +243,7 @@
     "title": "ตะลุยโจทย์ สอบเข้า ม.4 (SMTE) + สวช. ม.ต้น + O-NET ม.3 + ติวติดเตรียม",
     "tagline": "ตะลุยโจทย์ SMTE + สวช. + O-NET + ติวติดเตรียม",
     "group": "mton",
+    "kind": "practice",
     "price": 1490,
     "courseSlugs": [
       "m4-entrance-smte-science",
@@ -242,6 +258,7 @@
     "title": "ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม",
     "tagline": "ปรับพื้นฐานชีวะ ม.4-6 ครบ 6 เทอม",
     "group": "mplai",
+    "kind": "foundation",
     "price": 1990,
     "courseSlugs": [
       "foundation-biology-m4-term-1",
@@ -258,6 +275,7 @@
     "title": "ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ครูผู้ช่วย เอกชีวะ",
     "tagline": "ปูพื้นชีวะ ม.ปลาย 6 เทอม + ติวสอบครูผู้ช่วย",
     "group": "mplai",
+    "kind": "foundation",
     "price": 2490,
     "courseSlugs": [
       "foundation-biology-m4-term-1",
@@ -275,6 +293,7 @@
     "title": "รวม สวช. ม.ปลาย (ชีวะ เคมี ฟิสิกส์)",
     "tagline": "สวช. ม.ปลาย ครบ 3 วิชา ชีวะ เคมี ฟิสิกส์",
     "group": "mplai",
+    "kind": "practice",
     "price": 999,
     "courseSlugs": [
       "nat-senior-biology",
@@ -288,6 +307,7 @@
     "title": "ตะลุยโจทย์ สอวน. 61-68",
     "tagline": "ตะลุยโจทย์ สอวน. ชีวะ 4 ปี รวม 500 ข้อ",
     "group": "mplai",
+    "kind": "practice",
     "price": 1999,
     "courseSlugs": [
       "posn-biology-61-64",
@@ -302,6 +322,7 @@
     "title": "ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ตะลุยโจทย์ สอวน. 61-68",
     "tagline": "ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ สอวน. 4 ปี",
     "group": "mplai",
+    "kind": "foundation",
     "price": 2990,
     "courseSlugs": [
       "foundation-biology-m4-term-1",
@@ -322,6 +343,7 @@
     "title": "ตะลุยโจทย์ A-Level ชีวะ 64-68",
     "tagline": "ตะลุยโจทย์ A-Level ชีวะ ปี 64-68 รวม 230 ข้อ",
     "group": "mplai",
+    "kind": "practice",
     "price": 1259,
     "courseSlugs": [
       "a-level-biology-64-66",
@@ -335,6 +357,7 @@
     "title": "ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ตะลุยโจทย์ A-Level ชีวะ",
     "tagline": "ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ A-Level",
     "group": "mplai",
+    "kind": "foundation",
     "price": 2490,
     "courseSlugs": [
       "foundation-biology-m4-term-1",
@@ -354,6 +377,7 @@
     "title": "ตะลุยโจทย์ NETSAT 65-68",
     "tagline": "ข้อสอบจริง NETSAT ชีวะ 4 ปี รวม 200 ข้อ",
     "group": "mplai",
+    "kind": "practice",
     "price": 999,
     "courseSlugs": [
       "netsat-biology-65",
@@ -368,6 +392,7 @@
     "title": "ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ตะลุยโจทย์ NETSAT",
     "tagline": "ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ NETSAT",
     "group": "mplai",
+    "kind": "foundation",
     "price": 2790,
     "courseSlugs": [
       "foundation-biology-m4-term-1",
@@ -388,6 +413,7 @@
     "title": "ตะลุยโจทย์ Biocontest + Biocontest Otter",
     "tagline": "Biocontest + Biocontest Otter รวม 220 ข้อ",
     "group": "mplai",
+    "kind": "practice",
     "price": 999,
     "courseSlugs": [
       "biocontest",
@@ -400,6 +426,7 @@
     "title": "ปรับพื้นฐาน ม.ปลาย เหมาทุกเทอม + ตะลุยโจทย์ Biocontest",
     "tagline": "ปูพื้นชีวะ 6 เทอม + ตะลุยโจทย์ Biocontest",
     "group": "mplai",
+    "kind": "foundation",
     "price": 2490,
     "courseSlugs": [
       "foundation-biology-m4-term-1",

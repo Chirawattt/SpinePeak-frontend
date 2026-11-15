@@ -10,35 +10,51 @@ const courses = [
   testCourse({ slug: 'c3', title: 'ปรับพื้นฐาน ม.4', price: 1000, group: 'mplai', category: 'ปรับพื้นฐาน', setCodes: ['NAT-01'] }),
   testCourse({ slug: 'c4', title: 'A-Level ชีวะ', price: 1000, group: 'mplai', category: 'A-Level', setCodes: ['NAT-01'] }),
   testCourse({ slug: 'c5', title: 'สอวน. ชีวะ', price: 1000, group: 'mplai', category: 'สอวน.' }),
+  testCourse({ slug: 'c6', title: 'ข้อสอบ ม.ปลาย', price: 1000, group: 'mplai', category: 'สอวน.', setCodes: ['AL-01'] }),
 ]
 // PR-01 ลด 1% (ไม่ถึงเกณฑ์ "คุ้ม") · NAT-01 ลด 25%
 const sets = [
   testSet({ code: 'PR-01', slug: 'pr-01-bundle', group: 'prathom', price: 990, courseSlugs: ['c1', 'c2'] }),
   testSet({ code: 'NAT-01', slug: 'nat-01-bundle', title: 'ม.ปลาย ครบ', group: 'mplai', price: 1500, courseSlugs: ['c3', 'c4'] }),
+  testSet({ code: 'AL-01', slug: 'al-01-bundle', title: 'ตะลุยโจทย์ A-Level', group: 'mplai', kind: 'practice', price: 900, courseSlugs: ['c6'] }),
 ]
 const catalog = createCatalog(testContent({ courses, sets }))
 const listOf = (filters: Parameters<typeof filterCatalogList>[1]) => filterCatalogList(catalog.catalogListIndex(), filters)
 
+const slugsOf = (list: { cards: { slug: string }[] }) => list.cards.map((c) => c.slug)
+
 describe('filterCatalogList()', () => {
-  it('filters SETs and single courses with the same filters', () => {
+  it('splits SETs into SET ปูพื้นฐาน and SET ตะลุยโจทย์ by the kind the sheet gives, keeping sheet order', () => {
+    const list = listOf({})
+
+    expect(slugsOf(list.sets.foundation)).toEqual(['pr-01-bundle', 'nat-01-bundle'])
+    expect(slugsOf(list.sets.practice)).toEqual(['al-01-bundle'])
+  })
+
+  it('filters both SET sections and single courses with the same filters', () => {
     const list = listOf({ group: 'mplai' })
 
-    expect(list.sets.cards.map((c) => c.slug)).toEqual(['nat-01-bundle'])
-    expect(list.courses.cards.map((c) => c.slug)).toEqual(['c3', 'c4', 'c5'])
+    expect(slugsOf(list.sets.foundation)).toEqual(['nat-01-bundle'])
+    expect(slugsOf(list.sets.practice)).toEqual(['al-01-bundle'])
+    expect(slugsOf(list.courses)).toEqual(['c3', 'c4', 'c5', 'c6'])
   })
 
   it('finds a SET by the name of a course inside it, alongside the course itself', () => {
     const list = listOf({ q: 'A-Level' })
 
-    expect(list.sets.cards.map((c) => c.slug)).toEqual(['nat-01-bundle'])
-    expect(list.courses.cards.map((c) => c.slug)).toEqual(['c4'])
+    expect(slugsOf(list.sets.foundation)).toEqual(['nat-01-bundle'])
+    expect(slugsOf(list.sets.practice)).toEqual(['al-01-bundle'])
+    expect(slugsOf(list.courses)).toEqual(['c4'])
   })
 
-  it('has no SETs when none match, so the page can hide that section', () => {
-    expect(listOf({ group: 'mplai', category: 'สอวน.' }).sets.cards).toEqual([])
+  it('leaves a SET section empty when none of its kind match, so the page can hide that section', () => {
+    const list = listOf({ group: 'prathom' })
+
+    expect(slugsOf(list.sets.foundation)).toEqual(['pr-01-bundle'])
+    expect(list.sets.practice.cards).toEqual([])
   })
 
-  it('offers each category once, courses first', () => {
+  it('offers each category once, courses first, from SETs of every kind', () => {
     expect(listOf({ group: 'mplai' }).categoryOptions).toEqual(['ปรับพื้นฐาน', 'A-Level', 'สอวน.'])
   })
 
@@ -48,19 +64,20 @@ describe('filterCatalogList()', () => {
     )
     const big = createCatalog(testContent({ courses, sets: many })).catalogListIndex()
 
-    it(`shows only the first ${SET_PREVIEW}, in sheet order, when no group is chosen`, () => {
+    it(`shows only the first ${SET_PREVIEW} of each section, in sheet order, when no group is chosen`, () => {
       const list = filterCatalogList(big, {})
-      expect(list.setPreview).toBe(SET_PREVIEW)
-      expect(list.sets.cards[0]?.slug).toBe('pr-0-bundle')
+      expect(list.sets.foundation.preview).toBe(SET_PREVIEW)
+      expect(list.sets.foundation.cards[0]?.slug).toBe('pr-0-bundle')
     })
 
     it('shows every SET of the group once a group is chosen', () => {
       const list = filterCatalogList(big, { group: 'prathom' })
-      expect(list.setPreview).toBe(list.sets.cards.length)
+      expect(list.sets.foundation.preview).toBe(list.sets.foundation.cards.length)
     })
 
     it('never previews more than there are', () => {
-      expect(listOf({}).setPreview).toBe(2)
+      expect(listOf({}).sets.foundation.preview).toBe(2)
+      expect(listOf({}).sets.practice.preview).toBe(1)
     })
   })
 })

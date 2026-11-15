@@ -16,6 +16,9 @@ export type Subject =
 
 export type SaleMode = 'standalone_and_set' | 'standalone_only'
 
+/** ประเภทเซ็ต (CONTEXT.md) · foundation = SET ปูพื้นฐาน (มีคอร์สเนื้อหา) · practice = SET ตะลุยโจทย์ (โจทย์และข้อสอบล้วน) · เจ้าของกำหนดในชีต ไม่เดาจากชื่อ */
+export type SetKind = 'foundation' | 'practice'
+
 /** จำนวนหน้า PDF บางคอร์สในชีตเป็นช่วง เช่น "30-70" จึงไม่ใช่ number เสมอไป */
 export type PageCount = number | { min: number; max: number }
 
@@ -68,6 +71,7 @@ export type CourseSet = {
   title: string
   tagline: string
   group: Group
+  kind: SetKind
   /** ราคาขายของเซ็ต ส่วนราคาปกติและส่วนลดคำนวณเอาเอง */
   price: number
   /** slug ของคอร์สสมาชิก เรียงตามลำดับในชีต */

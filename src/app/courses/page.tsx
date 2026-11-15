@@ -19,7 +19,7 @@ import { FaqList } from '@/components/faq-list'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 import { cardVariants } from '@/components/ui/card'
 
-// หน้ารายการเดียวของเว็บ: ส่วน SET ขึ้นก่อน (เน้นขาย SET) แล้วค่อยคอร์สเดี่ยว · /sets redirect มาที่ /courses#sets (next.config.ts)
+// หน้ารายการเดียวของเว็บ: SET ขึ้นก่อน (เน้นขาย SET) แยก SET ปูพื้นฐาน กับ SET ตะลุยโจทย์ แล้วค่อยคอร์สเดี่ยว · /sets redirect มาที่ /courses#sets (next.config.ts)
 // build แบบ static ทั้งหน้า แล้วกรองฝั่ง client ตาม query string (?group=mplai)
 // fallback ของ Suspense คือรายการที่ยังไม่กรอง HTML ที่ build ไว้จึงมีการ์ดจริงตั้งแต่แรก
 

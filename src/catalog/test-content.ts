@@ -32,6 +32,7 @@ export function testSet(overrides: Partial<CourseSet> = {}): CourseSet {
     title: 'วิทยาศาสตร์ ป.4',
     tagline: 'ครบในเซ็ตเดียว',
     group: 'prathom',
+    kind: 'foundation',
     price: 888,
     courseSlugs: [],
     ...overrides,

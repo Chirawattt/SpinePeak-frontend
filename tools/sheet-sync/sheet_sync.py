@@ -38,6 +38,7 @@ SALE_MODES = {
     "ขายเดี่ยว + อยู่ใน SET": "standalone_and_set",
     "ขายเดี่ยวเท่านั้น": "standalone_only",
 }
+SET_KINDS = {"ปูพื้นฐาน": "foundation", "ตะลุยโจทย์": "practice"}  # คอลัมน์ "ประเภท SET" · ดู CONTEXT.md
 STATUSES = {"เปิดขาย": "open", "เร็ว ๆ นี้": "coming_soon", "เร็วๆ นี้": "coming_soon"}
 INSTRUCTORS = {"ครูพี่หนาม": "kru-nam", "ครูพี่ฝน": "kru-fon", "ครูพี่ลูกไม้": "kru-lookmai"}
 DEFAULT_INSTRUCTOR = "kru-nam"  # เจ้าของยืนยัน: แถวที่เว้นว่างคือครูพี่หนาม
@@ -334,6 +335,10 @@ def build_sets(courses):
         tagline = row.get("tagline", "")
         if not tagline:
             err("%s ยังไม่มี tagline" % where)
+        # แยก SET ปูพื้นฐาน / SET ตะลุยโจทย์ บนหน้ารายการ · ว่างก็พัง จะได้ไม่มี SET ไปโผล่ผิดส่วนเงียบ ๆ
+        kind_th = row.get("ประเภท SET", "")
+        if kind_th not in SET_KINDS:
+            err("%s: ประเภท SET '%s' ไม่อยู่ในค่าที่รู้จัก (ปูพื้นฐาน / ตะลุยโจทย์)" % (where, kind_th))
 
         slugs, names = resolve_members(row, where, courses, by_name)
         if len(slugs) != len(set(slugs)):
@@ -364,6 +369,7 @@ def build_sets(courses):
         s["title"] = row.get("ชื่อ SET", "")
         s["tagline"] = tagline
         s["group"] = GROUPS.get(group_th)
+        s["kind"] = SET_KINDS.get(kind_th)
         s["price"] = price
         s["courseSlugs"] = slugs
         sets.append(s)
