@@ -132,16 +132,26 @@ export function TeacherSection({ teacher, photoAlt }: { teacher: Teacher; photoA
           <StaggerItem>
             <h2 className="mb-4 font-heading text-[clamp(27px,4.4vw,36px)] font-bold">{teacher.name}</h2>
           </StaggerItem>
-          <StaggerItem as="p" className="mb-6 max-w-[520px] text-[17px] leading-[1.8] text-ink-soft">
-            {teacher.bio}
+          <StaggerItem as="p" className="max-w-[520px] text-[17px] leading-[1.8] whitespace-pre-line text-ink-soft">
+            {teacher.bio.map((part, i) =>
+              part.strong ? (
+                <strong key={i} className="font-semibold text-ink">
+                  {part.text}
+                </strong>
+              ) : (
+                part.text
+              ),
+            )}
           </StaggerItem>
-          <StaggerItem as="ul" className="flex flex-wrap gap-2.5">
-            {teacher.tags.map((tag) => (
-              <li key={tag} className={badgeVariants({ variant: 'outline', className: 'text-sm font-normal' })}>
-                {tag}
-              </li>
-            ))}
-          </StaggerItem>
+          {teacher.tags.length > 0 && (
+            <StaggerItem as="ul" className="mt-6 flex flex-wrap gap-2.5">
+              {teacher.tags.map((tag) => (
+                <li key={tag} className={badgeVariants({ variant: 'outline', className: 'text-sm font-normal' })}>
+                  {tag}
+                </li>
+              ))}
+            </StaggerItem>
+          )}
         </Stagger>
       </div>
     </section>

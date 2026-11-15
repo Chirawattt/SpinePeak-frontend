@@ -84,6 +84,7 @@ export type Instructor = {
   name: string
   role: string
   shortBio: string
+  /** ประวัติยาวในส่วนแนะนำครูบนหน้าแรก · ครอบคำด้วย **…** ให้เป็นตัวหนา · "\n" = ขึ้นบรรทัดใหม่ */
   longBio: string
   tags: string[]
   photoHero?: string

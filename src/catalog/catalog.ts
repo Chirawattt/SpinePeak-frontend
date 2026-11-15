@@ -71,7 +71,18 @@ export type GroupEntry = {
   categories: NavLink[]
 }
 
-export type Teacher = { name: string; bio: string; tags: string[] }
+/** ข้อความหนึ่งช่วงของประวัติครู · strong = ส่วนที่ครอบด้วย **…** ใน site.json ให้เป็นตัวหนา */
+export type BioPart = { text: string; strong?: true }
+
+export type Teacher = { name: string; bio: BioPart[]; tags: string[] }
+
+/** "a **b** c" → [a, b(ตัวหนา), c] · ช่วงว่างถูกตัดทิ้ง */
+export function bioParts(text: string): BioPart[] {
+  return text
+    .split('**')
+    .map((part, i) => (i % 2 ? { text: part, strong: true as const } : { text: part }))
+    .filter((p) => p.text.length > 0)
+}
 
 export type ClipCard = { title: string; /** เช่น "ตัดจากคอร์ส ม.ปลาย · 8 นาที" */ meta: string; href: string; thumbnail?: string }
 
@@ -119,7 +130,7 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
   function landing(): Landing {
     // ผู้สอนหลักคือคนแรกใน site.json
     const main = site.instructors[0]
-    const teacher = main && { name: main.name, bio: nonEmpty(main.longBio) ?? main.shortBio, tags: main.tags }
+    const teacher = main && { name: main.name, bio: bioParts(nonEmpty(main.longBio) ?? main.shortBio), tags: main.tags }
     const clips = content.clips.map((c) => ({ title: c.title, meta: `${c.sourceLabel} · ${c.minutes} นาที`, href: c.youtubeUrl, ...(nonEmpty(c.thumbnail) && { thumbnail: c.thumbnail }) }))
     const reviews = content.reviews.map(buildReviewQuote)
     // ของที่ไม่มีอยู่ข้ามไป: validateContent() รายงานให้ build พังก่อนอยู่แล้ว

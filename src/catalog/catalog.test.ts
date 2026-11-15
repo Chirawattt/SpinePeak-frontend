@@ -197,13 +197,23 @@ describe('landing() sections', () => {
   })
 
   it('introduces the main instructor from site.json', () => {
-    const instructor = { slug: 'kru-nam', name: 'ครูพี่หนาม', role: '', shortBio: 'สั้น', longBio: 'ยาว', tags: ['สอนจากข้อสอบจริง'] }
+    const instructor = { slug: 'kru-nam', name: 'ครูพี่หนาม', role: '', shortBio: 'สั้น', longBio: 'ยาว', tags: ['ป้าย'] }
 
     expect(landingOf({ site: testSite({ instructors: [instructor] }) }).teacher).toEqual({
       name: 'ครูพี่หนาม',
-      bio: 'ยาว',
-      tags: ['สอนจากข้อสอบจริง'],
+      bio: [{ text: 'ยาว' }],
+      tags: ['ป้าย'],
     })
+  })
+
+  it('bolds the part of the bio wrapped in **…**', () => {
+    const instructor = { slug: 'kru-nam', name: 'ครูพี่หนาม', role: '', shortBio: '', longBio: 'จบชีวะ **สอนให้เข้าใจ** ทีละขั้น', tags: [] }
+
+    expect(landingOf({ site: testSite({ instructors: [instructor] }) }).teacher?.bio).toEqual([
+      { text: 'จบชีวะ ' },
+      { text: 'สอนให้เข้าใจ', strong: true },
+      { text: ' ทีละขั้น' },
+    ])
   })
 
   it('hides clips and reviews, and the links to them, while clips.json and reviews.json are empty', () => {

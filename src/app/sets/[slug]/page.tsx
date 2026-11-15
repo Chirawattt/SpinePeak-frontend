@@ -91,7 +91,6 @@ function SetPriceCard({ detail }: { detail: SetDetail }) {
       }
       secondary={
         <a href="#courses" className={buttonVariants({ variant: 'outline' })}>
-          {/* ดูคอร์สใน SET ({detail.courseCount}) */}
           ดูคอร์สใน SET
         </a>
       }
