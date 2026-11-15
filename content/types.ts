@@ -157,7 +157,7 @@ export type Site = {
     tiktok?: { handle: string; url: string }
     /** ว่างอยู่ — ถ้าว่างให้ซ่อนบรรทัดนั้นใน footer */
     email?: string
-    /** ว่างอยู่ — ถ้าว่างให้ซ่อนบรรทัดเวลาทำการ */
+    /** เวลาทำการของแอดมิน เช่น "ทุกวัน 09:00–21:00 น." · ว่าง = ซ่อนบรรทัดเวลาทำการ */
     hours?: string
     youtubeChannelUrl?: string
   }

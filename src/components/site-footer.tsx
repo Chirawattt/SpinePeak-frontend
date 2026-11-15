@@ -29,7 +29,7 @@ export function SiteFooter() {
         <div>
           <Logo size={46} className="mb-3.5" />
           <p className="mb-4 max-w-[260px] text-[15px] leading-[1.7] text-muted">{footer.blurb}</p>
-          {footer.hours && <div className="text-[14.5px] text-muted">{footer.hours}</div>}
+          {footer.hours && <div className="text-[14.5px] text-muted">แอดมินตอบแชท{footer.hours}</div>}
         </div>
 
         <div>

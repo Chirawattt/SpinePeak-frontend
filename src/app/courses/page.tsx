@@ -85,7 +85,7 @@ export default function CoursesPage() {
         <StaggerItem>
           <ContactBox
             title="ยังเลือกไม่ถูก ทักมาได้เลย"
-            {...(page.hours && { text: `ตอบกลับภายในวันทำการ ${page.hours}` })}
+            {...(page.hours && { text: `แอดมินตอบแชท${page.hours}` })}
             instagramHref={page.instagramHref}
             email={page.email}
           />
