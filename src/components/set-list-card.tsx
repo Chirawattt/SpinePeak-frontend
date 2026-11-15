@@ -4,7 +4,7 @@ import type { SetSavings } from '@/catalog/set-card'
 import type { CoverTile, SetListCard as SetListCardData } from '@/catalog/set-list'
 import { SetCoverFan } from '@/components/set-cover-stack'
 import { Badge } from '@/components/ui/badge'
-import { buttonVariants } from '@/components/ui/button'
+import { CardMore } from '@/components/card-more'
 import { cardVariants } from '@/components/ui/card'
 
 export type SetCardProps = {
@@ -67,7 +67,7 @@ export function SetCard({ href, stack, moreInStack, courseCount, eyebrow, title,
             </Badge>
           )}
         </div>
-        <span className={buttonVariants({ variant: 'brand', className: 'mt-1 group-hover:bg-brand/85' })}>ดู SET นี้</span>
+        <CardMore>ดู SET นี้</CardMore>
       </div>
     </Link>
   )

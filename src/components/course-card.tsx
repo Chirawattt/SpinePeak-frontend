@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { CourseCard as CourseCardData } from '@/catalog'
 import { CoverBox } from '@/components/cover-box'
 import { Badge } from '@/components/ui/badge'
-import { buttonVariants } from '@/components/ui/button'
+import { CardMore } from '@/components/card-more'
 import { cardVariants } from '@/components/ui/card'
 
 /** การ์ดคอร์สตาม docs/design-courses.dc.html · ใช้ทั้งหน้ารายการและคอร์สขายดีบนหน้าแรก (label = ป้ายที่เจ้าของใส่) · ทั้งใบกดเข้าหน้ารายละเอียดคอร์ส (design ให้กดแค่ปุ่ม แต่ทั้งใบกดง่ายกว่าบนมือถือ) */
@@ -34,7 +34,7 @@ export function CourseCard({ card, label }: { card: CourseCardData; label?: stri
           <span className="font-heading text-[25px] font-bold">{card.price}</span>
           {card.setCount && <Badge variant="wash" size="sm">{card.setCount}</Badge>}
         </div>
-        <span className={buttonVariants({ variant: 'brand', className: 'mt-1 group-hover:bg-brand/85' })}>ดูรายละเอียด</span>
+        <CardMore>ดูรายละเอียด</CardMore>
       </div>
     </Link>
   )
