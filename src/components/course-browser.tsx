@@ -79,7 +79,7 @@ export function SetSection({ index, filters }: { index: CatalogListIndex; filter
       <p className="mb-7 max-w-156 text-[16.5px] leading-[1.7] text-ink-soft">
         รวมคอร์สที่เรียนต่อกันเป็นเส้นทางเดียว จ่ายครั้งเดียวได้ครบทุกคอร์สในชุด ดูได้ไม่จำกัดอายุ
       </p>
-      <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,440px),1fr))] gap-6">
+      <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-[22px]">
         {shown.map((card, i) => (
           <Reveal key={card.slug} as="li" lift delay={Math.min((i < setPreview ? i : i - setPreview) * STAGGER, STAGGER_CAP)} className="flex">
             <SetListCard card={card} />

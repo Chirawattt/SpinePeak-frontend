@@ -5,14 +5,21 @@ import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { cardVariants } from '@/components/ui/card'
 
-/** การ์ดคอร์สตาม docs/design-courses.dc.html · ทั้งใบกดเข้าหน้ารายละเอียดคอร์ส (design ให้กดแค่ปุ่ม แต่ทั้งใบกดง่ายกว่าบนมือถือ) */
-export function CourseCard({ card }: { card: CourseCardData }) {
+/** การ์ดคอร์สตาม docs/design-courses.dc.html · ใช้ทั้งหน้ารายการและคอร์สขายดีบนหน้าแรก (label = ป้ายที่เจ้าของใส่) · ทั้งใบกดเข้าหน้ารายละเอียดคอร์ส (design ให้กดแค่ปุ่ม แต่ทั้งใบกดง่ายกว่าบนมือถือ) */
+export function CourseCard({ card, label }: { card: CourseCardData; label?: string }) {
   return (
     <Link
       href={card.href}
       className={cardVariants({ variant: 'tile', className: 'group flex w-full flex-col' })}
     >
-      <CoverBox cover={card.cover} label={card.label} title={card.title} className="rounded-none!" />
+      <div className="relative">
+        <CoverBox cover={card.cover} label={card.label} title={card.title} className="rounded-none!" />
+        {label && (
+          <Badge variant="ink" size="sm" className="absolute top-3 left-3 leading-4 text-white ring-1 ring-brand/40">
+            {label}
+          </Badge>
+        )}
+      </div>
       <div className="flex flex-1 flex-col gap-[9px] px-5 pt-[18px] pb-5">
         <div className="font-mono text-xs font-semibold text-eyebrow">{card.eyebrow}</div>
         <h3 className="font-heading text-xl leading-[1.3] font-semibold">{card.title}</h3>

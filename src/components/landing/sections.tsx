@@ -4,12 +4,11 @@ import { SETS_HREF, type ClipCard, type FeaturedCard as FeaturedCardData, type P
 import { Carousel } from '@/components/carousel'
 import { ContactButton } from '@/components/contact-button'
 import { ContactNote } from '@/components/contact-note'
-import { CoverBox } from '@/components/cover-box'
 import { SeasonalPromo } from '@/components/landing/seasonal-promo'
-import { SetCoverFan } from '@/components/set-cover-stack'
+import { CourseCard } from '@/components/course-card'
+import { SetListCard } from '@/components/set-list-card'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
-import { Badge, badgeVariants } from '@/components/ui/badge'
-import { buttonVariants } from '@/components/ui/button'
+import { badgeVariants } from '@/components/ui/badge'
 import { contactHref } from '@/contact'
 
 // ส่วนต่าง ๆ ของหน้าแรก ตาม docs/design-landing.dc.html
@@ -105,63 +104,11 @@ export function FeaturedSection({ items, note }: { items: FeaturedCardData[]; no
 }
 
 /**
- * ใช้ข้อมูลการ์ดเดิมของคอร์ส / SET · ทั้งใบกดเข้าหน้ารายละเอียด (ลิงก์ที่ชื่อยืดคลุมทั้งใบ) ให้ดูของข้างในก่อนตัดสินใจทัก
- * ปุ่ม "ดูรายละเอียด" เป็นแค่ภาพของลิงก์นั้น · ไม่มีปุ่มทักแอดมินในการ์ด ให้ทักจากหน้ารายละเอียดหรือปุ่มลอยแทน
- * การ์ด SET ใช้โทนเข้ม (ขอบเข้ม ปกเข้ม) ให้แยกออกจากคอร์สเดี่ยวได้ทันที
+ * ใช้การ์ดใบเดียวกับหน้ารายการคอร์ส ทั้งคอร์สและ SET + ป้ายที่เจ้าของใส่ · ทั้งใบกดเข้าหน้ารายละเอียด ให้ดูของข้างในก่อนตัดสินใจทัก
+ * ไม่มีปุ่มทักแอดมินในการ์ด ให้ทักจากหน้ารายละเอียดหรือปุ่มลอยแทน · การ์ด SET แยกจากคอร์สเดี่ยวด้วยปกพื้นเข้มแบบพัด
  */
 function FeaturedCard({ item }: { item: FeaturedCardData }) {
-  const { card } = item
-  const isSet = item.kind === 'set'
-  const savings = isSet ? item.card.savings : undefined
-  const facts = isSet ? [item.card.courseCount, card.facts].filter(Boolean).join(' · ') : card.facts
-  return (
-    <article
-      className={`group/card relative flex w-full flex-col overflow-hidden rounded-[18px] transition-shadow hover:shadow-card ${isSet ? 'border-[1.5px] border-ink bg-set-wash' : 'border border-line bg-white'}`}
-    >
-      <div className="relative">
-        {isSet && !card.cover.image ? (
-          <div className="relative h-[184px] overflow-hidden bg-ink">
-            <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot-dark)_1.3px,transparent_1.4px)] bg-size-[22px_22px] opacity-70" />
-            <SetCoverFan stack={item.card.stack} more={item.card.moreInStack} />
-          </div>
-        ) : (
-          <CoverBox cover={card.cover} label={isSet ? item.card.codeLabel : item.card.label} title={card.title} className="aspect-auto! h-[184px] rounded-none!" />
-        )}
-        {item.label && (
-          <Badge variant="ink" size="sm" className="absolute top-3 left-3 leading-4 text-white ring-1 ring-brand/40">
-            {item.label}
-          </Badge>
-        )}
-      </div>
-      <div className="flex flex-1 flex-col gap-2.5 px-[22px] pt-5 pb-[22px]">
-        <h3 className="font-heading text-[21px] leading-[1.3] font-semibold text-pretty">
-          <Link href={card.href} className="after:absolute after:inset-0 group-hover/card:text-link-hover">
-            {card.title}
-          </Link>
-        </h3>
-        <p className="flex-1 text-[14.5px] leading-[1.6] text-muted">{card.tagline}</p>
-        {facts && <p className="text-[13.5px] text-muted">{facts}</p>}
-        <div className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
-          <span className="font-heading text-[26px] font-bold">{card.price}</span>
-          {savings && (
-            <>
-              <span className="text-[15px] text-strike line-through">
-                <span className="sr-only">ราคาปกติ </span>
-                {savings.regularPrice}
-              </span>
-              <Badge variant="wash" size="sm">
-                ประหยัด {savings.amount}
-              </Badge>
-            </>
-          )}
-        </div>
-        {/* สีฟ้าเสมอ ทั้งการ์ดคอร์สและ SET: สีเข้มสงวนไว้ให้ปุ่มติดต่อ (DESIGN.md) */}
-        <span aria-hidden className={buttonVariants({ variant: 'brand', className: 'mt-1 text-[15px] group-hover/card:bg-brand/85' })}>
-          ดูรายละเอียด
-        </span>
-      </div>
-    </article>
-  )
+  return item.kind === 'set' ? <SetListCard card={item.card} label={item.label} /> : <CourseCard card={item.card} label={item.label} />
 }
 
 /** แนะนำครู · id="teacher" เป็นปลายทางของเมนู */
