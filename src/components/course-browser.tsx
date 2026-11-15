@@ -4,6 +4,7 @@
 // หน้า build แบบ static แล้วมากรองฝั่ง client ตาม query string
 // import จาก catalog-list / course-filters ตรง ๆ ไม่ผ่าน '@/catalog' เพราะตัวนั้นโหลดข้อมูล content/ ทั้งก้อนเข้ามาใน bundle
 
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import type { SetKind } from '@content/types'
@@ -34,6 +35,22 @@ export function GroupTabsFromUrl({ index }: { index: CatalogListIndex }) {
 
 export function GroupTabs({ index, filters }: { index: CatalogListIndex; filters: CourseFilters }) {
   return <TabNav tabs={filterCatalogList(index, filters).courses.tabs} />
+}
+
+/** มีตัวกรองอยู่ (กลุ่ม หมวดหมู่ หรือคำค้น) · ลิงก์ "ล้างตัวกรองทั้งหมด" ขึ้นเฉพาะตอนนี้ */
+function isFiltered(filters: CourseFilters): boolean {
+  return Boolean(filters.group || filters.category || filters.q?.trim())
+}
+
+const RESET_HREF = '/courses'
+
+/** ลิงก์ล้างตัวกรอง ชิดขวาในแถวหัวข้อของส่วนแรกที่เห็น (ปกติคือ SET ปูพื้นฐาน) */
+function ResetLink() {
+  return (
+    <Link href={RESET_HREF} scroll={false} className="ml-auto self-center border-b border-ring text-[14.5px] text-eyebrow hover:text-ink">
+      ล้างตัวกรองทั้งหมด
+    </Link>
+  )
 }
 
 /** ช่องค้นหา + เลือกหมวดหมู่ ตามตัวกรองใน URL · ใช้ใน <Suspense> */
@@ -75,15 +92,15 @@ export function SetSection({ index, filters }: { index: CatalogListIndex; filter
 
   return (
     <div id={SETS_ID} className={`flex flex-col gap-14 px-gutter pt-[26px] pb-8 ${SECTION_SCROLL}`}>
-      {kinds.map((kind) => (
-        <KindSection key={kind} kind={kind} list={sets[kind]} />
+      {kinds.map((kind, i) => (
+        <KindSection key={kind} kind={kind} list={sets[kind]} reset={i === 0 && isFiltered(filters)} />
       ))}
     </div>
   )
 }
 
 /** พื้นขาวเรียบเหมือนส่วนคอร์สเดี่ยว · แต่ละประเภทขยาย "ดู SET ทั้งหมด" แยกกัน */
-function KindSection({ kind, list }: { kind: SetKind; list: SetKindList }) {
+function KindSection({ kind, list, reset }: { kind: SetKind; list: SetKindList; reset: boolean }) {
   const [expanded, setExpanded] = useState(false)
   const copy = KIND_COPY[kind]
   const shown = expanded ? list.cards : list.cards.slice(0, list.preview)
@@ -100,6 +117,7 @@ function KindSection({ kind, list }: { kind: SetKind; list: SetKindList }) {
         <p className="font-mono text-[13px] font-semibold text-eyebrow" aria-live="polite">
           {list.resultText}
         </p>
+        {reset && <ResetLink />}
       </div>
       <p className="mb-7 max-w-156 text-[16.5px] leading-[1.7] text-ink-soft">{copy.description}</p>
       <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-[22px]">
@@ -131,7 +149,9 @@ export function CourseSectionFromUrl({ index }: { index: CatalogListIndex }) {
 }
 
 export function CourseSection({ index, filters }: { index: CatalogListIndex; filters: CourseFilters }) {
-  const { courses } = filterCatalogList(index, filters)
+  const { courses, sets } = filterCatalogList(index, filters)
+  // ไม่มี SET ผ่านตัวกรองเลย ส่วน SET ถูกซ่อน ลิงก์ล้างตัวกรองจึงย้ายมาอยู่แถวหัวข้อคอร์สเดี่ยวแทน
+  const noSets = SET_KINDS.every((kind) => sets[kind].cards.length === 0)
   return (
     <section id={COURSES_ID} aria-label="คอร์สเดี่ยว" className={SECTION_SCROLL}>
       <PagedGrid
@@ -140,7 +160,7 @@ export function CourseSection({ index, filters }: { index: CatalogListIndex; fil
         resultText={courses.resultText}
         paging={courses.paging}
         empty={courses.empty}
-        resetHref="/courses"
+        {...(noSets && isFiltered(filters) && { resetHref: RESET_HREF })}
         emptyTitle="ยังไม่มีคอร์สที่ตรงกับตัวกรองนี้"
         emptyHint="ลองลดตัวกรองลงสักข้อ หรือทักมาถามครูพี่หนามได้เลย"
         loadingText="กำลังโหลดคอร์สเพิ่ม…"

@@ -152,7 +152,7 @@ function batchDelay(i: number, paging: { first: number; step: number }) {
 }
 
 /**
- * แถวหัวข้อ (title + "พบ N …") + ล้างตัวกรอง แล้วกริดการ์ดที่โหลดเพิ่มเองเมื่อเลื่อนถึงท้ายรายการ
+ * แถวหัวข้อ (title + "พบ N …") + ล้างตัวกรอง (ถ้าส่ง resetHref) แล้วกริดการ์ดที่โหลดเพิ่มเองเมื่อเลื่อนถึงท้ายรายการ
  * ใส่ key ตามตัวกรองไว้ที่ผู้เรียก จำนวนที่โหลดจึงนับใหม่เมื่อเปลี่ยนตัวกรอง
  */
 export function PagedGrid<T extends { slug: string }>({
@@ -174,8 +174,8 @@ export function PagedGrid<T extends { slug: string }>({
   resultText: string
   paging: { first: number; step: number }
   empty: boolean
-  /** หน้ารายการที่ไม่กรองอะไร */
-  resetHref: string
+  /** หน้ารายการที่ไม่กรองอะไร · ไม่ส่ง = ไม่มีลิงก์ล้างตัวกรองในแถวหัวข้อ (หน้ารายการคอร์สย้ายไปไว้ส่วนบนของหน้า) */
+  resetHref?: string
   emptyTitle: string
   emptyHint: ReactNode
   loadingText: string
@@ -216,9 +216,11 @@ export function PagedGrid<T extends { slug: string }>({
             {resultText}
           </h2>
         )}
-        <Link href={resetHref} scroll={false} className="border-b border-ring text-[14.5px] text-eyebrow hover:text-ink">
-          ล้างตัวกรองทั้งหมด
-        </Link>
+        {resetHref && (
+          <Link href={resetHref} scroll={false} className="border-b border-ring text-[14.5px] text-eyebrow hover:text-ink">
+            ล้างตัวกรองทั้งหมด
+          </Link>
+        )}
       </div>
       <ul className={`grid px-gutter pt-3 pb-5 ${gridClassName}`}>
         {cards.slice(0, shown).map((card, i) => (
