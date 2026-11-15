@@ -7,9 +7,9 @@ import { buttonVariants } from '@/components/ui/button'
 import { cardVariants } from '@/components/ui/card'
 import { ContactBar } from '@/components/contact-bar'
 import { ContactButton } from '@/components/contact-button'
-import { ContactNote } from '@/components/contact-note'
 import { CoverBox } from '@/components/cover-box'
-import { Bullets, ClosingBand, DetailHeading, DetailTop, PreviewClip, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
+import { ClosingBand, DetailHeading, DetailTop, PreviewClip, PriceCard, ReviewsCard, SectionTitle, TeacherAvatar } from '@/components/detail-page'
+import { SetCoverFan } from '@/components/set-cover-stack'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
 
 // ตาม docs/design-set-detail.dc.html · hero พื้นเข้มเหมือนหน้ารายการ SET
@@ -51,8 +51,6 @@ function Top({ detail }: { detail: SetDetail }) {
   return (
     <DetailTop
       tone="dark"
-      // การ์ดราคา flex 320px + padding 48px ฝั่งซ้าย 520px แบ่งที่เหลือเท่ากัน: ขวา = ครึ่งหนึ่ง − 94px · 1180px → 496px
-      columns="lg:grid-cols-[minmax(0,1fr)_calc(50%-94px)]"
       crumbs={[
         { label: 'หน้าแรก', href: '/' },
         { label: 'คอร์สเรียน', href: '/courses' },
@@ -71,61 +69,33 @@ function Top({ detail }: { detail: SetDetail }) {
   )
 }
 
-const SET_BULLETS = ['ปลดล็อกทุกคอร์สพร้อมกันทันที', 'ดูย้อนหลังได้ไม่จำกัดอายุ', 'ไฟล์ PDF ดาวน์โหลดได้ · เรียนได้ทั้งคอมและมือถือ']
-
-/** การ์ดราคา SET: ราคา + ส่วนลด + ตารางเทียบซื้อแยก · จอใหญ่ติดอยู่ใต้ header ตอนเลื่อน (บนมือถือไม่ติด จะได้ไม่ทับเนื้อหา) */
+/**
+ * การ์ดราคา SET ใบเดียวกับหน้าคอร์ส · ปกเป็นพัดปกคอร์สใน SET แบบการ์ด SET ในหน้ารายการ
+ * ราคาเดี่ยวทีละคอร์สอยู่ในส่วน "คอร์สใน SET นี้" ใต้หัว ปุ่มรองพาไปที่นั่น
+ */
 function SetPriceCard({ detail }: { detail: SetDetail }) {
-  const { savings } = detail
   return (
-    <Reveal
-      as="aside"
-      trigger="mount"
-      delay={0.12}
-      className="min-w-0 self-start rounded-[22px] bg-white p-6 text-ink shadow-[0_18px_40px_rgb(0_0_0/0.25)] lg:sticky lg:top-[calc(var(--header-h)+20px)] lg:col-start-2 lg:row-span-2 lg:row-start-1"
-    >
-      <div className="mb-1.5 flex items-center justify-between gap-2.5">
-        <div className="font-mono text-xs font-semibold text-eyebrow">ราคา SET</div>
-        {savings && <Badge variant="ink" size="sm" className="font-mono">-{savings.percent}</Badge>}
-      </div>
-      <div className="mb-1 flex flex-wrap items-baseline gap-x-2.5">
-        <span className="font-heading text-[clamp(34px,4.6vw,42px)] font-bold">{detail.price}</span>
-        {savings && (
-          <span className="text-base text-strike line-through">
-            <span className="sr-only">ราคาปกติ </span>
-            {savings.regularPrice}
-          </span>
-        )}
-      </div>
-      <div className="mb-[18px] text-[14.5px] text-eyebrow">{savings ? `ประหยัด ${savings.amount} เทียบกับซื้อแยก` : detail.lifetime}</div>
-      <ContactButton item={detail.contactItem} size="lg" watched className="mb-2.5" />
-      <ContactNote className="mb-3 text-center text-muted" />
-      <a href="#courses" className={buttonVariants({ variant: 'outline' })}>
-        ดูคอร์สใน SET
-      </a>
-
-      <div className="mt-5 rounded-[14px] bg-set-wash p-4">
-        <div className="mb-2.5 text-sm font-semibold">ถ้าซื้อแยกทีละคอร์ส</div>
-        <ul className="flex flex-col gap-[7px]">
-          {detail.breakdown.map((course) => (
-            <li key={course.title} className="flex justify-between gap-3 text-sm text-ink-soft">
-              <span className="min-w-0">{course.title}</span>
-              <span className="flex-none">{course.price}</span>
-            </li>
-          ))}
-        </ul>
-        {savings && (
-          <div className="mt-2.5 flex justify-between gap-3 border-t border-dashed border-ring pt-2.5 text-[14.5px]">
-            <span>รวมซื้อแยก</span>
-            <span className="text-strike line-through">{savings.regularPrice}</span>
-          </div>
-        )}
-        <div className="mt-1.5 flex justify-between gap-3 text-[15.5px] font-bold">
-          <span>ราคา SET</span>
-          <span>{detail.price}</span>
+    <PriceCard
+      cover={detail.cover}
+      coverLabel={`SET · ${detail.courseCount}`}
+      title={detail.title}
+      price={detail.price}
+      lifetime={detail.lifetime}
+      contactItem={detail.contactItem}
+      {...(detail.savings && { savings: detail.savings })}
+      media={
+        <div className="group/card relative isolate mb-[18px] aspect-video overflow-hidden rounded-[14px] bg-ink">
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot-dark)_1.3px,transparent_1.4px)] bg-size-[22px_22px] opacity-70" />
+          <SetCoverFan stack={detail.stack} more={detail.moreInStack} />
         </div>
-      </div>
-      <Bullets items={SET_BULLETS} />
-    </Reveal>
+      }
+      secondary={
+        <a href="#courses" className={buttonVariants({ variant: 'outline' })}>
+          {/* ดูคอร์สใน SET ({detail.courseCount}) */}
+          ดูคอร์สใน SET
+        </a>
+      }
+    />
   )
 }
 

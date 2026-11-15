@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import type { Cover, CoursePreview, NavLink, ReviewQuote, Stat } from '@/catalog'
+import type { Cover, CoursePreview, NavLink, ReviewQuote, SetSavings, Stat } from '@/catalog'
 import { contactHref, type ContactItem } from '@/contact'
 import { ContactButton } from '@/components/contact-button'
 import { ContactNote } from '@/components/contact-note'
@@ -164,6 +164,8 @@ export function PriceCard({
   note,
   contactItem,
   secondary,
+  media,
+  savings,
 }: {
   cover: Cover
   coverLabel: string
@@ -175,17 +177,39 @@ export function PriceCard({
   contactItem: ContactItem
   /** ปุ่มรองใต้ปุ่มสมัคร พาไปส่วนอื่นในหน้านี้ (คลิปตัวอย่าง / เนื้อหาในคอร์ส) · ไม่ส่ง = ไม่มีปุ่มรอง */
   secondary?: React.ReactNode
+  /** ใช้แทนรูปปก เช่น พัดปกคอร์สของ SET · กล่อง 16:9 ขนาดเดียวกับปก */
+  media?: React.ReactNode
+  /** SET ที่ถูกกว่าซื้อแยก: ราคาเต็มขีดฆ่าข้างราคา + บรรทัดยอดประหยัด */
+  savings?: SetSavings
 }) {
   return (
     <Reveal
       as="aside"
       trigger="mount"
       delay={0.12}
-      className="min-w-0 self-start rounded-[20px] border border-card-line bg-white p-5 shadow-card lg:col-start-2 lg:row-span-2 lg:row-start-1"
+      className="min-w-0 self-start rounded-[20px] border border-card-line bg-white p-5 text-ink shadow-card lg:col-start-2 lg:row-span-2 lg:row-start-1"
     >
-      <CoverBox cover={cover} label={coverLabel} title={title} eager className="mb-[18px]" />
+      {media ?? <CoverBox cover={cover} label={coverLabel} title={title} eager className="mb-[18px]" />}
       <div className="mb-[18px]">
-        <div className="mb-1 font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</div>
+        <div className="mb-1 flex flex-wrap items-baseline gap-x-2.5">
+          <span className="font-heading text-[clamp(31px,4.4vw,38px)] font-bold">{price}</span>
+          {savings && (
+            <span className="text-base text-strike line-through">
+              <span className="sr-only">ราคาปกติ </span>
+              {savings.regularPrice}
+            </span>
+          )}
+        </div>
+        {savings && (
+          // ยอดเงินกับ % เป็นก้อนเดียว ไม่ตัดบรรทัดกลาง
+          <div className="mb-0.5 text-[15px] text-ink">
+            ประหยัด{' '}
+            <span className="font-semibold whitespace-nowrap">
+              {savings.amount} ({savings.percent})
+            </span>{' '}
+            เทียบกับซื้อแยก
+          </div>
+        )}
         <div className="text-sm text-eyebrow">
           {note ?? lifetime} · <span className="whitespace-nowrap">{COURSE_DEVICES}</span>
         </div>
@@ -205,16 +229,6 @@ export function PriceCard({
         </a>
       </p>
     </Reveal>
-  )
-}
-
-export function Bullets({ items }: { items: string[] }) {
-  return (
-    <ul className="mt-[18px] flex flex-col gap-[9px] border-t border-divider-soft pt-[18px] text-[14.5px] leading-relaxed text-ink-soft">
-      {items.map((b) => (
-        <li key={b}>{b}</li>
-      ))}
-    </ul>
   )
 }
 

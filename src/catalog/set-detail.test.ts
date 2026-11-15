@@ -70,11 +70,10 @@ describe('setDetail()', () => {
       expect(pairAt(300, 700)).not.toHaveProperty('savings')
     })
 
-    it('breaks the regular price down course by course, in set order', () => {
-      expect(pairAt(1200, 2000)?.breakdown).toEqual([
-        { title: 'คอร์ส A', price: '1,200.-' },
-        { title: 'คอร์ส B', price: '1,200.-' },
-      ])
+    it('fans the course covers on the price card, last course in front', () => {
+      const detail = pairAt(1200, 2000)
+      expect(detail?.stack).toMatchObject([{ title: 'คอร์ส B' }, { title: 'คอร์ส A' }])
+      expect(detail?.moreInStack).toBe(0)
     })
   })
 

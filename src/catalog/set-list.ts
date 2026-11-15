@@ -57,6 +57,20 @@ export function setCategories(members: Course[]): string[] {
   return [...new Set(members.map((c) => c.category))]
 }
 
+/** ปกพัดบนหัวการ์ด / การ์ดราคา SET: 3 คอร์สท้ายสุด เรียงจากท้ายมาหน้า + จำนวนคอร์สที่เหลือ ("+N") */
+export function coverStack(members: Course[]): { stack: CoverTile[]; moreInStack: number } {
+  return {
+    stack: members
+      .slice(-STACK)
+      .reverse()
+      .map((c) => {
+        const image = nonEmpty(c.coverImage)
+        return { title: c.title, ...(image && { image }) }
+      }),
+    moreInStack: Math.max(0, members.length - STACK),
+  }
+}
+
 function membersOf(set: CourseSet, courses: Course[]): Course[] {
   const bySlug = new Map(courses.map((c) => [c.slug, c]))
   return set.courseSlugs.map((s) => bySlug.get(s)).filter((c): c is Course => Boolean(c))
@@ -84,14 +98,7 @@ export function buildSetListCard(set: CourseSet, courses: Course[], site: Site):
     ...(facts && { facts }),
     stats: [videoHours && `VDO ${videoHours} ชม.`, pages && `PDF ${pages}`, questionCount && `โจทย์ ${questionCount} ข้อ`].filter((s): s is string => Boolean(s)),
     cover: cover(set.group, set.coverImage),
-    stack: members
-      .slice(-STACK)
-      .reverse()
-      .map((c) => {
-        const image = nonEmpty(c.coverImage)
-        return { title: c.title, ...(image && { image }) }
-      }),
-    moreInStack: Math.max(0, members.length - STACK),
+    ...coverStack(members),
     listed: members.slice(0, LISTED).map((c) => ({ title: c.title, price: formatBaht(c.price) })),
     moreListed: Math.max(0, members.length - LISTED),
     price: formatBaht(set.price),

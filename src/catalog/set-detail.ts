@@ -8,7 +8,7 @@ import type { CoursePreview } from './course-detail'
 import { buildReviewQuote, type ReviewQuote } from './course-list'
 import { cover, formatBaht, groupLabel, groupLink, lifetimeLabel, nonEmpty, statsRow, SUBJECT_LABEL, type Cover, type NavLink, type Stat } from './format'
 import { setSavings, type SetSavings } from './set-card'
-import { setCategories } from './set-list'
+import { coverStack, setCategories, type CoverTile } from './set-list'
 import { youtubeEmbedUrl } from './youtube'
 
 /** ครูหนึ่งคนในกล่อง "ครูผู้สอน" · role เช่น "สอนชีววิทยา · เคมี" */
@@ -36,8 +36,9 @@ export type SetDetail = {
   stats: Stat[]
   /** คลิปตัวอย่าง: ใช้คลิปของคอร์สแรกใน SET ที่มีคลิป */
   preview?: CoursePreview
-  /** ราคาเดี่ยวทีละคอร์ส ในกล่อง "ถ้าซื้อแยกทีละคอร์ส" ของการ์ดราคา */
-  breakdown: { title: string; price: string }[]
+  /** ปกพัดบนการ์ดราคา แบบเดียวกับการ์ด SET */
+  stack: CoverTile[]
+  moreInStack: number
   /** คอร์สใน SET เรียงตามลำดับที่แนะนำ (ลำดับในชีต) */
   courses: CourseCard[]
   gets: SetGet[]
@@ -80,7 +81,7 @@ export function buildSetDetail(set: CourseSet, courses: Course[], site: Site, re
     courseCount: `${derived.courseCount} คอร์ส`,
     stats: [{ value: String(derived.courseCount), label: 'คอร์สในชุด' }, ...totals, { value: 'ไม่จำกัด', label: 'อายุคอร์ส' }],
     ...(preview && { preview }),
-    breakdown: members.map((c) => ({ title: c.title, price: formatBaht(c.price) })),
+    ...coverStack(members),
     courses: members.map((c) => buildCourseCard(c, site)),
     gets: setGets(derived.totals),
     ...(forWho.length > 0 && { forWho }),
