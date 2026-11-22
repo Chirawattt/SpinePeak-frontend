@@ -3,13 +3,13 @@
 """แปลง Google Sheet "SpinePeak - รายชื่อคอร์สทั้งหมด" เป็นไฟล์ JSON ใน content/
 
 วิธีใช้
-    python3 tools/sheet-sync/sheet_sync.py            # อ่าน raw/*.csv เขียน content/*.json
+    python3 tools/sheet-sync/sheet_sync.py            # ดึงชีตสดจากลิงก์ publish to web เขียน content/*.json
     python3 tools/sheet-sync/sheet_sync.py --check    # ตรวจเท่านั้น ไม่เขียนไฟล์
 
 วิธีอัปเดตข้อมูลจากชีต
-    เปิดชีต > ไฟล์ > ดาวน์โหลด > CSV (แท็บละครั้ง) แล้ววางทับ
-    raw/courses.csv (แท็บ "คอร์สทั้งหมด") และ raw/sets.csv (แท็บ "SET")
-    แล้วรันสคริปต์นี้ใหม่ ไฟล์ใน content/ จะถูกเขียนทับทั้งหมด
+    แก้ชีตแล้วรันสคริปต์นี้ ไม่ต้องดาวน์โหลดไฟล์ · ไฟล์ใน content/ จะถูกเขียนทับทั้งหมด
+    ถ้าลิงก์ใช้ไม่ได้ จะอ่านไฟล์สำรอง raw/courses.csv และ raw/sets.csv แทน (พร้อมเตือน)
+    ชีตต้องเปิด ไฟล์ > แชร์ > เผยแพร่ไปยังเว็บ (ทั้งเอกสาร) อยู่ · ลิงก์เปลี่ยนได้ด้วยตัวแปร SHEET_PUB_URL
 
 สคริปต์จะ exit ด้วยรหัส 1 ถ้าเจอข้อผิดพลาดที่ต้องแก้ในชีตก่อน build
 """
@@ -19,10 +19,18 @@ import json
 import os
 import re
 import sys
+import urllib.request
 from collections import Counter, OrderedDict
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-RAW = os.path.join(ROOT, "raw")
+# ลิงก์ "เผยแพร่ไปยังเว็บ" ของชีต + gid ของแต่ละแท็บ (gid ไม่เปลี่ยนแม้เปลี่ยนชื่อแท็บ)
+RAW = os.path.join(ROOT, "raw")  # ไฟล์ CSV สำรองเผื่อลิงก์ใช้ไม่ได้ (โหลดจากชีตมาวางทับเมื่อต้องการ)
+PUB_URL = os.environ.get(
+    "SHEET_PUB_URL",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSJ994C3ZcIf6BU-hTnLafTtNlOPUycTI1wQIi1_8z_errakQVvJ5y1mNpfS5nbGPDq8XHq9LgqehIm/pub",
+)
+GID_COURSES = 1282783287  # แท็บ "คอร์สทั้งหมด"
+GID_SETS = 2124793012  # แท็บ "SET"
 OUT = os.path.join(ROOT, "content")
 
 GROUPS = {"ประถม": "prathom", "ม.ต้น": "mton", "ม.ปลาย": "mplai"}
@@ -96,9 +104,18 @@ def split_bullets(v):
     return [p for p in parts if p]
 
 
-def read_csv(path):
-    with io.open(path, encoding="utf-8-sig", newline="") as f:
-        rows = [r for r in csv.reader(f) if any(clean(c) for c in r)]
+def read_csv(gid, fallback):
+    """ดึงจากลิงก์ publish · ถ้าลิงก์ใช้ไม่ได้ (ไม่มีเน็ต/เลิกเผยแพร่) อ่านไฟล์สำรอง raw/<fallback> แทน"""
+    url = "%s?gid=%d&single=true&output=csv" % (PUB_URL, gid)
+    try:
+        with urllib.request.urlopen(url, timeout=30) as resp:
+            text = resp.read().decode("utf-8-sig")
+    except (OSError, ValueError) as e:  # URLError/HTTPError/timeout เป็นลูกของ OSError
+        path = os.path.join(RAW, fallback)
+        print("  WARN ดึงชีตสดไม่ได้ (%s) ใช้ไฟล์สำรอง %s แทน อาจเป็นข้อมูลเก่า" % (e, path))
+        with io.open(path, encoding="utf-8-sig") as f:
+            text = f.read()
+    rows = [r for r in csv.reader(io.StringIO(text, newline="")) if any(clean(c) for c in r)]
     header = [clean(c) for c in rows[0]]
     out = []
     for r in rows[1:]:
@@ -152,7 +169,7 @@ def find_cover(slug):
 
 
 def build_courses():
-    rows = read_csv(os.path.join(RAW, "courses.csv"))
+    rows = read_csv(GID_COURSES, "courses.csv")
     courses = []
     cover_refs = []
     skipped = []
@@ -308,7 +325,7 @@ def resolve_members(row, where, courses, by_name):
 
 
 def build_sets(courses):
-    rows = read_csv(os.path.join(RAW, "sets.csv"))
+    rows = read_csv(GID_SETS, "sets.csv")
     by_name = {c["title"]: c for c in courses}
     sets = []
     for row in rows:
