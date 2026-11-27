@@ -1,7 +1,7 @@
 // Catalog: รับข้อมูลจาก content/ แล้วคืนข้อมูลที่พร้อมให้แต่ละหน้าแสดง
 // ตัดสินเรื่องแสดง / ซ่อน / คำนวณไว้ครบที่นี่ หน้า React แค่ render ตามนั้น
 
-import { trackLabelsByGroup, type Clip, type Course, type CourseSet, type Group, type Review, type Site } from '@content/types'
+import { trackLabelsByGroup, type Clip, type Course, type CourseSet, type Group, type Review, type ReviewImage, type Site } from '@content/types'
 import { buildCourseCard, type CourseCard } from './course-card'
 import { buildCourseDetail, type CourseDetail } from './course-detail'
 import { listHref, type CourseFilters } from './course-filters'
@@ -10,6 +10,7 @@ import { buildCourseListIndex, buildCoursesPage, buildReviewQuote, filterCourseL
 import { groupLink, nonEmpty, type Faq, type NavLink } from './format'
 import { withoutMocks } from './mocks'
 import { buildPromos, SETS_HREF, type Promo } from './promos'
+import { buildReviewCards, type ReviewImageCard } from './review-cards'
 import { courseOgCard, pageOgCard, setOgCard, type OgCard, type OgPage } from './og'
 import { buildSetDetail, type SetDetail } from './set-detail'
 import { buildSetListCard, buildSetListIndex, filterSetList, type SetFilters, type SetList, type SetListCard } from './set-list'
@@ -20,6 +21,7 @@ export type Content = {
   sets: CourseSet[]
   site: Site
   reviews: Review[]
+  reviewImages: ReviewImage[]
   clips: Clip[]
 }
 
@@ -49,6 +51,8 @@ export type Landing = {
   clips: ClipCard[]
   /** ว่างเมื่อ reviews.json ว่าง ให้ซ่อนทั้งส่วน */
   reviews: ReviewQuote[]
+  /** การ์ดรูปรีวิว จากแท็บ "รีวิว" ในชีต · ว่างให้ซ่อนทั้งส่วน */
+  reviewCards: ReviewImageCard[]
   /** ของแนะนำ (หัวข้อ "คอร์สขายดี") ตามลำดับใน site.json · ว่างเมื่อไม่ได้เลือกไว้ ให้ซ่อนทั้งส่วน */
   featured: FeaturedCard[]
   /** เมนูหัวเว็บ · ลิงก์ไปส่วนที่ซ่อนอยู่จะไม่โผล่ */
@@ -160,6 +164,7 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
       ...(teacher && { teacher }),
       clips,
       reviews,
+      reviewCards: buildReviewCards(content.reviewImages, courses, sets),
       featured,
       // SET อยู่ในหน้าคอร์สเรียนแล้ว เมนูจึงนับหน้ารายละเอียด SET เป็นของคอร์สเรียนด้วย
       // ติดต่อเรา = เลื่อนไปคอลัมน์ติดต่อใน footer ซึ่งมีทุกหน้า

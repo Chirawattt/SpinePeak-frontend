@@ -2,49 +2,33 @@
 
 // การ์ดรีวิวแบบรูปเต็มใบ 16:9 + แถบเข้มล่างบอกว่าเป็นรีวิวคอร์สหรือ SET ไหน · กดการ์ดแล้วเปิด Dialog รูปรีวิวย่อย 2 คอลัมน์
 // ล่างสุดของ Dialog เป็นแบนเนอร์แนวนอนเต็มความกว้างของคอร์ส/SET นั้น · กดรูปย่อยแล้วขยายเต็มจอ
-// ⚠️ MOCK: ข้อมูลยังไม่ต่อกับ reviews.json (ดู review-image-section.tsx) · images ที่เป็น undefined แสดงกล่องตัวอย่าง
 
 import { ArrowRightIcon, XIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import type { ReviewImageCard } from '@/catalog'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
-
-export type ReviewImageCardData = {
-  /** รูปปกการ์ด · ไม่มี = กล่องตัวอย่าง */
-  image?: string
-  kind: 'course' | 'set'
-  title: string
-  href: string
-  /** รูปปกคอร์ส/SET สำหรับแบนเนอร์ท้าย Dialog · ไม่มี = แบนเนอร์สีเข้มล้วน */
-  cover?: string
-  /** รูปรีวิวย่อยใน Dialog · undefined = กล่องตัวอย่าง */
-  images: (string | undefined)[]
-}
 
 const KIND_LABEL = { course: 'รีวิวคอร์ส', set: 'รีวิว SET' } as const
 
 const CLOSE = 'absolute top-3 right-3 outline-none focus-visible:ring-3 focus-visible:ring-ink/60'
 
-export function ReviewCard({ card }: { card: ReviewImageCardData }) {
+export function ReviewCard({ card }: { card: ReviewImageCard }) {
   const [open, setOpen] = useState(false)
   const [zoom, setZoom] = useState<number | null>(null)
   const label = KIND_LABEL[card.kind]
 
   return (
     <article className="group relative isolate aspect-video overflow-hidden rounded-[20px] bg-brand-wash">
-      {card.image ? (
-        <Image
-          src={card.image}
-          alt={`${label} ${card.title}`}
-          fill
-          sizes="(max-width: 520px) 86vw, 440px"
-          className="object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] motion-safe:group-hover:scale-[1.03]"
-        />
-      ) : (
-        <MockImage />
-      )}
+      <Image
+        src={card.image}
+        alt={`${label} ${card.title}`}
+        fill
+        sizes="(max-width: 520px) 86vw, 440px"
+        className="object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] motion-safe:group-hover:scale-[1.03]"
+      />
 
       {/* ปุ่มเปิด Dialog คลุมทั้งการ์ด · ลิงก์ในแถบล่างอยู่เหนือปุ่ม (z-10) จึงกดไปหน้ารายละเอียดได้แยกกัน ไม่ซ้อนปุ่มในปุ่ม */}
       <button
@@ -94,11 +78,7 @@ export function ReviewCard({ card }: { card: ReviewImageCardData }) {
                     aria-label={`ขยายรูปรีวิวที่ ${i + 1}`}
                     className="relative block aspect-square w-full cursor-zoom-in overflow-hidden rounded-xl border border-card-line bg-brand-wash outline-none focus-visible:ring-3 focus-visible:ring-ink/60"
                   >
-                    {src ? (
-                      <Image src={src} alt={`รูปรีวิวที่ ${i + 1} ของ ${card.title}`} fill sizes="(max-width: 768px) 45vw, 340px" className="object-contain" />
-                    ) : (
-                      <MockImage label={`รูปรีวิว ${i + 1}`} />
-                    )}
+                    <Image src={src} alt={`รูปรีวิวที่ ${i + 1} ของ ${card.title}`} fill sizes="(max-width: 768px) 45vw, 340px" className="object-contain" />
                   </button>
                 </li>
               ))}
@@ -113,7 +93,7 @@ export function ReviewCard({ card }: { card: ReviewImageCardData }) {
               {card.cover ? (
                 <Image src={card.cover} alt={card.title} fill sizes="(max-width: 768px) 90vw, 696px" className="object-cover transition-transform duration-700 motion-safe:group-hover/cover:scale-[1.02]" />
               ) : (
-                <MockImage label={card.kind === 'set' ? 'ปก SET' : 'ปกคอร์ส'} />
+                <span className="absolute inset-0 flex items-center justify-center bg-ink font-heading text-lg font-semibold text-white">ดูรายละเอียด</span>
               )}
             </Link>
           </div>
@@ -132,20 +112,14 @@ export function ReviewCard({ card }: { card: ReviewImageCardData }) {
                   <DialogClose aria-label="ปิดรูป" render={<Button variant="wash" size="icon" className={`${CLOSE} z-10`} />}>
                     <XIcon className="h-[18px] w-[18px]" aria-hidden />
                   </DialogClose>
-                  {card.images[zoom] ? (
-                    <Image
-                      src={card.images[zoom]}
-                      alt={`รูปรีวิวที่ ${zoom + 1} ของ ${card.title}`}
-                      width={0}
-                      height={0}
-                      sizes="92vw"
-                      className="block h-auto max-h-[88dvh] w-auto max-w-[92vw] rounded-xl"
-                    />
-                  ) : (
-                    <div className="relative aspect-square h-[min(88dvh,92vw)] overflow-hidden rounded-xl">
-                      <MockImage label={`รูปรีวิว ${zoom + 1}`} />
-                    </div>
-                  )}
+                  <Image
+                    src={card.images[zoom]}
+                    alt={`รูปรีวิวที่ ${zoom + 1} ของ ${card.title}`}
+                    width={0}
+                    height={0}
+                    sizes="92vw"
+                    className="block h-auto max-h-[88dvh] w-auto max-w-[92vw] rounded-xl"
+                  />
                 </div>
               )}
             </DialogContent>
@@ -153,16 +127,5 @@ export function ReviewCard({ card }: { card: ReviewImageCardData }) {
         </DialogContent>
       </Dialog>
     </article>
-  )
-}
-
-/** กล่องแทนรูปตอน mock · ลายจุดแบบเดียวกับพื้นหลังของเว็บ + ป้ายบอกว่าเป็นตัวอย่าง */
-function MockImage({ label = 'รูปรีวิว' }: { label?: string }) {
-  return (
-    <div aria-hidden className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-brand-wash">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-dot)_1.4px,transparent_1.5px)] bg-size-[18px_18px] opacity-50" />
-      <span className="relative font-heading text-lg font-semibold text-eyebrow">{label}</span>
-      <span className="relative font-mono text-xs text-eyebrow">mock</span>
-    </div>
   )
 }

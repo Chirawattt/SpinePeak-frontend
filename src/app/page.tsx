@@ -5,7 +5,7 @@ import { ReviewImageSection } from '@/components/landing/review-image-section'
 import { ClipsSection, ClosingBand, FeaturedSection, FloatingContact, PromoSection, TeacherSection } from '@/components/landing/sections'
 
 export default function LandingPage() {
-  const { hero, groupEntries, promos, featured, featuredNote, teacher, clips, reviews } = catalog.landing()
+  const { hero, groupEntries, promos, featured, featuredNote, teacher, clips, reviewCards } = catalog.landing()
 
   return (
     <>
@@ -14,8 +14,7 @@ export default function LandingPage() {
       {featured.length > 0 && <FeaturedSection items={featured} note={featuredNote} />}
       {teacher && <TeacherSection teacher={teacher} photoAlt={teacher.name} />}
       {clips.length > 0 && <ClipsSection clips={clips} />}
-      {/* MOCK การ์ดรีวิวแบบรูปเต็มใบ · ยังไม่ต่อข้อมูล · reviews มีเฉพาะตอน dev (รีวิวตอนนี้เป็น mock ทั้งหมด) จึงไม่หลุดขึ้นเว็บจริง */}
-      {reviews.length > 0 && <ReviewImageSection />}
+      {reviewCards.length > 0 && <ReviewImageSection cards={reviewCards} />}
       <ClosingBand />
       <FloatingContact />
     </>

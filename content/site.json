@@ -80,21 +80,6 @@
     { "type": "set", "slug": "m1-entrance-special-complete-bundle" }
   ],
 
-  "promos": {
-    "seasonal": [
-      {
-        "name": "โปรเปิดเทอม 2 (mock)",
-        "headline": ["โปรเปิดเทอม 2 (mock)", "ลดเพิ่ม 15% ทุก SET"],
-        "detail": "บอกชื่อโปรกับแอดมินตอนสมัคร · ถึง 31 ต.ค. 69",
-        "endsAt": "2026-10-31T23:59:59+07:00"
-      }
-    ],
-    "evergreen": [
-      { "kind": "set-savings", "name": "ซื้อเป็น SET", "desc": "ประหยัดสูงสุดเทียบกับซื้อแยก" },
-      { "kind": "contact", "name": "ชวนเพื่อนเรียน (mock)", "value": "100.-", "desc": "ลดทั้งคุณและเพื่อน" }
-    ]
-  },
-
   "faqs": [
     {
       "q": "ซื้อคอร์สแล้วดูได้นานแค่ไหน",

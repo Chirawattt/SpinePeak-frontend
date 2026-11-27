@@ -1,0 +1,12 @@
+{
+  "seasonal": [],
+  "evergreen": [
+    {
+      "kind": "set-savings",
+      "name": "ซื้อเป็น SET",
+      "desc": "ประหยัดสูงสุดเทียบกับซื้อแยก",
+      "image": "/promos/1YLEQlpvOFsXrXBbGrGRWqGemTdjo8uVs.png",
+      "imageMobile": "/promos/1YLEQlpvOFsXrXBbGrGRWqGemTdjo8uVs.png"
+    }
+  ]
+}

@@ -153,5 +153,15 @@ export function validateContent(content: Content): ContentProblem[] {
     if (promo.imageMobile && !promo.image) report(where, 'มี imageMobile แต่ไม่มี image')
   }
 
+  // การ์ดรูปรีวิว: slug ต้องมีจริง และรูปต้องเป็นไฟล์ใน public/
+  for (const review of content.reviewImages) {
+    const where = `รูปรีวิว ${review.slug}`
+    if (![...content.courses, ...content.sets].some((item) => item.slug === review.slug)) report(where, 'ไม่มีคอร์สหรือ SET ที่ใช้ slug นี้')
+    if (review.images.length === 0) report(where, 'ไม่มีรูปรีวิวย่อย')
+    for (const path of [review.cover, ...review.images]) {
+      if (!path?.startsWith('/')) report(where, `รูป "${path}" ต้องขึ้นต้นด้วย / (ไฟล์ใน public/)`)
+    }
+  }
+
   return problems
 }

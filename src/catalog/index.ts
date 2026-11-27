@@ -15,6 +15,7 @@ export type { SetCard, SetSavings } from './set-card'
 export type { SetFilters, SetList, SetListCard, SetListIndex } from './set-list'
 export type { SetDetail, SetGet, SetTeacher } from './set-detail'
 export type { Promo } from './promos'
+export type { ReviewImageCard } from './review-cards'
 export type { ContentProblem } from './validate-content'
 
 // mock โชว์เฉพาะตอน next dev ไว้ดูหน้าตา · production build (รวม preview บน Vercel) ตัดทิ้งเสมอ

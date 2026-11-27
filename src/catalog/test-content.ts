@@ -90,6 +90,7 @@ export function testContent(overrides: Partial<Content> = {}): Content {
     sets: [],
     site: testSite(),
     reviews: [],
+    reviewImages: [],
     clips: [],
     ...overrides,
   }

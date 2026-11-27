@@ -207,6 +207,16 @@ export type Review = {
   featured?: boolean
 }
 
+/** review-images.json (จากแท็บ "รีวิว" ในชีต) · 1 รายการ = 1 การ์ดรูปรีวิวบนหน้าแรก */
+export type ReviewImage = {
+  /** slug ของคอร์สหรือ SET */
+  slug: string
+  /** รูปบนการ์ด */
+  cover: string
+  /** รูปย่อยที่เห็นเมื่อกดการ์ด */
+  images: string[]
+}
+
 /** clips.json เป็น [] อยู่ — ถ้าว่างให้ซ่อนกล่องคลิปตัวอย่าง */
 export type Clip = {
   title: string

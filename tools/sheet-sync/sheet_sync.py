@@ -4,16 +4,18 @@
 
 วิธีใช้
     python3 tools/sheet-sync/sheet_sync.py            # ดึงชีตสดจากลิงก์ publish to web เขียน content/*.json
-    python3 tools/sheet-sync/sheet_sync.py --check    # ตรวจเท่านั้น ไม่เขียนไฟล์
+    python3 tools/sheet-sync/sheet_sync.py --check    # ตรวจเท่านั้น ไม่เขียนไฟล์ ไม่โหลดรูป
 
 วิธีอัปเดตข้อมูลจากชีต
     แก้ชีตแล้วรันสคริปต์นี้ ไม่ต้องดาวน์โหลดไฟล์ · ไฟล์ใน content/ จะถูกเขียนทับทั้งหมด
-    ถ้าลิงก์ใช้ไม่ได้ จะอ่านไฟล์สำรอง raw/courses.csv และ raw/sets.csv แทน (พร้อมเตือน)
+    ถ้าลิงก์ใช้ไม่ได้ จะอ่านไฟล์สำรอง raw/<ชื่อแท็บ>.csv แทน (พร้อมเตือน)
+    รูปโปรและรูปรีวิวจากลิงก์ Drive โหลดมาเก็บใน public/promos/ และ public/reviews/
     ชีตต้องเปิด ไฟล์ > แชร์ > เผยแพร่ไปยังเว็บ (ทั้งเอกสาร) อยู่ · ลิงก์เปลี่ยนได้ด้วยตัวแปร SHEET_PUB_URL
 
 สคริปต์จะ exit ด้วยรหัส 1 ถ้าเจอข้อผิดพลาดที่ต้องแก้ในชีตก่อน build
 """
 import csv
+import datetime
 import io
 import json
 import os
@@ -31,6 +33,9 @@ PUB_URL = os.environ.get(
 )
 GID_COURSES = 1282783287  # แท็บ "คอร์สทั้งหมด"
 GID_SETS = 2124793012  # แท็บ "SET"
+GID_PROMOS = 700000001  # แท็บ "โปรโมชัน"
+GID_REVIEWS = 700000002  # แท็บ "รีวิว"
+PUBLIC = os.path.join(ROOT, "public")
 OUT = os.path.join(ROOT, "content")
 
 GROUPS = {"ประถม": "prathom", "ม.ต้น": "mton", "ม.ปลาย": "mplai"}
@@ -53,6 +58,13 @@ DEFAULT_INSTRUCTOR = "kru-nam"  # เจ้าของยืนยัน: แ�
 
 SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 BULLET = "•"
+
+PROMO_COLUMNS = ("ชนิด", "ชื่อโปร", "หัวการ์ด", "รายละเอียด", "ตัวเลขใหญ่", "วันหมดเขต", "รูปแนวนอน", "รูปมือถือ", "สถานะ")
+REVIEW_COLUMNS = ("slug", "รูปปก", "รูปรีวิว", "สถานะ")
+PROMO_KINDS = ("ตามฤดู", "ตลอดปี", "ประหยัด SET")
+VISIBILITY = ("แสดง", "ซ่อน")
+DRIVE_ID_RE = re.compile(r"^https://(?:drive|docs)\.google\.com/(?:file/d/|(?:open|uc)\?(?:[^#]*&)?id=)([A-Za-z0-9_-]{10,})")
+MAX_IMAGE_BYTES = 15 * 1024 * 1024
 
 errors = []
 warnings = []
@@ -104,7 +116,7 @@ def split_bullets(v):
     return [p for p in parts if p]
 
 
-def read_csv(gid, fallback):
+def read_csv(gid, fallback, required=()):
     """ดึงจากลิงก์ publish · ถ้าลิงก์ใช้ไม่ได้ (ไม่มีเน็ต/เลิกเผยแพร่) อ่านไฟล์สำรอง raw/<fallback> แทน"""
     url = "%s?gid=%d&single=true&output=csv" % (PUB_URL, gid)
     try:
@@ -116,7 +128,11 @@ def read_csv(gid, fallback):
         with io.open(path, encoding="utf-8-sig") as f:
             text = f.read()
     rows = [r for r in csv.reader(io.StringIO(text, newline="")) if any(clean(c) for c in r)]
-    header = [clean(c) for c in rows[0]]
+    header = [clean(c) for c in rows[0]] if rows else []
+    # หัวคอลัมน์หาย (หรือแท็บถูกล้างทั้งแท็บ) ต้องพัง ไม่งั้นจะกลายเป็น "ไม่มีข้อมูล" แล้วเขียนทับเงียบ ๆ
+    for col in required:
+        if col not in header:
+            err("ไม่พบคอลัมน์ '%s' ใน %s" % (col, fallback))
     out = []
     for r in rows[1:]:
         r = list(r) + [""] * (len(header) - len(r))
@@ -393,6 +409,157 @@ def build_sets(courses):
     return sets
 
 
+def drive_id(url):
+    """ID ของไฟล์จากลิงก์แชร์ Drive · ไม่ใช่ลิงก์ไฟล์ Drive = None"""
+    m = DRIVE_ID_RE.match(clean(url))
+    return m.group(1) if m else None
+
+
+def image_ext(data):
+    """นามสกุลจากเนื้อไฟล์จริง · ไม่ใช่รูป (เช่นหน้า login เพราะไม่ได้แชร์) = None"""
+    if data.startswith(b"\x89PNG\r\n\x1a\n"):
+        return ".png"
+    if data.startswith(b"\xff\xd8\xff"):
+        return ".jpg"
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return ".webp"
+    return None
+
+
+def check_image(url, folder, where):
+    """ใช้ตอน --check: ตรวจแค่รูปแบบลิงก์ ไม่โหลด"""
+    file_id = drive_id(url)
+    if not file_id:
+        err("%s: '%s' ไม่ใช่ลิงก์ไฟล์ Google Drive" % (where, url))
+        return None
+    return "/%s/%s" % (folder, file_id)
+
+
+def download_image(url, folder, where):
+    """โหลดรูปไป public/<folder>/<id ของ Drive>.<ext> แล้วคืน path บนเว็บ"""
+    if not check_image(url, folder, where):
+        return None
+    file_id = drive_id(url)
+    target = os.path.join(PUBLIC, folder)
+    # shortcut: มีไฟล์ของ ID นี้แล้วไม่โหลดซ้ำ และไม่ลบไฟล์ที่ไม่ใช้ · แทนที่รูปใน Drive โดย ID เดิม ต้องลบไฟล์ในเครื่องก่อน
+    for ext in (".png", ".jpg", ".webp"):
+        if os.path.isfile(os.path.join(target, file_id + ext)):
+            return "/%s/%s%s" % (folder, file_id, ext)
+    try:
+        with urllib.request.urlopen("https://drive.google.com/uc?export=download&id=" + file_id, timeout=60) as resp:
+            data = resp.read(MAX_IMAGE_BYTES + 1)
+    except (OSError, ValueError) as e:
+        err("%s: โหลดรูปไม่ได้ (%s) ตรวจว่าแชร์แบบ 'ทุกคนที่มีลิงก์'" % (where, e))
+        return None
+    ext = image_ext(data)
+    if len(data) > MAX_IMAGE_BYTES:
+        err("%s: รูปใหญ่เกิน 15 MB" % where)
+        return None
+    if not ext:
+        err("%s: ลิงก์ไม่ได้ให้ไฟล์รูป (png/jpg/webp) ตรวจว่าแชร์แบบ 'ทุกคนที่มีลิงก์'" % where)
+        return None
+    os.makedirs(target, exist_ok=True)
+    with open(os.path.join(target, file_id + ext), "wb") as f:
+        f.write(data)
+    return "/%s/%s%s" % (folder, file_id, ext)
+
+
+def ends_at(value):
+    """'31/12/2569' หรือ '2026-12-31' -> สิ้นวันนั้นเวลาไทย (ISO 8601) · อ่านไม่ได้ = None"""
+    s = clean(value)
+    dmy = re.match(r"^(\d{1,2})/(\d{1,2})/(\d{4})$", s)
+    ymd = re.match(r"^(\d{4})-(\d{1,2})-(\d{1,2})$", s)
+    if dmy:
+        day, month, year = (int(x) for x in dmy.groups())
+    elif ymd:
+        year, month, day = (int(x) for x in ymd.groups())
+    else:
+        return None
+    if year > 2400:  # พ.ศ.
+        year -= 543
+    try:
+        return datetime.date(year, month, day).isoformat() + "T23:59:59+07:00"
+    except ValueError:
+        return None
+
+
+def is_shown(row, where):
+    status = row.get("สถานะ", "")
+    if status not in VISIBILITY:
+        err("%s: สถานะ '%s' ต้องเป็น แสดง หรือ ซ่อน" % (where, status))
+    return status == "แสดง"
+
+
+def build_promos(rows, image):
+    """แถวในแท็บโปรโมชัน -> รูปร่างเดียวกับ Promotions ใน content/types.ts · image = download_image หรือ check_image"""
+    seasonal, evergreen = [], []
+    for n, row in enumerate(rows, 1):
+        name = row.get("ชื่อโปร", "")
+        where = "โปรโมชัน รายการที่ %d (%s)" % (n, name)
+        if not is_shown(row, where):
+            continue
+        kind = row.get("ชนิด", "")
+        if kind not in PROMO_KINDS:
+            err("%s: ชนิด '%s' ต้องเป็น %s" % (where, kind, " / ".join(PROMO_KINDS)))
+            continue
+        if not name:
+            err("%s ยังไม่มีชื่อโปร" % where)
+            continue
+        detail = row.get("รายละเอียด", "")
+        promo = OrderedDict()
+        if kind == "ตามฤดู":
+            end = ends_at(row.get("วันหมดเขต"))
+            if not end:
+                err("%s: วันหมดเขต '%s' ต้องเป็นแบบ 31/12/2569 หรือ 2026-12-31" % (where, row.get("วันหมดเขต", "")))
+                continue
+            lines = [x.strip() for x in row.get("หัวการ์ด", "").split("\n") if x.strip()]
+            promo.update(name=name, headline=lines or [name], detail=detail, endsAt=end)
+        elif kind == "ตลอดปี":
+            value = row.get("ตัวเลขใหญ่", "")
+            if not value:
+                err("%s ยังไม่มีตัวเลขใหญ่" % where)
+                continue
+            promo.update(kind="contact", name=name, value=value, desc=detail)
+        else:
+            promo.update(kind="set-savings", name=name, desc=detail)
+
+        wide, tall = row.get("รูปแนวนอน", ""), row.get("รูปมือถือ", "")
+        if tall and not wide:
+            err("%s: มีรูปมือถือแต่ไม่มีรูปแนวนอน" % where)
+            continue
+        for key, url in (("image", wide), ("imageMobile", tall)):
+            if url:
+                promo[key] = image(url, "promos", where)
+        (seasonal if kind == "ตามฤดู" else evergreen).append(promo)
+    return OrderedDict(seasonal=seasonal, evergreen=evergreen)
+
+
+def build_review_images(rows, slugs, image):
+    """1 แถว = 1 การ์ดบนหน้าแรก: รูปปก 1 รูป + รูปรีวิวย่อยหลายรูป (บรรทัดละลิงก์)"""
+    cards, seen = [], set()
+    for n, row in enumerate(rows, 1):
+        slug = row.get("slug", "")
+        where = "รีวิว รายการที่ %d (%s)" % (n, slug)
+        if not is_shown(row, where):
+            continue
+        cover = row.get("รูปปก", "")
+        links = row.get("รูปรีวิว", "").split()
+        if slug not in slugs:
+            err("%s: ไม่มีคอร์สหรือ SET ที่ใช้ slug นี้" % where)
+        elif slug in seen:
+            err("%s: slug ซ้ำ ให้รวมรูปไว้ในแถวเดียว" % where)
+        elif not cover or not links:
+            err("%s: ต้องมีรูปปก และรูปรีวิวอย่างน้อย 1 รูป" % where)
+        else:
+            cards.append(OrderedDict(
+                slug=slug,
+                cover=image(cover, "reviews", where),
+                images=[image(url, "reviews", where) for url in links],
+            ))
+        seen.add(slug)
+    return cards
+
+
 def cross_check(courses, sets):
     # slug ต้องไม่ซ้ำ ทั้งในตัวเองและข้ามสองตาราง
     for label, items in (("คอร์ส", courses), ("SET", sets)):
@@ -542,13 +709,21 @@ def write_json(name, data):
 
 
 def main():
+    # ข้อความไทยพังบน Windows ถ้า output ถูก pipe เพราะใช้ codepage ของเครื่อง
+    sys.stdout.reconfigure(encoding="utf-8")
     check_only = "--check" in sys.argv
     courses, cover_refs = build_courses()
     sets = build_sets(courses)
     cross_check(courses, sets)
     badge = check_site(courses)
 
-    print("อ่านได้ %d คอร์ส %d SET" % (len(courses), len(sets)))
+    image = check_image if check_only else download_image
+    promos = build_promos(read_csv(GID_PROMOS, "promos.csv", PROMO_COLUMNS), image)
+    slugs = {item["slug"] for item in courses + sets}
+    reviews = build_review_images(read_csv(GID_REVIEWS, "reviews.csv", REVIEW_COLUMNS), slugs, image)
+
+    print("อ่านได้ %d คอร์ส %d SET %d โปร %d การ์ดรีวิว"
+          % (len(courses), len(sets), len(promos["seasonal"]) + len(promos["evergreen"]), len(reviews)))
     for m in warnings:
         print("  WARN " + m)
     for m in errors:
@@ -565,7 +740,8 @@ def main():
     if not os.path.isdir(OUT):
         os.makedirs(OUT)
     print("")
-    for name, data in (("courses.json", courses), ("sets.json", sets)):
+    for name, data in (("courses.json", courses), ("sets.json", sets),
+                       ("promos.json", promos), ("review-images.json", reviews)):
         print("  เขียน " + write_json(name, data))
     for name in ("reviews.json", "clips.json"):
         path = os.path.join(OUT, name)
