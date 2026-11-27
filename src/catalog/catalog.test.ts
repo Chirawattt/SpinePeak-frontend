@@ -357,4 +357,22 @@ describe('landing() promos', () => {
 
     expect(card).toMatchObject({ value: '100.-', contactItem: { kind: 'promo', title: 'ชวนเพื่อนเรียน' } })
   })
+
+  it('passes banner images through to the slides', () => {
+    const art = { image: '/promos/a.png', imageMobile: '/promos/a-m.png' }
+
+    const cards = promosOf({
+      seasonal: [{ ...seasonal, ...art }],
+      evergreen: [
+        { kind: 'contact', name: 'ชวนเพื่อนเรียน', value: '100.-', desc: '', ...art },
+        { kind: 'set-savings', name: 'ซื้อเป็น SET', desc: '', ...art },
+      ],
+    })
+
+    expect(cards).toMatchObject([art, art, art])
+  })
+
+  it('keeps a lone set saving slide when the owner made a banner for it', () => {
+    expect(promosOf({ seasonal: [], evergreen: [{ kind: 'set-savings', name: 'ซื้อเป็น SET', desc: '', image: '/promos/set.png' }] })).toHaveLength(1)
+  })
 })

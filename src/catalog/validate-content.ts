@@ -144,5 +144,14 @@ export function validateContent(content: Content): ContentProblem[] {
     if (promo.headline.length === 0) report(where, 'headline ว่าง')
   })
 
+  // รูปแบนเนอร์โปร: ต้องเป็นไฟล์ใน public/ และรูปมือถือใช้คู่กับรูปแนวนอน
+  for (const promo of [...site.promos.seasonal, ...site.promos.evergreen]) {
+    const where = `โปร ${promo.name}`
+    for (const path of [promo.image, promo.imageMobile]) {
+      if (path && !path.startsWith('/')) report(where, `รูป "${path}" ต้องขึ้นต้นด้วย / (ไฟล์ใน public/)`)
+    }
+    if (promo.imageMobile && !promo.image) report(where, 'มี imageMobile แต่ไม่มี image')
+  }
+
   return problems
 }

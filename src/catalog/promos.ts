@@ -1,12 +1,12 @@
 // แถบโปรโมชันบนหน้าแรก · ลูกค้าใช้โปรโดยบอกชื่อโปรกับแอดมินตอนทัก (ไม่มีโค้ด)
 
-import { deriveSet, type Course, type CourseSet, type Site } from '@content/types'
+import { deriveSet, type Course, type CourseSet, type PromoArt, type Site } from '@content/types'
 import type { ContactItem } from '@/contact'
 
 /** ส่วน SET ในหน้ารายการ · ทุกลิงก์ที่ชวนซื้อเป็น SET ชี้มาที่นี่ */
 export const SETS_HREF = '/courses#sets'
 
-export type Promo =
+export type Promo = PromoArt & (
   | {
       kind: 'seasonal'
       name: string
@@ -26,6 +26,7 @@ export type Promo =
       href?: string
       contactItem?: ContactItem
     }
+)
 
 /** โปรตามฤดูก่อน แล้วโปรตลอดปี · โปรตามฤดูที่หมดเขตแล้วตอน build ตัดทิ้ง · ว่าง = ซ่อนทั้งแถบ */
 export function buildPromos(site: Site, sets: CourseSet[], courses: Course[], now: Date): Promo[] {
@@ -38,15 +39,18 @@ export function buildPromos(site: Site, sets: CourseSet[], courses: Course[], no
       detail: p.detail,
       endsAt: p.endsAt,
       contactItem: { kind: 'promo', slug: `seasonal-${i + 1}`, title: p.name },
+      image: p.image,
+      imageMobile: p.imageMobile,
     }))
 
   const evergreen = site.promos.evergreen.flatMap((p, i): Promo[] => {
+    const art = { image: p.image, imageMobile: p.imageMobile }
     if (p.kind === 'contact') {
-      return [{ kind: 'evergreen', name: p.name, value: p.value, desc: p.desc, contactItem: { kind: 'promo', slug: `evergreen-${i + 1}`, title: p.name } }]
+      return [{ kind: 'evergreen', name: p.name, value: p.value, desc: p.desc, contactItem: { kind: 'promo', slug: `evergreen-${i + 1}`, title: p.name }, ...art }]
     }
     const best = maxSavingsPercent(sets, courses, site)
     // ไม่มีเซ็ตที่ถูกกว่าซื้อแยก ก็ไม่มีอะไรให้โฆษณา
-    return best > 0 ? [{ kind: 'evergreen', name: p.name, value: `-${best}%`, desc: p.desc, href: SETS_HREF }] : []
+    return best > 0 ? [{ kind: 'evergreen', name: p.name, value: `-${best}%`, desc: p.desc, href: SETS_HREF, ...art }] : []
   })
 
   return [...seasonal, ...evergreen]

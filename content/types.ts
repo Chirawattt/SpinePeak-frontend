@@ -99,12 +99,20 @@ export type FeaturedItem = {
   label?: string
 }
 
+/** รูปแบนเนอร์ของโปร (ไฟล์ใน public/) · ไม่ใส่ = ระบบทำการ์ดตัวอักษรให้ */
+export type PromoArt = {
+  /** รูปแนวนอน 3:1 แนะนำ 2400×800 เช่น "/promos/term2.png" */
+  image?: string
+  /** รูปแนวตั้ง 4:5 สำหรับมือถือ แนะนำ 1080×1350 · ไม่ใส่ = มือถือเห็นรูปแนวนอนทั้งรูป */
+  imageMobile?: string
+}
+
 /**
  * โปรโมชันบนหน้าแรก · ลูกค้าใช้โปรโดยบอกชื่อโปรกับแอดมินตอนทัก ไม่มีโค้ด
  * โปรตามฤดูมีวันหมดเขต พ้นแล้วไม่แสดง · โปรตลอดปีไม่มีวันหมด
  */
 export type Promotions = {
-  seasonal: {
+  seasonal: (PromoArt & {
     /** ชื่อโปรที่ลูกค้าบอกแอดมิน และอยู่ในข้อความทัก LINE */
     name: string
     /** หัวการ์ด แต่ละช่องขึ้นบรรทัดใหม่ เช่น ["โปรเปิดเทอม 2", "ลดเพิ่ม 15% ทุก SET"] */
@@ -113,8 +121,8 @@ export type Promotions = {
     detail: string
     /** ISO 8601 พร้อม timezone เช่น "2026-10-31T23:59:59+07:00" */
     endsAt: string
-  }[]
-  evergreen: (
+  })[]
+  evergreen: (PromoArt & (
     | {
         /** ตัวเลขใหญ่คำนวณจาก SET ที่ประหยัดสูงสุด กดแล้วไปหน้า SET */
         kind: 'set-savings'
@@ -129,7 +137,7 @@ export type Promotions = {
         value: string
         desc: string
       }
-  )[]
+  ))[]
 }
 
 export type Site = {

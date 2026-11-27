@@ -4,7 +4,7 @@ import { SETS_HREF, type ClipCard, type FeaturedCard as FeaturedCardData, type P
 import { Carousel } from '@/components/carousel'
 import { ContactButton } from '@/components/contact-button'
 import { ContactNote } from '@/components/contact-note'
-import { SeasonalPromo } from '@/components/landing/seasonal-promo'
+import { PromoCarousel } from '@/components/landing/promo-carousel'
 import { CourseCard } from '@/components/course-card'
 import { SetListCard } from '@/components/set-list-card'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/reveal'
@@ -16,65 +16,10 @@ import { contactHref } from '@/contact'
 
 const SECTION_TITLE = 'font-heading text-[clamp(24px,3.8vw,32px)] font-bold'
 
-/** แถบโปรโมชัน ต่อจาก hero · เลื่อนไปการ์ดถัดไปเองทุก 4 วินาที */
+/** แถบโปรโมชัน ต่อจาก hero · สร้างลิงก์ทักแอดมินฝั่ง server แล้วส่งให้สไลด์ */
 export function PromoSection({ promos }: { promos: Promo[] }) {
-  return (
-    <Reveal as="section" className="px-gutter pt-5 pb-2">
-      <Carousel
-        label="โปรโมชัน"
-        autoplaySeconds={4}
-        gap={18}
-        className="snap-x snap-mandatory gap-[18px] pb-2"
-        header={
-          // ไม่มีลิงก์ "ดู SET ทั้งหมด" ที่นี่: หัวข้อคอร์สขายดีถัดไปมีอยู่แล้ว
-          <h2 id="promo" className={`${SECTION_TITLE} flex-1 scroll-mt-[90px]`}>
-            โปรโมชัน
-          </h2>
-        }
-      >
-        {promos.map((promo) =>
-          promo.kind === 'seasonal' ? (
-            <SeasonalPromo key={promo.name} name={promo.name} headline={promo.headline} detail={promo.detail} endsAt={promo.endsAt} href={contactHref(promo.contactItem, 'line')} />
-          ) : (
-            <li key={promo.name} className="flex w-[min(72vw,300px)] shrink-0 snap-start">
-              <EvergreenPromo promo={promo} />
-            </li>
-          ),
-        )}
-      </Carousel>
-    </Reveal>
-  )
-}
-
-function EvergreenPromo({ promo }: { promo: Extract<Promo, { kind: 'evergreen' }> }) {
-  const body = (
-    <>
-      <span className="font-mono text-xs font-semibold text-eyebrow">ตลอดปี</span>
-      <span className="font-heading text-[42px] leading-none font-bold">{promo.value}</span>
-      <span className="font-heading text-lg font-bold">{promo.name}</span>
-      <span className="text-[14.5px] leading-[1.6] text-ink-soft">{promo.desc}</span>
-    </>
-  )
-  // การ์ดที่ลิงก์ในเว็บพื้นฟ้าอ่อน การ์ดทักแอดมินพื้นขาวมีขอบ ตาม design
-  const card = 'flex w-full flex-col gap-2.5 rounded-[22px] p-[26px] transition-colors'
-  if (promo.href) {
-    return (
-      <Link href={promo.href} className={`${card} bg-brand-wash hover:bg-brand-soft/60`}>
-        {body}
-      </Link>
-    )
-  }
-  return (
-    <a
-      href={promo.contactItem && contactHref(promo.contactItem, 'line')}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${promo.name} · ทักแอดมินเพื่อใช้โปรนี้`}
-      className={`${card} border border-line bg-set-wash hover:border-brand`}
-    >
-      {body}
-    </a>
-  )
+  const slides = promos.map((promo) => ({ ...promo, link: promo.kind === 'evergreen' && promo.href ? promo.href : contactHref(promo.contactItem!, 'line') }))
+  return <PromoCarousel promos={slides} />
 }
 
 /** "คอร์สขายดี": ของแนะนำที่เจ้าของเลือกใน site.json ผสมคอร์สกับ SET · ว่างให้ผู้เรียกไม่ render · note = บรรทัดใต้หัวข้อ (ดู Landing.featuredNote) */

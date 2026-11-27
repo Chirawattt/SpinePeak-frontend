@@ -1,6 +1,6 @@
 'use client'
 
-// แถบเลื่อนแนวนอน (โปรโมชัน, รีวิว) · มือถือปัดนิ้ว trackpad ปัดสองนิ้วได้เองด้วย scroll-snap
+// แถบเลื่อนแนวนอน (คลิป, รีวิว) · มือถือปัดนิ้ว trackpad ปัดสองนิ้วได้เองด้วย scroll-snap
 // เมาส์ใช้ปุ่มลูกศรที่หัวแถบ (ซ่อนบนจอสัมผัส และเมื่อการ์ดไม่ล้นแถบ) · ไม่แปลงล้อเมาส์แนวตั้งเป็นแนวนอน จะได้ไม่ดักคนที่เลื่อนหน้าลงมา
 
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
@@ -14,17 +14,14 @@ const ARROW = 'border border-ring bg-white pointer-coarse:hidden'
 export function Carousel({
   header,
   label,
-  autoplaySeconds = 0,
   gap,
   className = '',
   children,
 }: {
   /** หัวข้อของแถบ อยู่ซ้ายของปุ่มลูกศร */
   header: React.ReactNode
-  /** ชื่อแถบสำหรับ screen reader เช่น "โปรโมชัน" */
+  /** ชื่อแถบสำหรับ screen reader เช่น "รีวิว" */
   label: string
-  /** เลื่อนไปการ์ดถัดไปเองทุก N วินาที วนกลับเมื่อถึงท้าย · 0 = ไม่เลื่อนเอง · หยุดเมื่อชี้ แตะ หรือ focus อยู่ในแถบ */
-  autoplaySeconds?: number
   /** ระยะห่างระหว่างการ์ด (px) ต้องตรงกับ gap ของ className ใช้คำนวณระยะที่ปุ่มเลื่อน */
   gap: number
   className?: string
@@ -33,8 +30,6 @@ export function Carousel({
 }) {
   const scroller = useRef<HTMLUListElement>(null)
   const reduce = useReducedMotion()
-  const paused = useRef(false)
-  const lastUserAt = useRef(0)
   // การ์ดไม่ล้นแถบ (เช่น เหลือโปรใบเดียว) ไม่มีอะไรให้เลื่อน ซ่อนลูกศรไป จะได้ไม่มีปุ่มที่กดแล้วไม่เกิดอะไร
   const [overflowing, setOverflowing] = useState(false)
 
@@ -58,40 +53,7 @@ export function Carousel({
     const el = scroller.current
     const card = el?.firstElementChild
     if (!el || !card) return
-    lastUserAt.current = Date.now()
     el.scrollBy({ left: dir * (card.getBoundingClientRect().width + gap), behavior: reduce ? 'auto' : 'smooth' })
-  }
-
-  useEffect(() => {
-    const el = scroller.current
-    if (!el || !autoplaySeconds || reduce) return
-    const markUser = () => (lastUserAt.current = Date.now())
-    el.addEventListener('pointerdown', markUser, { passive: true })
-    el.addEventListener('wheel', markUser, { passive: true })
-    lastUserAt.current = Date.now()
-
-    const tick = setInterval(() => {
-      if (paused.current || Date.now() - lastUserAt.current < autoplaySeconds * 1000) return
-      const max = el.scrollWidth - el.clientWidth
-      if (max <= 0) return
-      const base = (el.firstElementChild as HTMLElement | null)?.offsetLeft ?? 0
-      const next = [...el.children].find((c) => (c as HTMLElement).offsetLeft - base > el.scrollLeft + 4) as HTMLElement | undefined
-      const to = el.scrollLeft >= max - 4 || !next ? 0 : Math.min(max, next.offsetLeft - base)
-      el.scrollTo({ left: to, behavior: 'smooth' })
-      lastUserAt.current = Date.now()
-    }, 500)
-
-    return () => {
-      clearInterval(tick)
-      el.removeEventListener('pointerdown', markUser)
-      el.removeEventListener('wheel', markUser)
-    }
-  }, [autoplaySeconds, reduce])
-
-  const pause = () => (paused.current = true)
-  const resume = () => {
-    paused.current = false
-    lastUserAt.current = Date.now()
   }
 
   return (
@@ -112,12 +74,6 @@ export function Carousel({
       <ul
         ref={scroller}
         aria-label={label}
-        onMouseEnter={pause}
-        onMouseLeave={resume}
-        onTouchStart={pause}
-        onTouchEnd={resume}
-        onFocus={pause}
-        onBlur={resume}
         className={`flex overflow-x-auto overscroll-x-contain [scrollbar-width:none] ${className}`}
       >
         {children}

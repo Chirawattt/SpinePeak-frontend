@@ -264,8 +264,14 @@ describe('validateContent() featured', () => {
 
 describe('validateContent() promos', () => {
   const seasonal = { name: 'โปรเปิดเทอม', headline: ['โปรเปิดเทอม'], detail: '', endsAt: '2026-10-31T23:59:59+07:00' }
-  const problemsWith = (promo: typeof seasonal) =>
+  const problemsWith = (promo: typeof seasonal & { image?: string; imageMobile?: string }) =>
     createCatalog(testContent({ site: testSite({ promos: { seasonal: [promo], evergreen: [] } }) })).validateContent()
+
+  it('rejects a banner path outside public/, or a phone banner without a wide one', () => {
+    expect(problemsWith({ ...seasonal, image: '/promos/a.png', imageMobile: '/promos/a-m.png' })).toEqual([])
+    expect(problemsWith({ ...seasonal, image: 'promos/a.png' })).toHaveLength(1)
+    expect(problemsWith({ ...seasonal, imageMobile: '/promos/a-m.png' })).toHaveLength(1)
+  })
 
   it('accepts an end date with a timezone', () => {
     expect(problemsWith(seasonal)).toEqual([])

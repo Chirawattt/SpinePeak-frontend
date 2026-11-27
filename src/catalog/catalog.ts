@@ -199,7 +199,7 @@ export function createCatalog(source: Content, { now = () => new Date(), showMoc
    */
   function promoStrip(promos: Promo[]): Pick<Landing, 'promos' | 'featuredNote'> {
     const [only] = promos
-    if (promos.length !== 1 || only?.kind !== 'evergreen' || only.href !== SETS_HREF) return { promos }
+    if (promos.length !== 1 || only?.kind !== 'evergreen' || only.href !== SETS_HREF || only.image) return { promos }
     return { promos: [], featuredNote: `ซื้อเป็น SET ประหยัดสูงสุด ${only.value.replace(/^-/, '')}` }
   }
 
