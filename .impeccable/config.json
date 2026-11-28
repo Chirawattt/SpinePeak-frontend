@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "docs/promo-banners/banners.html"
+        ],
+        "createdAt": "2026-11-28T02:31:20.159Z",
+        "reason": "agent: false positive, offset ink drop shadow under cover images on the light wash banner, not a glow on dark"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "docs/promo-banners/banners.html"
+        ],
+        "createdAt": "2026-11-28T02:32:20.757Z",
+        "reason": "agent: false positive, banner text is absolutely positioned 220px (wide) / 80px (tall) inside the edge, confirmed in rendered PNGs"
+      }
+    ]
+  }
+}

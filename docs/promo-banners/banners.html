@@ -1,0 +1,303 @@
+<!doctype html>
+<!-- ต้นฉบับแบนเนอร์โปร · เปิดด้วย ?b=set|friend & s=wide|tall แล้ว screenshot ตามขนาด 2400x800 หรือ 1080x1350 -->
+<html lang="th">
+  <meta charset="utf-8" />
+  <title>Promo banners</title>
+  <style>
+    @font-face {
+      font-family: Anuphan;
+      font-weight: 700;
+      src: url(../../assets/anuphan-thai-700.woff);
+      unicode-range: U+0E00-0E7F;
+    }
+    @font-face {
+      font-family: Anuphan;
+      font-weight: 700;
+      src: url(../../assets/anuphan-latin-700.woff);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Anuphan, sans-serif;
+      font-weight: 700;
+      color: #0b2b33;
+      overflow: hidden;
+    }
+    .banner {
+      display: none;
+      position: relative;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+    }
+    .set {
+      background: #e6f9ff;
+    }
+    .friend {
+      background: #0b2b33;
+      color: #fff;
+    }
+    .dots {
+      position: absolute;
+      inset: 0;
+      background-size: 48px 48px;
+      background-image: radial-gradient(#bfe9f5 3px, transparent 3.5px);
+    }
+    .friend .dots {
+      background-image: radial-gradient(#1f5360 3px, transparent 3.5px);
+    }
+    .text,
+    .art {
+      position: absolute;
+    }
+    h1 {
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    p {
+      white-space: nowrap;
+    }
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      background: #85e5ff;
+      color: #0b2b33;
+      white-space: nowrap;
+    }
+    .big {
+      line-height: 1.05;
+      white-space: nowrap;
+    }
+    .friend .big {
+      color: #85e5ff;
+    }
+    .sub {
+      color: #4a6c75;
+    }
+    .friend .sub {
+      color: #c6dee4;
+    }
+    .sample {
+      position: absolute;
+      border: 3px dashed currentColor;
+      border-radius: 999px;
+      opacity: 0.75;
+    }
+
+    .covers img {
+      position: absolute;
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgb(11 43 51 / 0.22);
+    }
+    .covers img:nth-child(1) {
+      transform: rotate(-7deg);
+    }
+    .covers img:nth-child(2) {
+      transform: rotate(5deg);
+    }
+    .covers img:nth-child(3) {
+      transform: rotate(-1deg);
+    }
+    .teacher .ring {
+      position: absolute;
+      border-radius: 50%;
+      background: #85e5ff;
+    }
+    .teacher img {
+      position: absolute;
+    }
+
+    /* แนวนอน 2400x800 · เว้นข้างละ ~200px ให้พ้นปุ่มลูกศร และล่าง ~100px ให้พ้นจุด */
+    .wide .text {
+      left: 220px;
+      top: 0;
+      bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .wide h1 {
+      font-size: 90px;
+    }
+    .wide .big {
+      font-size: 230px;
+      margin: 6px 0 10px;
+    }
+    .wide .sub {
+      font-size: 48px;
+    }
+    .wide .pill {
+      font-size: 40px;
+      padding: 8px 36px;
+      margin-top: 28px;
+    }
+    .wide .set .covers {
+      left: 1210px;
+      top: 0;
+      width: 1000px;
+      height: 800px;
+    }
+    .wide .covers img {
+      width: 660px;
+    }
+    .wide .covers img:nth-child(1) {
+      left: 0;
+      top: 80px;
+    }
+    .wide .covers img:nth-child(2) {
+      left: 320px;
+      top: 170px;
+    }
+    .wide .covers img:nth-child(3) {
+      left: 160px;
+      top: 340px;
+    }
+    .wide .teacher {
+      left: 1370px;
+      top: 0;
+      width: 820px;
+      height: 800px;
+    }
+    .wide .teacher .ring {
+      width: 720px;
+      height: 720px;
+      left: 50px;
+      top: 180px;
+    }
+    .wide .teacher img {
+      width: 800px;
+      height: 800px;
+      left: 10px;
+      top: 10px;
+    }
+    .wide .sample {
+      right: 220px;
+      top: 48px;
+      font-size: 34px;
+      padding: 4px 28px;
+    }
+
+    /* หัวของโปร SET ยาวกว่า และมีสระล่าง (สูงสุด) จึงเล็กลงและเว้นบรรทัดมากขึ้น */
+    body .set .big {
+      font-size: 156px;
+      line-height: 1.35;
+      margin: 0 0 6px;
+    }
+
+    /* แนวตั้ง 1080x1350 · ตัวหนังสือสำคัญอยู่ครึ่งบน เหนือปุ่มลูกศรที่กลางขอบ */
+    .tall .text {
+      left: 0;
+      right: 0;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .tall h1 {
+      font-size: 80px;
+    }
+    .tall .big {
+      font-size: 210px;
+      margin: 4px 0 8px;
+    }
+    .tall .sub {
+      font-size: 50px;
+    }
+    .tall .pill {
+      font-size: 44px;
+      padding: 10px 40px;
+      margin-top: 30px;
+    }
+    .tall .set .covers {
+      left: 0;
+      top: 700px;
+      width: 1080px;
+      height: 560px;
+    }
+    .tall .covers img {
+      width: 620px;
+    }
+    .tall .covers img:nth-child(1) {
+      left: 90px;
+      top: 20px;
+    }
+    .tall .covers img:nth-child(2) {
+      left: 380px;
+      top: 70px;
+    }
+    .tall .covers img:nth-child(3) {
+      left: 230px;
+      top: 180px;
+    }
+    .tall .teacher {
+      left: 200px;
+      top: 690px;
+      width: 680px;
+      height: 660px;
+    }
+    .tall .teacher .ring {
+      width: 620px;
+      height: 620px;
+      left: 30px;
+      top: 140px;
+    }
+    .tall .teacher img {
+      width: 680px;
+      height: 680px;
+      left: 0;
+      top: -10px;
+    }
+    .tall .sample {
+      right: 40px;
+      bottom: 120px;
+      font-size: 36px;
+      padding: 4px 28px;
+    }
+  </style>
+  <body>
+    <div class="banner set">
+      <div class="dots" style="opacity: 0.55"></div>
+      <div class="text">
+        <h1>ซื้อเป็น SET คุ้มกว่า</h1>
+        <div class="big">ลดสูงสุด 51%</div>
+        <p class="sub">เทียบกับซื้อแยกทีละคอร์ส</p>
+        <span class="pill">กดเพื่อดู SET ทั้งหมด</span>
+      </div>
+      <div class="art covers">
+        <img src="../../public/courses/primary-science-p4.png" alt="" />
+        <img src="../../public/courses/a-level-biology-68.png" alt="" />
+        <img
+          src="../../public/courses/foundation-biology-m4-term-1.png"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <!-- โปรชวนเพื่อนยังเป็นตัวเลข mock · ลบป้าย "ตัวอย่าง" เมื่อเจ้าของยืนยันเงื่อนไขแล้ว -->
+    <div class="banner friend">
+      <div class="dots" style="opacity: 0.7"></div>
+      <div class="text">
+        <h1>ชวนเพื่อนมาเรียน</h1>
+        <div class="big">ลด 100.-</div>
+        <p class="sub">ได้ส่วนลดทั้งคุณและเพื่อน</p>
+        <span class="pill">บอกชื่อโปรกับแอดมินตอนสมัคร</span>
+      </div>
+      <div class="art teacher">
+        <div class="ring"></div>
+        <img src="../../public/kru-nam-full.png" alt="" />
+      </div>
+      <span class="sample">ตัวอย่าง</span>
+    </div>
+    <script>
+      const q = new URLSearchParams(location.search);
+      document.body.className = q.get("s") || "wide";
+      document.querySelector(".banner." + (q.get("b") || "set")).style.display =
+        "block";
+    </script>
+  </body>
+</html>

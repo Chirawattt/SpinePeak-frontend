@@ -3,10 +3,18 @@
   "evergreen": [
     {
       "kind": "set-savings",
-      "name": "ซื้อเป็น SET",
+      "name": "โปรซื้อเป็น SET",
       "desc": "ประหยัดสูงสุดเทียบกับซื้อแยก",
-      "image": "/promos/1YLEQlpvOFsXrXBbGrGRWqGemTdjo8uVs.png",
-      "imageMobile": "/promos/1YLEQlpvOFsXrXBbGrGRWqGemTdjo8uVs.png"
+      "image": "/promos/1j6ODDQVgHYI8CtwhxEmykY7HgrPNPVhS.png",
+      "imageMobile": "/promos/1y4265srDj7j6XS0G0GgjEF8WzuFAOOxB.png"
+    },
+    {
+      "kind": "contact",
+      "name": "โปรชวนเพื่อน",
+      "value": "100",
+      "desc": "โปรชวนเพื่อนเรียนลด 100.-",
+      "image": "/promos/170Iylcmli60ZK_BEfgt21NcQawSRWNMm.png",
+      "imageMobile": "/promos/1c_AbuJfQCEVwV9UrBcDf7Htzu_duBqx7.png"
     }
   ]
 }
